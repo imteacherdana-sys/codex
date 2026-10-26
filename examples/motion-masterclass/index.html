@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --ground-top: #0b1026;
+        --ground: #05060f;
+        --grid: rgba(124, 58, 237, 0.12);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--ground);
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      #ground {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(var(--ground-top), var(--ground));
+      }
+      #grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(var(--grid) 1px, transparent 1px),
+          linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+        background-size: 40px 40px;
+        -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 70%);
+        mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 70%);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="71.3"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="ground"></div>
+      <div id="grid"></div>
+
+      <div id="hook" data-composition-id="hook" data-composition-src="compositions/hook.html"
+        data-start="0" data-duration="11.92" data-track-index="1" data-track-kind="graphics"
+        data-width="1920" data-height="1080"></div>
+      <div id="timing" data-composition-id="timing" data-composition-src="compositions/timing.html"
+        data-start="11.92" data-duration="11.09" data-track-index="1" data-track-kind="graphics"
+        data-width="1920" data-height="1080"></div>
+      <div id="easing" data-composition-id="easing" data-composition-src="compositions/easing.html"
+        data-start="23.01" data-duration="10.76" data-track-index="1" data-track-kind="graphics"
+        data-width="1920" data-height="1080"></div>
+      <div id="hierarchy" data-composition-id="hierarchy" data-composition-src="compositions/hierarchy.html"
+        data-start="33.77" data-duration="9.96" data-track-index="1" data-track-kind="graphics"
+        data-width="1920" data-height="1080"></div>
+      <div id="transition" data-composition-id="transition" data-composition-src="compositions/transition.html"
+        data-start="43.73" data-duration="7.31" data-track-index="1" data-track-kind="graphics"
+        data-width="1920" data-height="1080"></div>
+      <div id="compare" data-composition-id="compare" data-composition-src="compositions/compare.html"
+        data-start="51.04" data-duration="4.68" data-track-index="1" data-track-kind="graphics"
+        data-width="1920" data-height="1080"></div>
+      <div id="claim" data-composition-id="claim" data-composition-src="compositions/claim.html"
+        data-start="55.72" data-duration="5.18" data-track-index="1" data-track-kind="graphics"
+        data-width="1920" data-height="1080"></div>
+      <div id="outro" data-composition-id="outro" data-composition-src="compositions/outro.html"
+        data-start="60.9" data-duration="10.4" data-track-index="1" data-track-kind="graphics"
+        data-width="1920" data-height="1080"></div>
+
+      <audio id="vo-b01" class="clip" src="assets/audio/B01.wav" data-duration="5.725" data-start="0.2" data-track-index="10" data-volume="1"></audio>
+      <audio id="vo-b02" class="clip" src="assets/audio/B02.wav" data-duration="5.0" data-start="6.52" data-track-index="10" data-volume="1"></audio>
+      <audio id="vo-b03" class="clip" src="assets/audio/B03.wav" data-duration="6.68" data-start="12.12" data-track-index="10" data-volume="1"></audio>
+      <audio id="vo-b04" class="clip" src="assets/audio/B04.wav" data-duration="3.209" data-start="19.4" data-track-index="10" data-volume="1"></audio>
+      <audio id="vo-b05" class="clip" src="assets/audio/B05.wav" data-duration="4.976" data-start="23.21" data-track-index="10" data-volume="1"></audio>
+      <audio id="vo-b06" class="clip" src="assets/audio/B06.wav" data-duration="4.58" data-start="28.79" data-track-index="10" data-volume="1"></audio>
+      <audio id="vo-b07" class="clip" src="assets/audio/B07.wav" data-duration="5.18" data-start="33.97" data-track-index="10" data-volume="1"></audio>
+      <audio id="vo-b08" class="clip" src="assets/audio/B08.wav" data-duration="3.58" data-start="39.75" data-track-index="10" data-volume="1"></audio>
+      <audio id="vo-b09" class="clip" src="assets/audio/B09.wav" data-duration="6.706" data-start="43.93" data-track-index="10" data-volume="1"></audio>
+      <audio id="vo-b10" class="clip" src="assets/audio/B10.wav" data-duration="4.08" data-start="51.24" data-track-index="10" data-volume="1"></audio>
+      <audio id="vo-b11" class="clip" src="assets/audio/B11.wav" data-duration="4.58" data-start="55.92" data-track-index="10" data-volume="1"></audio>
+      <audio id="vo-b12" class="clip" src="assets/audio/B12.wav" data-duration="7.71" data-start="61.1" data-track-index="10" data-volume="1"></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

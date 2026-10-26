@@ -1,0 +1,118 @@
+[
+ {
+  "scene": "hook",
+  "start": 0,
+  "dur": 11.92,
+  "beats": [
+   {
+    "id": "B01",
+    "at": 0.2,
+    "len": 5.725
+   },
+   {
+    "id": "B02",
+    "at": 6.52,
+    "len": 5.0
+   }
+  ]
+ },
+ {
+  "scene": "timing",
+  "start": 11.92,
+  "dur": 11.09,
+  "beats": [
+   {
+    "id": "B03",
+    "at": 0.2,
+    "len": 6.68
+   },
+   {
+    "id": "B04",
+    "at": 7.48,
+    "len": 3.209
+   }
+  ]
+ },
+ {
+  "scene": "easing",
+  "start": 23.01,
+  "dur": 10.76,
+  "beats": [
+   {
+    "id": "B05",
+    "at": 0.2,
+    "len": 4.976
+   },
+   {
+    "id": "B06",
+    "at": 5.78,
+    "len": 4.58
+   }
+  ]
+ },
+ {
+  "scene": "hierarchy",
+  "start": 33.77,
+  "dur": 9.96,
+  "beats": [
+   {
+    "id": "B07",
+    "at": 0.2,
+    "len": 5.18
+   },
+   {
+    "id": "B08",
+    "at": 5.98,
+    "len": 3.58
+   }
+  ]
+ },
+ {
+  "scene": "transition",
+  "start": 43.73,
+  "dur": 7.31,
+  "beats": [
+   {
+    "id": "B09",
+    "at": 0.2,
+    "len": 6.706
+   }
+  ]
+ },
+ {
+  "scene": "compare",
+  "start": 51.04,
+  "dur": 4.68,
+  "beats": [
+   {
+    "id": "B10",
+    "at": 0.2,
+    "len": 4.08
+   }
+  ]
+ },
+ {
+  "scene": "claim",
+  "start": 55.72,
+  "dur": 5.18,
+  "beats": [
+   {
+    "id": "B11",
+    "at": 0.2,
+    "len": 4.58
+   }
+  ]
+ },
+ {
+  "scene": "outro",
+  "start": 60.9,
+  "dur": 10.31,
+  "beats": [
+   {
+    "id": "B12",
+    "at": 0.2,
+    "len": 7.71
+   }
+  ]
+ }
+]

@@ -1,0 +1,44 @@
+<template>
+  <style>
+    @font-face { font-family: "Pretendard"; src: url("assets/fonts/Pretendard.woff2") format("woff2"); font-weight: 100 900; }
+    #root { position: absolute; inset: 0; font-family: "Pretendard", sans-serif; color: #f5f3ff; word-break: keep-all; }
+    #ou-sub { position: absolute; left: 0; right: 0; top: 300px; display: flex; justify-content: center; font-size: 120px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+    #ou-sub i { font-style: normal; display: inline-block; }
+    #ou-sub i.sp { width: 0.3em; }
+    .ou-lime { color: #b4e61d; }
+    #ou-row { position: absolute; left: 0; right: 0; top: 540px; display: flex; justify-content: center; }
+    .ou-word { font-size: 60px; font-weight: 800; padding: 0 50px; border-left: 3px solid rgba(124, 58, 237, 0.7); }
+    .ou-word:first-child { border-left: 0; }
+    #ou-next { position: absolute; left: 0; right: 0; top: 700px; text-align: center; font-size: 44px; font-weight: 600; color: #a5a3c7; }
+    #ou-mark { position: absolute; left: 120px; top: 940px; display: flex; align-items: center; gap: 16px; font-size: 40px; font-weight: 900; }
+    #ou-mark i { width: 24px; height: 24px; border-radius: 6px; background: #7c3aed; display: block; }
+  </style>
+  <div id="root" data-composition-id="outro" data-width="1920" data-height="1080">
+    <div id="ou-sub"><i id="ou-c1">모</i><i id="ou-c2">션</i><i id="ou-c3">그</i><i id="ou-c4">래</i><i id="ou-c5">픽</i><i class="sp"></i><i class="ou-lime" id="ou-c6">완</i><i class="ou-lime" id="ou-c7">전</i><i class="ou-lime" id="ou-c8">정</i><i class="ou-lime" id="ou-c9">복</i></div>
+    <div id="ou-row">
+      <span class="ou-word" id="ou-w1">타이밍</span>
+      <span class="ou-word" id="ou-w2">이징</span>
+      <span class="ou-word" id="ou-w3">위계</span>
+      <span class="ou-word" id="ou-w4">전환</span>
+    </div>
+    <div id="ou-next">다음 편에서 하나씩 깊게</div>
+    <div id="ou-mark"><i></i>단아쌤TV</div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const chars = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (n) { return "#ou-c" + n; });
+      gsap.set(chars.concat(["#ou-w1", "#ou-w2", "#ou-w3", "#ou-w4", "#ou-next", "#ou-mark"]), { opacity: 0 });
+      chars.forEach(function (c, i) {
+        tl.fromTo(c, { opacity: 0, y: 26, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.45, ease: "expo.out" }, 0.1 + i * 0.07);
+      });
+      // B12 "타이밍, 이징, 위계, 전환."
+      [["#ou-w1", 0.35], ["#ou-w2", 1.25], ["#ou-w3", 2.05], ["#ou-w4", 2.85]].forEach(function (w) {
+        tl.fromTo(w[0], { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, w[1]);
+      });
+      tl.fromTo("#ou-next", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 4.2);
+      tl.fromTo("#ou-mark", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: "expo.out" }, 6.0);
+      window.__timelines["outro"] = tl;
+    })();
+  </script>
+</template>

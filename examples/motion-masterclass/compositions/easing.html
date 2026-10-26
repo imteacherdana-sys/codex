@@ -1,0 +1,59 @@
+<template>
+  <style>
+    @font-face { font-family: "Pretendard"; src: url("assets/fonts/Pretendard.woff2") format("woff2"); font-weight: 100 900; }
+    #root { position: absolute; inset: 0; font-family: "Pretendard", sans-serif; color: #f5f3ff; word-break: keep-all; }
+    .ez-head { position: absolute; left: 120px; top: 110px; display: flex; align-items: baseline; gap: 22px; }
+    .ez-head b { font-size: 44px; font-weight: 800; color: #b4e61d; }
+    .ez-head span { font-size: 64px; font-weight: 800; }
+    .ez-lane { position: absolute; left: 120px; width: 1680px; height: 190px; }
+    #ez-lane-a { top: 300px; }
+    #ez-lane-b { top: 600px; }
+    .ez-label { position: absolute; left: 0; top: 0; font-size: 36px; font-weight: 700; }
+    #ez-lane-a .ez-label { color: #ff6b5b; }
+    #ez-lane-b .ez-label { color: #b4e61d; }
+    .ez-track { position: absolute; left: 0; top: 150px; width: 1260px; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.16); }
+    .ez-card { position: absolute; left: 0; top: 70px; width: 300px; height: 120px; border-radius: 22px; background: #4a33a6; display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: 800; }
+    #ez-lane-b .ez-card { background: #7c3aed; }
+    .ez-graph { position: absolute; left: 1420px; top: 0; width: 220px; height: 190px; }
+    .ez-graph svg { width: 220px; height: 190px; overflow: visible; }
+  </style>
+  <div id="root" data-composition-id="easing" data-width="1920" data-height="1080">
+    <div class="ez-head" id="ez-head"><b>02</b><span>이징</span></div>
+    <div class="ez-lane" id="ez-lane-a">
+      <div class="ez-label">똑같은 속도</div>
+      <div class="ez-track"></div>
+      <div class="ez-card" id="ez-card-a">모션그래픽</div>
+      <div class="ez-graph">
+        <svg viewBox="0 0 220 190"><path d="M10 180 L10 10 M10 180 L210 180" stroke="rgba(255,255,255,0.25)" stroke-width="3" fill="none"/><path id="ez-curve-a" d="M10 180 L210 10" stroke="#ff6b5b" stroke-width="7" fill="none" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1.2" stroke-dashoffset="1.1"/></svg>
+      </div>
+    </div>
+    <div class="ez-lane" id="ez-lane-b">
+      <div class="ez-label">빠르게 출발, 천천히 멈춤</div>
+      <div class="ez-track"></div>
+      <div class="ez-card" id="ez-card-b">모션그래픽</div>
+      <div class="ez-graph">
+        <svg viewBox="0 0 220 190"><path d="M10 180 L10 10 M10 180 L210 180" stroke="rgba(255,255,255,0.25)" stroke-width="3" fill="none"/><path id="ez-curve-b" d="M10 180 C40 30 90 12 210 10" stroke="#b4e61d" stroke-width="7" fill="none" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1.2" stroke-dashoffset="1.1"/></svg>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const RUN = 960;
+      gsap.set(["#ez-lane-a", "#ez-lane-b"], { opacity: 0 });
+      tl.fromTo("#ez-head", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.6, ease: "expo.out" }, 0.25);
+      // B05 "똑같은 속도로 움직이면 로봇처럼"
+      tl.fromTo("#ez-lane-a", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 1.4);
+      tl.fromTo("#ez-card-a", { x: 0 }, { x: RUN, duration: 1.6, ease: "none" }, 2.2);
+      tl.fromTo("#ez-curve-a", { strokeDashoffset: 1.1 }, { strokeDashoffset: 0, duration: 1.6, ease: "none" }, 2.2);
+      // B06 "빠르게 출발해서 천천히 멈추면"
+      tl.fromTo("#ez-lane-b", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 5.6);
+      tl.fromTo("#ez-card-b", { x: 0 }, { x: RUN, duration: 1.6, ease: "expo.out" }, 6.2);
+      tl.fromTo("#ez-curve-b", { strokeDashoffset: 1.1 }, { strokeDashoffset: 0, duration: 1.6, ease: "expo.out" }, 6.2);
+      // 나란히 한 번 더
+      tl.fromTo("#ez-card-a", { x: 0 }, { x: RUN, duration: 1.4, ease: "none", immediateRender: false }, 8.7);
+      tl.fromTo("#ez-card-b", { x: 0 }, { x: RUN, duration: 1.4, ease: "expo.out", immediateRender: false }, 8.7);
+      window.__timelines["easing"] = tl;
+    })();
+  </script>
+</template>

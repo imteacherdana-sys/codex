@@ -1,0 +1,45 @@
+<template>
+  <style>
+    @font-face { font-family: "Pretendard"; src: url("assets/fonts/Pretendard.woff2") format("woff2"); font-weight: 100 900; }
+    #root { position: absolute; inset: 0; font-family: "Pretendard", sans-serif; color: #f5f3ff; word-break: keep-all; }
+    #cp-flood { position: absolute; inset: 0; background: #4a33a6; }
+    .cp-panel { position: absolute; top: 300px; width: 760px; height: 440px; border-radius: 30px; background: #131838; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; }
+    #cp-left { left: 140px; }
+    #cp-right { left: 1020px; }
+    .cp-label { font-size: 38px; font-weight: 800; }
+    #cp-left .cp-label { color: #ff6b5b; }
+    #cp-right .cp-label { color: #a5a3c7; }
+    .cp-sub { display: flex; font-size: 76px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+    .cp-sub i { font-style: normal; display: inline-block; }
+    .cp-sub i.sp { width: 0.3em; }
+    .cp-lime { color: #b4e61d; }
+    #cp-eq { position: absolute; left: 900px; top: 470px; width: 120px; text-align: center; font-size: 90px; font-weight: 900; color: #a5a3c7; }
+    #cp-note { position: absolute; left: 0; right: 0; top: 800px; text-align: center; font-size: 40px; font-weight: 700; }
+  </style>
+  <div id="root" data-composition-id="compare" data-width="1920" data-height="1080">
+    <div class="cp-panel" id="cp-left"><div class="cp-label">처음</div><div class="cp-sub" id="cp-plain">모션그래픽 완전정복</div></div>
+    <div class="cp-panel" id="cp-right"><div class="cp-label">지금</div>
+      <div class="cp-sub"><i id="cp-c1">모</i><i id="cp-c2">션</i><i id="cp-c3">그</i><i id="cp-c4">래</i><i id="cp-c5">픽</i><i class="sp"></i><i class="cp-lime" id="cp-c6">완</i><i class="cp-lime" id="cp-c7">전</i><i class="cp-lime" id="cp-c8">정</i><i class="cp-lime" id="cp-c9">복</i></div>
+    </div>
+    <div id="cp-eq">=</div>
+    <div id="cp-note">같은 문장</div>
+    <div id="cp-flood"></div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const chars = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (n) { return "#cp-c" + n; });
+      gsap.set(["#cp-plain", "#cp-eq", "#cp-note"].concat(chars), { opacity: 0 });
+      // 앞 장면의 보라 카드가 바탕으로 이어지다가 걷힌다
+      tl.fromTo("#cp-flood", { opacity: 1 }, { opacity: 0, duration: 0.45, ease: "power2.inOut" }, 0.05);
+      tl.set("#cp-plain", { opacity: 1 }, 0.5);
+      chars.forEach(function (c, i) {
+        tl.fromTo(c, { opacity: 0, y: 20, filter: "blur(6px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "expo.out" }, 0.8 + i * 0.07);
+      });
+      // "문장은 하나도 안 바뀌었어요"
+      tl.fromTo("#cp-eq", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(1.4)" }, 2.5);
+      tl.fromTo("#cp-note", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 2.75);
+      window.__timelines["compare"] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,47 @@
+<template>
+  <style>
+    @font-face { font-family: "Pretendard"; src: url("assets/fonts/Pretendard.woff2") format("woff2"); font-weight: 100 900; }
+    #root { position: absolute; inset: 0; font-family: "Pretendard", sans-serif; color: #f5f3ff; word-break: keep-all; }
+    .tm-head { position: absolute; left: 120px; top: 110px; display: flex; align-items: baseline; gap: 22px; }
+    .tm-head b { font-size: 44px; font-weight: 800; color: #b4e61d; }
+    .tm-head span { font-size: 64px; font-weight: 800; }
+    .tm-sub { position: absolute; left: 0; right: 0; top: 440px; display: flex; justify-content: center; font-size: 120px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+    .tm-sub i { font-style: normal; display: inline-block; position: relative; }
+    .tm-sub i.sp { width: 0.3em; }
+    .tm-tag { position: absolute; left: 0; right: 0; top: 340px; text-align: center; font-size: 36px; font-weight: 700; }
+    #tm-tag-bad { color: #ff6b5b; }
+    #tm-tag-good { color: #b4e61d; }
+    .tm-n { position: absolute; left: 50%; top: 150px; transform: translateX(-50%); font-size: 30px; font-weight: 700; color: #a5a3c7; }
+  </style>
+  <div id="root" data-composition-id="timing" data-width="1920" data-height="1080">
+    <div class="tm-head" id="tm-head"><b>01</b><span>타이밍</span></div>
+    <div class="tm-tag" id="tm-tag-bad">한꺼번에</div>
+    <div class="tm-tag" id="tm-tag-good">0.09초씩 시간차</div>
+    <div class="tm-sub" id="tm-all">모션그래픽 완전정복</div>
+    <div class="tm-sub" id="tm-step">
+      <i id="tm-c1">모<em class="tm-n" id="tm-n1">1</em></i><i id="tm-c2">션<em class="tm-n" id="tm-n2">2</em></i><i id="tm-c3">그<em class="tm-n" id="tm-n3">3</em></i><i id="tm-c4">래<em class="tm-n" id="tm-n4">4</em></i><i id="tm-c5">픽<em class="tm-n" id="tm-n5">5</em></i><i class="sp"></i><i id="tm-c6">완<em class="tm-n" id="tm-n6">6</em></i><i id="tm-c7">전<em class="tm-n" id="tm-n7">7</em></i><i id="tm-c8">정<em class="tm-n" id="tm-n8">8</em></i><i id="tm-c9">복<em class="tm-n" id="tm-n9">9</em></i>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const chars = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (n) { return "#tm-c" + n; });
+      const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9].map(function (n) { return "#tm-n" + n; });
+      gsap.set(["#tm-tag-bad", "#tm-tag-good", "#tm-all"].concat(chars, nums), { opacity: 0 });
+      tl.fromTo("#tm-head", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.6, ease: "expo.out" }, 0.25);
+      // "한꺼번에 띄우지 말고" — 전부 한 번에
+      tl.set(["#tm-all", "#tm-tag-bad"], { opacity: 1 }, 2.5);
+      tl.to(["#tm-all", "#tm-tag-bad"], { opacity: 0, duration: 0.18, ease: "power3.in" }, 4.1);
+      // "조금씩 시간차를 두세요" — 글자마다 0.09초
+      tl.fromTo("#tm-tag-good", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, 4.45);
+      chars.forEach(function (c, i) {
+        tl.fromTo(c, { opacity: 0, y: 26, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.42, ease: "expo.out" }, 4.5 + i * 0.09);
+      });
+      // B04 "읽히는 순서가 생겼죠?" — 순서 번호
+      nums.forEach(function (n, i) {
+        tl.fromTo(n, { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power2.out" }, 8.2 + i * 0.09);
+      });
+      window.__timelines["timing"] = tl;
+    })();
+  </script>
+</template>
