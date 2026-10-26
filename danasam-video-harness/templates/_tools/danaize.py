@@ -33,6 +33,34 @@ COMMON_HEX = {
     "#ffb020": "#b4e61d", "#f4f2ec": "#f5f3ff",
 }
 
+HOST = """<!doctype html>
+<html lang="ko" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+      html, body {{ width: 1920px; height: 1080px; overflow: hidden; background: #05060f; }}
+      #root {{ position: relative; width: 1920px; height: 1080px; }}
+      #ground {{ position: absolute; inset: 0; background: linear-gradient(#0b1026, #05060f); }}
+      #grid {{ position: absolute; inset: 0; background-image: linear-gradient(rgba(124,58,237,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,.12) 1px, transparent 1px); background-size: 40px 40px; -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 70%); mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 70%); }}
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="{dur}" data-width="1920" data-height="1080">
+      <div id="ground"></div>
+      <div id="grid"></div>
+      <div id="{cid}" data-composition-id="{cid}" data-composition-src="scene.html" data-start="0" data-duration="{dur}" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {{}};
+      window.__timelines["main"] = gsap.timeline({{ paused: true }});
+    </script>
+  </body>
+</html>
+"""
+
 TEMPLATES = {
     "typed-prompt": {
         "src": "components/typed-prompt.html",
@@ -185,7 +213,14 @@ def danaize(slug, cfg):
     link = out / "assets"
     if not link.exists():
         link.symlink_to("../_assets")
-    (out / "index.html").write_text(s, encoding="utf-8")
+    if "<template>" in s:
+        # 끼워 넣는 부품: scene.html 로 두고, 단아쌤 배경 위에 얹는 host index.html 을 만든다
+        dur = re.search(r'<div id="root" data-composition-id="[^"]+" data-duration="([0-9.]+)"', s).group(1)
+        cid = re.search(r'<div id="root" data-composition-id="([^"]+)"', s).group(1)
+        (out / "scene.html").write_text(s, encoding="utf-8")
+        (out / "index.html").write_text(HOST.format(dur=dur, cid=cid), encoding="utf-8")
+    else:
+        (out / "index.html").write_text(s, encoding="utf-8")
     print("ok", slug)
 
 
