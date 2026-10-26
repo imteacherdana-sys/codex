@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "danasam-video-harness/beat.schema.json",
+  "title": "Beat — 대본·촬영·컷·모션·자막·검수를 잇는 최소 단위",
+  "type": "object",
+  "required": ["beats"],
+  "properties": {
+    "script_version": { "type": "integer", "minimum": 1 },
+    "beats": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["beat_id", "section", "narration", "layout", "est_sec"],
+        "additionalProperties": false,
+        "properties": {
+          "beat_id": { "type": "string", "pattern": "^B[0-9]{3}$", "description": "B001부터. 프롬프터 머리표·녹화 파일명·자막과 같은 값" },
+          "section": { "type": "string", "description": "INTRO, BODY1, ... OUTRO" },
+          "narration": { "type": "string", "description": "단아쌤이 읽을 완전한 문장 1~2개" },
+          "prompter": { "type": "string", "description": "읽기용 표기. 숫자·영어를 읽는 대로 쓰고 원표기는 괄호로. 비우면 narration을 쓴다" },
+          "layout": { "enum": ["FACE", "PIP", "RECORD", "CARD", "END"] },
+          "keyword": { "type": "string", "description": "자막·화면에서 라임으로 강조할 단어 (narration 안에 있어야 함)" },
+          "visual": {
+            "type": "object",
+            "properties": {
+              "component": { "type": "string", "description": "design/motion-grammar.md §2의 컴포넌트 이름" },
+              "props": { "type": "object" },
+              "scene_group": { "type": "string", "description": "여러 비트를 한 장면으로 묶을 때 같은 값" },
+              "record_file": { "type": "string", "description": "RECORD일 때 R{beat_id}_{설명}.mp4" },
+              "note": { "type": "string" }
+            }
+          },
+          "claim_ids": { "type": "array", "items": { "type": "string" }, "description": "사실 장부의 claim_id" },
+          "est_sec": { "type": "number", "description": "예정 길이. 270자/분 기준 추정" },
+          "actual": {
+            "type": "object",
+            "description": "S6 이후 편집자가 채운다",
+            "properties": {
+              "source_file": { "type": "string" },
+              "in": { "type": "number" },
+              "out": { "type": "number" },
+              "spoken_text": { "type": "string" },
+              "match_ratio": { "type": "number" },
+              "flags": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    }
+  }
+}
