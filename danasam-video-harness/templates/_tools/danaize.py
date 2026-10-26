@@ -51,7 +51,7 @@ HOST = """<!doctype html>
     <div id="root" data-composition-id="main" data-start="0" data-duration="{dur}" data-width="1920" data-height="1080">
       <div id="ground"></div>
       <div id="grid"></div>
-      <div id="{cid}" data-composition-id="{cid}" data-composition-src="scene.html" data-start="0" data-duration="{dur}" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
+      <div id="{cid}" data-composition-id="{cid}" data-composition-src="compositions/scene.html" data-start="0" data-duration="{dur}" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>
     </div>
     <script>
       window.__timelines = window.__timelines || {{}};
@@ -217,7 +217,8 @@ def danaize(slug, cfg):
         # 끼워 넣는 부품: scene.html 로 두고, 단아쌤 배경 위에 얹는 host index.html 을 만든다
         dur = re.search(r'<div id="root" data-composition-id="[^"]+" data-duration="([0-9.]+)"', s).group(1)
         cid = re.search(r'<div id="root" data-composition-id="([^"]+)"', s).group(1)
-        (out / "scene.html").write_text(s, encoding="utf-8")
+        (out / "compositions").mkdir(exist_ok=True)
+        (out / "compositions" / "scene.html").write_text(s, encoding="utf-8")
         (out / "index.html").write_text(HOST.format(dur=dur, cid=cid), encoding="utf-8")
     else:
         (out / "index.html").write_text(s, encoding="utf-8")

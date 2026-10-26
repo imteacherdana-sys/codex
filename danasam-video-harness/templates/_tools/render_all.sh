@@ -3,7 +3,7 @@
 set -u
 cd "$(dirname "$0")/.."
 mkdir -p _previews
-for d in */; do
+for d in ${@:-*/}; do
   d=${d%/}
   [ -f "$d/index.html" ] || continue
   case "$d" in _*) continue;; esac
