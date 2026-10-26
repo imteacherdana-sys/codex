@@ -1,0 +1,104 @@
+{
+  "$schema": "https://hyperframes.heygen.com/schema/hyperframes.json",
+  "registry": "https://raw.githubusercontent.com/heygen-com/hyperframes/main/registry",
+  "paths": {
+    "blocks": "compositions",
+    "components": "compositions/components",
+    "assets": "assets"
+  },
+  "media": {
+    "autoProxy": true
+  },
+  "registryItems": [
+    {
+      "name": "claude-exchange",
+      "type": "hyperframes:block",
+      "target": "compositions/claude-exchange.html"
+    },
+    {
+      "name": "chatgpt-exchange",
+      "type": "hyperframes:block",
+      "target": "compositions/chatgpt-exchange.html"
+    },
+    {
+      "name": "typed-prompt",
+      "type": "hyperframes:component",
+      "target": "compositions/components/typed-prompt.html"
+    },
+    {
+      "name": "streaming-text",
+      "type": "hyperframes:component",
+      "target": "compositions/components/streaming-text.html"
+    },
+    {
+      "name": "caption-emoji-pop",
+      "type": "hyperframes:component",
+      "target": "compositions/components/caption-emoji-pop.html"
+    },
+    {
+      "name": "spring-pop",
+      "type": "hyperframes:component",
+      "target": "compositions/components/spring-pop.html"
+    },
+    {
+      "name": "hw-frame",
+      "type": "hyperframes:block",
+      "target": "compositions/hw-frame.html"
+    },
+    {
+      "name": "before-after-wipe",
+      "type": "hyperframes:component",
+      "target": "compositions/components/before-after-wipe.html"
+    },
+    {
+      "name": "hw-callout-circle",
+      "type": "hyperframes:component",
+      "target": "compositions/components/hw-callout-circle.html"
+    },
+    {
+      "name": "hw-arrow",
+      "type": "hyperframes:component",
+      "target": "compositions/components/hw-arrow.html"
+    },
+    {
+      "name": "hw-underline",
+      "type": "hyperframes:component",
+      "target": "compositions/components/hw-underline.html"
+    },
+    {
+      "name": "hw-text-cloud",
+      "type": "hyperframes:block",
+      "target": "compositions/hw-text-cloud.html"
+    },
+    {
+      "name": "marker-highlight",
+      "type": "hyperframes:component",
+      "target": "compositions/components/marker-highlight.html"
+    },
+    {
+      "name": "whiteboard-ink",
+      "type": "hyperframes:component",
+      "target": "compositions/components/whiteboard-ink.html"
+    },
+    {
+      "name": "count-up",
+      "type": "hyperframes:component",
+      "target": "compositions/components/count-up.html"
+    },
+    {
+      "name": "marker-checklist-card",
+      "type": "hyperframes:component",
+      "target": "compositions/components/marker-checklist-card.html"
+    },
+    {
+      "name": "lt-kicker-name",
+      "type": "hyperframes:block",
+      "target": "compositions/lt-kicker-name.html"
+    },
+    {
+      "name": "cursor-annotate",
+      "type": "hyperframes:component",
+      "target": "compositions/components/cursor-annotate.html"
+    }
+  ]
+}

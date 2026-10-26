@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Pretendard"; src: url("assets/fonts/Pretendard.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+      @font-face { font-family: "Noto Color Emoji"; src: local("Noto Color Emoji"); }
+      @font-face { font-family: "NanumPen"; src: url("assets/fonts/NanumPenScript-korean.woff2") format("woff2"); font-display: block; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #05060f; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; color: #f5f3ff; word-break: keep-all; }
+      .ground { position: absolute; inset: 0; background: linear-gradient(#0b1026, #05060f); }
+      .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(124,58,237,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,.12) 1px, transparent 1px); background-size: 40px 40px; -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 70%); mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 70%); }
+
+      .shp { position: absolute; top: 330px; width: 240px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+      .shp svg { width: 220px; height: 220px; overflow: visible; }
+      .g > * { fill: var(--c); fill-opacity: 0; stroke: var(--c); stroke-width: 10; stroke-linejoin: round; stroke-dasharray: 1 1.2; stroke-dashoffset: 1.1; }
+      .shp b { font-size: 44px; font-weight: 800; }
+      .title { position: absolute; left: 0; right: 0; top: 150px; text-align: center; font-size: 64px; font-weight: 800; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="shape-kit" data-start="0" data-duration="5" data-width="1920" data-height="1080">
+      <div class="ground"></div>
+      <div class="grid"></div>
+      <div class="title" id="shape-kit-title">선으로 그리고, 색으로 채우고</div>
+      <div class="shp" id="shape-kit-circle" style="left:300px"><svg viewBox="0 0 220 220"><g class="g" style="--c:#b4e61d" id="shape-kit-circle-g"><circle cx="110" cy="110" r="96"/></g></svg><b id="shape-kit-circle-l">원</b></div>
+      <div class="shp" id="shape-kit-square" style="left:660px"><svg viewBox="0 0 220 220"><g class="g" style="--c:#7c3aed" id="shape-kit-square-g"><rect x="16" y="16" width="188" height="188" rx="20"/></g></svg><b id="shape-kit-square-l">사각형</b></div>
+      <div class="shp" id="shape-kit-tri" style="left:1020px"><svg viewBox="0 0 220 220"><g class="g" style="--c:#ff6b5b" id="shape-kit-tri-g"><path d="M110 14 L206 204 L14 204 Z"/></g></svg><b id="shape-kit-tri-l">삼각형</b></div>
+      <div class="shp" id="shape-kit-star" style="left:1380px"><svg viewBox="0 0 220 220"><g class="g" style="--c:#22d3ee" id="shape-kit-star-g"><path d="M110 10 L136 80 L210 82 L152 128 L172 202 L110 160 L48 202 L68 128 L10 82 L84 80 Z"/></g></svg><b id="shape-kit-star-l">별</b></div>
+      <div id="shape-kit-drv" class="clip" data-start="0" data-duration="5" data-track-index="0" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none"></div>
+    </div>
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const vars = (window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables()) || {};
+        const tl = gsap.timeline({ paused: true });
+
+        document.querySelectorAll(".g > *").forEach(function (el) { el.setAttribute("pathLength", "1"); });
+        gsap.set(["#shape-kit-circle-l", "#shape-kit-square-l", "#shape-kit-tri-l", "#shape-kit-star-l"], { opacity: 0 });
+        tl.fromTo("#shape-kit-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.1);
+        tl.fromTo("#shape-kit-circle-g > *", { strokeDashoffset: 1.1, fillOpacity: 0 }, { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut" }, 0.3);
+        tl.to("#shape-kit-circle-g > *", { fillOpacity: 0.9, duration: 0.4, ease: "power1.out" }, 1.1);
+        tl.fromTo("#shape-kit-circle", { scale: 1 }, { scale: 1.08, duration: 0.15, ease: "power2.out", yoyo: true, repeat: 1 }, 1.1);
+        tl.fromTo("#shape-kit-circle-l", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "expo.out" }, 1.2);
+        tl.fromTo("#shape-kit-square-g > *", { strokeDashoffset: 1.1, fillOpacity: 0 }, { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut" }, 0.6499999999999999);
+        tl.to("#shape-kit-square-g > *", { fillOpacity: 0.9, duration: 0.4, ease: "power1.out" }, 1.4500000000000002);
+        tl.fromTo("#shape-kit-square", { scale: 1 }, { scale: 1.08, duration: 0.15, ease: "power2.out", yoyo: true, repeat: 1 }, 1.4500000000000002);
+        tl.fromTo("#shape-kit-square-l", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "expo.out" }, 1.5499999999999998);
+        tl.fromTo("#shape-kit-tri-g > *", { strokeDashoffset: 1.1, fillOpacity: 0 }, { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut" }, 1.0);
+        tl.to("#shape-kit-tri-g > *", { fillOpacity: 0.9, duration: 0.4, ease: "power1.out" }, 1.8);
+        tl.fromTo("#shape-kit-tri", { scale: 1 }, { scale: 1.08, duration: 0.15, ease: "power2.out", yoyo: true, repeat: 1 }, 1.8);
+        tl.fromTo("#shape-kit-tri-l", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "expo.out" }, 1.9);
+        tl.fromTo("#shape-kit-star-g > *", { strokeDashoffset: 1.1, fillOpacity: 0 }, { strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut" }, 1.3499999999999999);
+        tl.to("#shape-kit-star-g > *", { fillOpacity: 0.9, duration: 0.4, ease: "power1.out" }, 2.15);
+        tl.fromTo("#shape-kit-star", { scale: 1 }, { scale: 1.08, duration: 0.15, ease: "power2.out", yoyo: true, repeat: 1 }, 2.15);
+        tl.fromTo("#shape-kit-star-l", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "expo.out" }, 2.25);
+
+        window.__timelines["shape-kit"] = tl;
+      })();
+    </script>
+  </body>
+</html>

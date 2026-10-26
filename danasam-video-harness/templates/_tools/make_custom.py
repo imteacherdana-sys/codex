@@ -1,0 +1,254 @@
+"""단아쌤 전용 HyperFrames 템플릿 5종을 만든다: 채팅창 2종, 이모지, 사진, 도형.
+
+사용: python3 _tools/make_custom.py <templates 폴더>
+각 템플릿은 <slug>/index.html (+ assets -> ../_assets) 한 편짜리 HyperFrames 프로젝트다.
+채팅창은 공식 claude-exchange / chatgpt-exchange 블록의 다크 팔레트를 16:9 창으로 옮긴 '예시 화면'이다.
+"""
+import json
+import sys
+from pathlib import Path
+
+ROOT = Path(sys.argv[1])
+
+HEAD = """<!doctype html>
+<html lang="ko" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Pretendard"; src: url("assets/fonts/Pretendard.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+      @font-face { font-family: "Noto Color Emoji"; src: local("Noto Color Emoji"); }
+      @font-face { font-family: "NanumPen"; src: url("assets/fonts/NanumPenScript-korean.woff2") format("woff2"); font-display: block; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #05060f; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; color: #f5f3ff; word-break: keep-all; }
+      .ground { position: absolute; inset: 0; background: linear-gradient(#0b1026, #05060f); }
+      .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(124,58,237,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,.12) 1px, transparent 1px); background-size: 40px 40px; -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 70%); mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 70%); }
+"""
+
+
+def page(cid, dur, style, body, script, variables=None):
+    vars_attr = ""
+    if variables:
+        vars_attr = " data-composition-variables='" + json.dumps(variables, ensure_ascii=False).replace("'", "&#39;") + "'"
+    html = HEAD.replace('<html lang="ko" data-resolution="landscape">', f'<html lang="ko" data-resolution="landscape"{vars_attr}>')
+    return (html + style + """    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id=\"""" + cid + f"""\" data-start="0" data-duration="{dur}" data-width="1920" data-height="1080">
+      <div class="ground"></div>
+      <div class="grid"></div>
+""" + body + f"""
+      <div id="{cid}-drv" class="clip" data-start="0" data-duration="{dur}" data-track-index="0" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none"></div>
+    </div>
+    <script>
+      (function () {{
+        window.__timelines = window.__timelines || {{}};
+        const vars = (window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables()) || {{}};
+        const tl = gsap.timeline({{ paused: true }});
+""" + script + f"""
+        window.__timelines["{cid}"] = tl;
+      }})();
+    </script>
+  </body>
+</html>
+""")
+
+
+def write(slug, html):
+    out = ROOT / slug
+    out.mkdir(exist_ok=True)
+    link = out / "assets"
+    if not link.exists():
+        link.symlink_to("../_assets")
+    (out / "index.html").write_text(html, encoding="utf-8")
+    print("ok", slug)
+
+
+# ---------------------------------------------------------------- 채팅창 2종
+def chat(slug, cid, theme):
+    t = theme
+    style = f"""
+      .win {{ position: absolute; left: 240px; top: 100px; width: 1440px; height: 880px; border-radius: 26px; background: {t['bg']}; box-shadow: 0 0 0 2px {t['hair']}, 0 40px 100px rgba(0,0,0,.55); overflow: hidden; }}
+      .bar {{ position: absolute; left: 0; right: 0; top: 0; height: 72px; display: flex; align-items: center; gap: 14px; padding: 0 32px; border-bottom: 1px solid {t['hair']}; }}
+      .bar b {{ font-size: 28px; font-weight: 700; color: {t['ink']}; }}
+      .bar i {{ width: 18px; height: 18px; border-radius: {t['mark_radius']}; background: {t['accent']}; display: block; }}
+      .bar small {{ margin-left: auto; font-size: 20px; color: {t['muted']}; }}
+      .user {{ position: absolute; right: 64px; top: 120px; max-width: 900px; padding: 22px 30px; border-radius: 26px; background: {t['bubble']}; font-size: 32px; line-height: 1.5; color: {t['ink']}; }}
+      .think {{ position: absolute; left: 64px; top: 270px; display: flex; align-items: center; gap: 16px; font-size: 28px; color: {t['muted']}; }}
+      .think i {{ width: 18px; height: 18px; border-radius: 50%; background: {t['think']}; display: block; }}
+      .answer {{ position: absolute; left: 64px; top: 260px; width: 1200px; font-size: 32px; line-height: 1.7; color: {t['ink']}; }}
+      .answer p {{ margin-bottom: 10px; }}
+      .answer span {{ display: inline; }}
+      .hlw {{ position: relative; display: inline-block; isolation: isolate; }}
+      .mark {{ position: absolute; left: -6px; right: -6px; top: 4px; bottom: 2px; border-radius: 10px; z-index: -1; background: rgba(180,230,29,.26); box-shadow: inset 0 -6px 0 #b4e61d; transform-origin: left center; }}
+      .input {{ position: absolute; left: 120px; right: 120px; bottom: 40px; height: 118px; border-radius: {t['input_radius']}; background: {t['input']}; box-shadow: 0 0 0 1px {t['hair']}; display: flex; align-items: center; padding: 0 130px 0 40px; font-size: 32px; color: {t['ink']}; }}
+      .ph {{ position: absolute; left: 40px; color: {t['muted']}; }}
+      .typed {{ white-space: pre; }}
+      .typed span {{ display: none; }}
+      .caret {{ display: inline-block; width: 3px; height: 38px; margin-left: 2px; background: {t['ink']}; vertical-align: -6px; }}
+      .send {{ position: absolute; right: 26px; top: 26px; width: 66px; height: 66px; border-radius: {t['send_radius']}; background: {t['send_bg']}; color: {t['send_fg']}; display: grid; place-items: center; font-size: 34px; font-weight: 800; }}
+      .tag {{ position: absolute; left: 240px; top: 52px; font-size: 22px; color: #a5a3c7; }}
+"""
+    body = f"""      <div class="tag" id="{cid}-tag">예시 화면 · 실제 시연은 화면 녹화로</div>
+      <div class="win" id="{cid}-win">
+        <div class="bar"><i></i><b>{t['name']}</b><small>새 대화</small></div>
+        <div class="user" id="{cid}-user"></div>
+        <div class="think" id="{cid}-think"><i id="{cid}-dot"></i><span>{t['thinking']}</span></div>
+        <div class="answer" id="{cid}-answer"></div>
+        <div class="input"><span class="ph" id="{cid}-ph">{t['placeholder']}</span><span class="typed" id="{cid}-typed"></span><span class="caret" id="{cid}-caret"></span><div class="send" id="{cid}-send">↑</div></div>
+      </div>
+"""
+    script = f"""
+        const prompt = vars.prompt || {json.dumps(t['prompt'], ensure_ascii=False)};
+        const lines = (vars.answer || {json.dumps(t['answer'], ensure_ascii=False)}).split("\\n");
+        const mark = vars.highlight || {json.dumps(t['highlight'], ensure_ascii=False)};
+        const typed = document.getElementById("{cid}-typed");
+        const chars = Array.from(prompt).map(function (ch) {{ const s = document.createElement("span"); s.textContent = ch; typed.appendChild(s); return s; }});
+        document.getElementById("{cid}-user").textContent = prompt;
+        const ans = document.getElementById("{cid}-answer");
+        const words = [];
+        let hl = null;
+        function addWords(parent, text) {{
+          text.split(/(\\s+)/).forEach(function (w) {{ if (!w) return; const s = document.createElement("span"); s.textContent = w; parent.appendChild(s); if (w.trim()) words.push(s); }});
+        }}
+        lines.forEach(function (line) {{
+          const p = document.createElement("p");
+          const at = mark ? line.indexOf(mark) : -1;
+          if (at > -1 && !hl) {{
+            addWords(p, line.slice(0, at));
+            const wrap = document.createElement("span"); wrap.className = "hlw";
+            hl = document.createElement("i"); hl.className = "mark"; wrap.appendChild(hl);
+            addWords(wrap, mark); p.appendChild(wrap);
+            addWords(p, line.slice(at + mark.length));
+          }} else addWords(p, line);
+          ans.appendChild(p);
+        }});
+        gsap.set(["#{cid}-user", "#{cid}-think"], {{ opacity: 0 }});
+        gsap.set(words, {{ opacity: 0 }});
+        if (hl) gsap.set(hl, {{ scaleX: 0 }});
+        tl.fromTo("#{cid}-win", {{ opacity: 0, scale: 0.97 }}, {{ opacity: 1, scale: 1, duration: 0.6, ease: "expo.out" }}, 0.2);
+        tl.fromTo("#{cid}-tag", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.3 }}, 0.4);
+        // 입력: 글자마다 0.05초
+        tl.set("#{cid}-ph", {{ opacity: 0 }}, 1.0);
+        chars.forEach(function (c, i) {{ tl.set(c, {{ display: "inline" }}, 1.0 + i * 0.05); }});
+        const sendAt = 1.0 + chars.length * 0.05 + 0.45;
+        tl.to("#{cid}-send", {{ scale: 0.86, duration: 0.08, ease: "power2.in" }}, sendAt);
+        tl.to("#{cid}-send", {{ scale: 1, duration: 0.3, ease: "back.out(2)" }}, sendAt + 0.08);
+        tl.set("#{cid}-typed", {{ opacity: 0 }}, sendAt + 0.1);
+        tl.set("#{cid}-ph", {{ opacity: 1 }}, sendAt + 0.1);
+        tl.fromTo("#{cid}-user", {{ opacity: 0, y: 24, scale: 0.96 }}, {{ opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "expo.out" }}, sendAt + 0.15);
+        // 생각 중
+        const th = sendAt + 0.6;
+        tl.fromTo("#{cid}-think", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.2 }}, th);
+        tl.fromTo("#{cid}-dot", {{ scale: 0.7 }}, {{ scale: 1.15, duration: 0.35, ease: "sine.inOut", yoyo: true, repeat: 3 }}, th);
+        tl.to("#{cid}-think", {{ opacity: 0, duration: 0.15 }}, th + 1.45);
+        // 답변 스트리밍: 단어 묶음이 0.06초 간격
+        const st = th + 1.6;
+        words.forEach(function (w, i) {{ tl.fromTo(w, {{ opacity: 0 }}, {{ opacity: 1, duration: 0.12, ease: "power1.out" }}, st + i * 0.06); }});
+        if (hl) tl.to(hl, {{ scaleX: 1, duration: 0.45, ease: "expo.out" }}, st + words.length * 0.06 + 0.3);
+"""
+    variables = [
+        {"id": "prompt", "type": "string", "label": "입력할 프롬프트", "default": t["prompt"]},
+        {"id": "answer", "type": "string", "label": "답변 (줄바꿈으로 문단)", "default": t["answer"]},
+        {"id": "highlight", "type": "string", "label": "라임으로 강조할 문구", "default": t["highlight"]},
+    ]
+    write(slug, page(cid, t["dur"], style, body, script, variables))
+
+
+chat("chat-claude", "chat-claude", {
+    "name": "Claude", "bg": "#20201f", "hair": "#424240", "ink": "#f8f8f4", "muted": "#94948c", "accent": "#d97757",
+    "bubble": "#2f2f2c", "input": "#2a2a28", "think": "#d97757", "mark_radius": "5px", "input_radius": "26px",
+    "send_bg": "#d97757", "send_fg": "#1c1c1b", "send_radius": "14px", "thinking": "생각하는 중…",
+    "placeholder": "오늘 무엇을 도와드릴까요?", "dur": 12,
+    "prompt": "유튜브 롱폼 대본을 10분 분량으로 써줘. 주제는 모션그래픽 완전정복",
+    "answer": "좋아요. 10분 대본은 이렇게 나눠볼게요.\n1. 훅 · 밋밋한 자막 한 줄 (0:00–0:30)\n2. 원리 네 가지 · 타이밍, 이징, 위계, 전환\n3. 정리와 다음 편 예고",
+    "highlight": "원리 네 가지",
+})
+chat("chat-chatgpt", "chat-chatgpt", {
+    "name": "ChatGPT", "bg": "#212121", "hair": "#303030", "ink": "#fcfcfc", "muted": "#a8a8ac", "accent": "#fcfcfc",
+    "bubble": "#303030", "input": "#303030", "think": "#fcfcfc", "mark_radius": "50%", "input_radius": "60px",
+    "send_bg": "#fcfcfc", "send_fg": "#0b0b0c", "send_radius": "50%", "thinking": "생각 중",
+    "placeholder": "무엇이든 물어보세요", "dur": 11,
+    "prompt": "썸네일 문구 3개만 추천해줘. 주제는 모션그래픽 완전정복",
+    "answer": "이렇게 써보세요.\n1. 자막 한 줄이 살아나는 4가지 원리\n2. 편집 초보도 바로 쓰는 모션 공식\n3. 밋밋한 영상, 이것만 바꾸세요",
+    "highlight": "4가지 원리",
+})
+
+# ---------------------------------------------------------------- 이모지 버스트
+EMO = ["✨", "🎉", "💡", "👍", "🔥", "⭐", "💯", "🙌"]
+burst = "\n".join(f'      <div class="bit" id="emoji-burst-b{i}">{e}</div>' for i, e in enumerate(EMO))
+write("emoji-burst", page("emoji-burst", 5, """
+      .hero { position: absolute; left: 860px; top: 280px; width: 200px; height: 200px; display: grid; place-items: center; font-size: 180px; font-family: "Noto Color Emoji", sans-serif; }
+      .bit { position: absolute; left: 920px; top: 340px; width: 80px; height: 80px; display: grid; place-items: center; font-size: 64px; font-family: "Noto Color Emoji", sans-serif; }
+      .line { position: absolute; left: 0; right: 0; top: 600px; text-align: center; font-size: 96px; font-weight: 800; letter-spacing: -0.02em; }
+      .line b { color: #b4e61d; font-weight: 800; }
+      .sub { position: absolute; left: 0; right: 0; top: 740px; text-align: center; font-size: 36px; font-weight: 600; color: #a5a3c7; }
+""", f"""      <div class="hero" id="emoji-burst-hero">🎯</div>
+{burst}
+      <div class="line" id="emoji-burst-line">핵심은 <b>딱 하나</b></div>
+      <div class="sub" id="emoji-burst-sub">이모지는 의미가 바로 읽히는 것 하나만</div>""", f"""
+        const bits = {json.dumps([f"#emoji-burst-b{i}" for i in range(len(EMO))])};
+        gsap.set(bits.concat(["#emoji-burst-line", "#emoji-burst-sub"]), {{ opacity: 0 }});
+        tl.fromTo("#emoji-burst-hero", {{ scale: 0, rotation: -20 }}, {{ scale: 1, rotation: 0, duration: 0.7, ease: "back.out(2.2)" }}, 0.3);
+        bits.forEach(function (b, i) {{
+          const a = (i / bits.length) * Math.PI * 2 - Math.PI / 2, r = 300 + (i % 2) * 70;
+          tl.fromTo(b, {{ opacity: 0, x: 0, y: 0, scale: 0.4 }}, {{ opacity: 1, x: Math.cos(a) * r, y: Math.sin(a) * r * 0.62, scale: 1, duration: 0.7, ease: "expo.out" }}, 0.55 + i * 0.03);
+          tl.to(b, {{ opacity: 0, scale: 0.6, duration: 0.4, ease: "power2.in" }}, 2.6 + i * 0.03);
+        }});
+        tl.fromTo("#emoji-burst-line", {{ opacity: 0, filter: "blur(8px)" }}, {{ opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }}, 1.1);
+        tl.fromTo("#emoji-burst-sub", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.3 }}, 1.6);
+""", [{"id": "line", "type": "string", "label": "문장", "default": "핵심은 딱 하나"}]))
+
+# ---------------------------------------------------------------- 사진 + 스티커 + 손그림
+write("image-drop", page("image-drop", 7, """
+      .card { position: absolute; left: 470px; top: 150px; width: 980px; height: 620px; padding: 22px 22px 90px; background: #f5f3ff; border-radius: 6px; box-shadow: 0 30px 80px rgba(0,0,0,.55); }
+      .card img { width: 936px; height: 508px; object-fit: cover; display: block; }
+      .cap { position: absolute; left: 0; right: 0; bottom: 18px; text-align: center; font-family: "NanumPen", cursive; font-size: 64px; color: #4a33a6; }
+      .tape { position: absolute; left: 400px; top: -26px; width: 180px; height: 52px; background: rgba(180,230,29,.75); transform: rotate(-4deg); }
+      .sticker { position: absolute; left: 1370px; top: 110px; font-size: 120px; font-family: "Noto Color Emoji", sans-serif; }
+      .draw { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: visible; }
+      .label { position: absolute; left: 1490px; top: 560px; font-family: "NanumPen", cursive; font-size: 60px; color: #b4e61d; }
+""", """      <div class="card" id="image-drop-card"><div class="tape"></div><img src="assets/images/desk.jpg" alt="" /><div class="cap">오늘의 작업 공간</div></div>
+      <div class="sticker" id="image-drop-sticker">📸</div>
+      <svg class="draw" viewBox="0 0 1920 1080">
+        <ellipse id="image-drop-ring" cx="1090" cy="420" rx="250" ry="150" fill="none" stroke="#b4e61d" stroke-width="10" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1.2" stroke-dashoffset="1.1" transform="rotate(-6 1090 420)"/>
+        <path id="image-drop-arrow" d="M1480 590 C1420 560 1380 540 1330 500 M1330 500 L1350 540 M1330 500 L1372 506" fill="none" stroke="#b4e61d" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1.2" stroke-dashoffset="1.1"/>
+      </svg>
+      <div class="label" id="image-drop-label">편집 화면</div>""", """
+        gsap.set(["#image-drop-label"], { opacity: 0 });
+        tl.fromTo("#image-drop-card", { opacity: 0, y: -260, rotation: -9 }, { opacity: 1, y: 0, rotation: -2, duration: 0.9, ease: "expo.out" }, 0.2);
+        tl.fromTo("#image-drop-sticker", { opacity: 0, scale: 0, rotation: -30 }, { opacity: 1, scale: 1, rotation: 12, duration: 0.5, ease: "back.out(2.4)" }, 1.1);
+        tl.fromTo("#image-drop-ring", { strokeDashoffset: 1.1 }, { strokeDashoffset: 0, duration: 0.9, ease: "power2.inOut" }, 2.0);
+        tl.fromTo("#image-drop-arrow", { strokeDashoffset: 1.1 }, { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" }, 2.9);
+        tl.fromTo("#image-drop-label", { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 3.3);
+"""))
+
+# ---------------------------------------------------------------- 도형 키트
+SHAPES = [
+    ("circle", '<circle cx="110" cy="110" r="96"/>', "#b4e61d", "원"),
+    ("square", '<rect x="16" y="16" width="188" height="188" rx="20"/>', "#7c3aed", "사각형"),
+    ("tri", '<path d="M110 14 L206 204 L14 204 Z"/>', "#ff6b5b", "삼각형"),
+    ("star", '<path d="M110 10 L136 80 L210 82 L152 128 L172 202 L110 160 L48 202 L68 128 L10 82 L84 80 Z"/>', "#22d3ee", "별"),
+]
+shape_html = "\n".join(
+    f'      <div class="shp" id="shape-kit-{k}" style="left:{300 + i * 360}px"><svg viewBox="0 0 220 220"><g class="g" style="--c:{c}" id="shape-kit-{k}-g">{svg}</g></svg><b id="shape-kit-{k}-l">{lab}</b></div>'
+    for i, (k, svg, c, lab) in enumerate(SHAPES))
+shape_js = "\n".join(
+    f'''        tl.fromTo("#shape-kit-{k}-g > *", {{ strokeDashoffset: 1.1, fillOpacity: 0 }}, {{ strokeDashoffset: 0, duration: 0.8, ease: "power2.inOut" }}, {0.3 + i * 0.35});
+        tl.to("#shape-kit-{k}-g > *", {{ fillOpacity: 0.9, duration: 0.4, ease: "power1.out" }}, {1.1 + i * 0.35});
+        tl.fromTo("#shape-kit-{k}", {{ scale: 1 }}, {{ scale: 1.08, duration: 0.15, ease: "power2.out", yoyo: true, repeat: 1 }}, {1.1 + i * 0.35});
+        tl.fromTo("#shape-kit-{k}-l", {{ opacity: 0, y: 14 }}, {{ opacity: 1, y: 0, duration: 0.35, ease: "expo.out" }}, {1.2 + i * 0.35});'''
+    for i, (k, _, _, _) in enumerate(SHAPES))
+write("shape-kit", page("shape-kit", 5, """
+      .shp { position: absolute; top: 330px; width: 240px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+      .shp svg { width: 220px; height: 220px; overflow: visible; }
+      .g > * { fill: var(--c); fill-opacity: 0; stroke: var(--c); stroke-width: 10; stroke-linejoin: round; stroke-dasharray: 1 1.2; stroke-dashoffset: 1.1; }
+      .shp b { font-size: 44px; font-weight: 800; }
+      .title { position: absolute; left: 0; right: 0; top: 150px; text-align: center; font-size: 64px; font-weight: 800; }
+""", '      <div class="title" id="shape-kit-title">선으로 그리고, 색으로 채우고</div>\n' + shape_html, """
+        document.querySelectorAll(".g > *").forEach(function (el) { el.setAttribute("pathLength", "1"); });
+        gsap.set(["#shape-kit-circle-l", "#shape-kit-square-l", "#shape-kit-tri-l", "#shape-kit-star-l"], { opacity: 0 });
+        tl.fromTo("#shape-kit-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.1);
+""" + shape_js + "\n"))

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Pretendard"; src: url("assets/fonts/Pretendard.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+      @font-face { font-family: "Noto Color Emoji"; src: local("Noto Color Emoji"); }
+      @font-face { font-family: "NanumPen"; src: url("assets/fonts/NanumPenScript-korean.woff2") format("woff2"); font-display: block; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #05060f; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; color: #f5f3ff; word-break: keep-all; }
+      .ground { position: absolute; inset: 0; background: linear-gradient(#0b1026, #05060f); }
+      .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(124,58,237,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,.12) 1px, transparent 1px); background-size: 40px 40px; -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 70%); mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 70%); }
+
+      .card { position: absolute; left: 470px; top: 150px; width: 980px; height: 620px; padding: 22px 22px 90px; background: #f5f3ff; border-radius: 6px; box-shadow: 0 30px 80px rgba(0,0,0,.55); }
+      .card img { width: 936px; height: 508px; object-fit: cover; display: block; }
+      .cap { position: absolute; left: 0; right: 0; bottom: 18px; text-align: center; font-family: "NanumPen", cursive; font-size: 64px; color: #4a33a6; }
+      .tape { position: absolute; left: 400px; top: -26px; width: 180px; height: 52px; background: rgba(180,230,29,.75); transform: rotate(-4deg); }
+      .sticker { position: absolute; left: 1370px; top: 110px; font-size: 120px; font-family: "Noto Color Emoji", sans-serif; }
+      .draw { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: visible; }
+      .label { position: absolute; left: 1490px; top: 560px; font-family: "NanumPen", cursive; font-size: 60px; color: #b4e61d; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="image-drop" data-start="0" data-duration="7" data-width="1920" data-height="1080">
+      <div class="ground"></div>
+      <div class="grid"></div>
+      <div class="card" id="image-drop-card"><div class="tape"></div><img src="assets/images/desk.jpg" alt="" /><div class="cap">오늘의 작업 공간</div></div>
+      <div class="sticker" id="image-drop-sticker">📸</div>
+      <svg class="draw" viewBox="0 0 1920 1080">
+        <ellipse id="image-drop-ring" cx="1090" cy="420" rx="250" ry="150" fill="none" stroke="#b4e61d" stroke-width="10" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1.2" stroke-dashoffset="1.1" transform="rotate(-6 1090 420)"/>
+        <path id="image-drop-arrow" d="M1480 590 C1420 560 1380 540 1330 500 M1330 500 L1350 540 M1330 500 L1372 506" fill="none" stroke="#b4e61d" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1.2" stroke-dashoffset="1.1"/>
+      </svg>
+      <div class="label" id="image-drop-label">편집 화면</div>
+      <div id="image-drop-drv" class="clip" data-start="0" data-duration="7" data-track-index="0" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none"></div>
+    </div>
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const vars = (window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables()) || {};
+        const tl = gsap.timeline({ paused: true });
+
+        gsap.set(["#image-drop-label"], { opacity: 0 });
+        tl.fromTo("#image-drop-card", { opacity: 0, y: -260, rotation: -9 }, { opacity: 1, y: 0, rotation: -2, duration: 0.9, ease: "expo.out" }, 0.2);
+        tl.fromTo("#image-drop-sticker", { opacity: 0, scale: 0, rotation: -30 }, { opacity: 1, scale: 1, rotation: 12, duration: 0.5, ease: "back.out(2.4)" }, 1.1);
+        tl.fromTo("#image-drop-ring", { strokeDashoffset: 1.1 }, { strokeDashoffset: 0, duration: 0.9, ease: "power2.inOut" }, 2.0);
+        tl.fromTo("#image-drop-arrow", { strokeDashoffset: 1.1 }, { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" }, 2.9);
+        tl.fromTo("#image-drop-label", { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }, 3.3);
+
+        window.__timelines["image-drop"] = tl;
+      })();
+    </script>
+  </body>
+</html>
