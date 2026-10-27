@@ -7,7 +7,7 @@ for d in ${@:-*/}; do
   d=${d%/}
   [ -f "$d/index.html" ] || continue
   case "$d" in _*) continue;; esac
-  ( cd "$d" && npx hyperframes render --quality draft --output "../_previews/$d.full.mp4" > "../_previews/$d.log" 2>&1 )
+  ( cd "$d" && npx hyperframes render --quality looks --output "../_previews/$d.full.mp4" > "../_previews/$d.log" 2>&1 )
   if [ -s "_previews/$d.full.mp4" ]; then
     ffmpeg -loglevel error -y -i "_previews/$d.full.mp4" -vf scale=960:540 -c:v libx264 -crf 30 -preset veryfast -an -movflags +faststart "_previews/$d.mp4"
     rm -f "_previews/$d.full.mp4"

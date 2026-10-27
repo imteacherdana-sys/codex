@@ -252,3 +252,135 @@ write("shape-kit", page("shape-kit", 5, """
         gsap.set(["#shape-kit-circle-l", "#shape-kit-square-l", "#shape-kit-tri-l", "#shape-kit-star-l"], { opacity: 0 });
         tl.fromTo("#shape-kit-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.1);
 """ + shape_js + "\n"))
+
+# ---------------------------------------------------------------- 권위 카드 (단아쌤 소개)
+# 경력 문구는 변수다. 기본값은 세진 PD 기획서에 나온 표현만 쓴 예시이며, 촬영 전 본인 확인 후 바꾼다.
+AUTH_CHIPS = ["경희대 교수", "기업 운영", "AI 생산성 강의"]
+chips_html = "\n".join(f'          <span class="chip" id="authority-card-c{i}">{c}</span>' for i, c in enumerate(AUTH_CHIPS))
+write("authority-card", page("authority-card", 7, """
+      .plate { position: absolute; inset: -60px; background: url("assets/images/desk.jpg") center / cover; transform-origin: 62% 45%; }
+      .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5,6,15,.92) 0%, rgba(5,6,15,.72) 38%, rgba(5,6,15,.15) 75%), linear-gradient(0deg, rgba(5,6,15,.75), transparent 45%); }
+      .cam { position: absolute; inset: 0; transform-origin: 30% 70%; }
+      .card { position: absolute; left: 120px; top: 520px; width: 980px; padding: 40px 48px 44px; border-radius: 28px; background: rgba(11,16,38,.72); box-shadow: inset 0 0 0 2px rgba(255,255,255,.12), 0 30px 80px rgba(0,0,0,.45); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+      .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 10px; background: #b4e61d; color: #05060f; font-size: 28px; font-weight: 800; letter-spacing: .04em; }
+      .name { margin-top: 22px; display: flex; font-size: 132px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; }
+      .name i { font-style: normal; display: inline-block; }
+      .uline { margin-top: 18px; width: 420px; height: 10px; border-radius: 6px; background: #b4e61d; transform-origin: left center; }
+      .title { margin-top: 24px; font-size: 40px; font-weight: 700; color: #f5f3ff; }
+      .chips { margin-top: 26px; display: flex; gap: 14px; flex-wrap: wrap; }
+      .chip { padding: 12px 20px; border-radius: 12px; background: rgba(124,58,237,.28); box-shadow: inset 0 0 0 2px rgba(124,58,237,.75); font-size: 30px; font-weight: 700; }
+      .tag { position: absolute; right: 60px; top: 48px; font-size: 22px; color: #a5a3c7; }
+""", f"""      <div class="cam" id="authority-card-cam">
+        <div class="plate" id="authority-card-plate"></div>
+        <div class="shade"></div>
+        <div class="card" id="authority-card-card">
+          <span class="eyebrow" id="authority-card-eyebrow">AI 교수</span>
+          <div class="name" id="authority-card-name"></div>
+          <div class="uline" id="authority-card-uline"></div>
+          <div class="title" id="authority-card-title">경희대 교수 · 기업 대표</div>
+          <div class="chips">
+{chips_html}
+          </div>
+        </div>
+      </div>
+      <div class="tag" id="authority-card-tag">예시 문구 · 경력은 본인 확인 후 확정</div>""", f"""
+        const nameText = vars.name || "단아쌤";
+        if (vars.eyebrow) document.getElementById("authority-card-eyebrow").textContent = vars.eyebrow;
+        if (vars.title) document.getElementById("authority-card-title").textContent = vars.title;
+        if (vars.chips) vars.chips.split(",").forEach(function (c, i) {{ const el = document.getElementById("authority-card-c" + i); if (el) el.textContent = c.trim(); }});
+        const nameEl = document.getElementById("authority-card-name");
+        const letters = Array.from(nameText).map(function (ch) {{ const s = document.createElement("i"); s.textContent = ch; nameEl.appendChild(s); return s; }});
+        const chips = {json.dumps([f"#authority-card-c{i}" for i in range(len(AUTH_CHIPS))])};
+        gsap.set(["#authority-card-eyebrow", "#authority-card-title"].concat(chips, letters), {{ opacity: 0 }});
+        gsap.set("#authority-card-uline", {{ scaleX: 0 }});
+        // 푸티지 자리: 느린 켄번즈 푸시인 (실제 영상에서는 단아쌤 촬영본이 이 자리에 온다)
+        tl.fromTo("#authority-card-plate", {{ scale: 1.0 }}, {{ scale: 1.14, duration: 7, ease: "sine.inOut" }}, 0);
+        // 카드: 아래에서 마스크로 열림
+        tl.fromTo("#authority-card-card", {{ clipPath: "inset(100% 0% 0% 0% round 28px)", y: 40 }}, {{ clipPath: "inset(0% 0% 0% 0% round 28px)", y: 0, duration: 0.7, ease: "expo.out" }}, 0.4);
+        tl.fromTo("#authority-card-eyebrow", {{ opacity: 0, x: -30 }}, {{ opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }}, 0.8);
+        letters.forEach(function (l, i) {{ tl.fromTo(l, {{ opacity: 0, y: 60, filter: "blur(10px)" }}, {{ opacity: 1, y: 0, filter: "blur(0px)", duration: 0.5, ease: "expo.out" }}, 1.0 + i * 0.08); }});
+        const landed = 1.0 + letters.length * 0.08 + 0.2;
+        // 이름이 자리 잡는 순간 카메라 펀치인
+        tl.fromTo("#authority-card-cam", {{ scale: 1 }}, {{ scale: 1.045, duration: 0.35, ease: "power2.out" }}, landed);
+        tl.to("#authority-card-uline", {{ scaleX: 1, duration: 0.55, ease: "expo.out" }}, landed);
+        tl.fromTo("#authority-card-title", {{ opacity: 0, filter: "blur(8px)" }}, {{ opacity: 1, filter: "blur(0px)", duration: 0.25, ease: "power4.out" }}, landed + 0.3);
+        chips.forEach(function (c, i) {{ tl.fromTo(c, {{ opacity: 0, scale: 0.7 }}, {{ opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }}, landed + 0.6 + i * 0.12); }});
+        // 퇴장: 카드가 아래로 접히며 사라지고 카메라는 원래대로
+        tl.to("#authority-card-card", {{ clipPath: "inset(0% 0% 100% 0% round 28px)", duration: 0.4, ease: "power3.in" }}, 6.3);
+        tl.to("#authority-card-cam", {{ scale: 1, duration: 0.5, ease: "power2.inOut" }}, 6.2);
+""", [
+    {"id": "name", "type": "string", "label": "이름", "default": "단아쌤"},
+    {"id": "eyebrow", "type": "string", "label": "머리표", "default": "AI 교수"},
+    {"id": "title", "type": "string", "label": "직함 한 줄", "default": "경희대 교수 · 기업 대표"},
+    {"id": "chips", "type": "string", "label": "이력 칩 (쉼표로 3개)", "default": ", ".join(AUTH_CHIPS)},
+]))
+
+# ---------------------------------------------------------------- X 뉴스 카드 (최신 반응 3장 + 카메라 이동)
+# 실제 영상에서는 원본 게시물 캡처를 shot 변수로 넣는다. 미리보기 문구는 "예시 게시물"이다.
+POSTS = [
+    {"who": "AI 크리에이터 A", "handle": "@example_a", "date": "2026.05.20", "tone": "혹평",
+     "text": "출시 첫날 써봤는데 영상 생성은 기대 이하네요. 이럴 거면 다른 툴 쓰죠.", "mark": "기대 이하", "color": "#ff6b5b"},
+    {"who": "영상 편집러 B", "handle": "@example_b", "date": "2026.05.22", "tone": "반전",
+     "text": "근데 이거 편집에 쓰니까 완전 다르네요. 배경만 바꾸고 사람은 그대로 유지됩니다.", "mark": "편집에 쓰니까 완전 다르네요", "color": "#b4e61d"},
+    {"who": "디자이너 C", "handle": "@example_c", "date": "2026.05.24", "tone": "재평가",
+     "text": "전광판 광고만 교체해봤습니다. 건물이랑 거리는 그대로.", "mark": "광고만 교체", "color": "#22d3ee", "media": True},
+]
+CARD_X = [120, 690, 1260]
+post_html = []
+for i, p in enumerate(POSTS):
+    t = p["text"].replace(p["mark"], f'<span class="mk" id="news-card-m{i}" style="--c:{p["color"]}">{p["mark"]}</span>')
+    media = '<div class="media"><img src="assets/images/desk.jpg" alt="" /></div>' if p.get("media") else ""
+    post_html.append(f"""        <div class="post" id="news-card-p{i}" style="left:{CARD_X[i]}px">
+          <div class="who"><i style="background:{p['color']}">{p['who'][0]}</i><div><b>{p['who']}</b><span>{p['handle']} · {p['date']}</span></div><em style="color:{p['color']};box-shadow:inset 0 0 0 2px {p['color']}">{p['tone']}</em></div>
+          <p>{t}</p>{media}
+          <div class="src">X · {p['date']} · 예시 게시물</div>
+        </div>""")
+focus = [{"cx": CARD_X[i] + 270, "cy": 300 + (300 if POSTS[i].get("media") else 200)} for i in range(3)]
+write("news-card", page("news-card", 9, """
+      .head { position: absolute; left: 0; right: 0; top: 120px; text-align: center; font-size: 64px; font-weight: 800; letter-spacing: -0.02em; }
+      .head b { color: #b4e61d; font-weight: 800; }
+      .world { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+      .post { position: absolute; top: 300px; width: 540px; padding: 30px 32px 26px; border-radius: 24px; background: #0f1430; box-shadow: inset 0 0 0 2px rgba(255,255,255,.12), 0 24px 60px rgba(0,0,0,.5); }
+      .who { display: flex; align-items: center; gap: 16px; }
+      .who i { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 26px; font-weight: 800; color: #05060f; flex: none; }
+      .who div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+      .who b { font-size: 26px; }
+      .who span { font-size: 20px; color: #a5a3c7; }
+      .who em { margin-left: auto; font-style: normal; font-size: 22px; font-weight: 800; padding: 6px 12px; border-radius: 10px; }
+      .post p { margin-top: 22px; font-size: 30px; line-height: 1.55; font-weight: 600; }
+      .mk { --s: 0; background-image: linear-gradient(color-mix(in srgb, var(--c) 42%, transparent), color-mix(in srgb, var(--c) 42%, transparent)); background-repeat: no-repeat; background-position: 0 88%; background-size: calc(var(--s) * 100%) 44%; -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 4px; }
+      .media { margin-top: 18px; border-radius: 16px; overflow: hidden; height: 220px; }
+      .media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .src { margin-top: 18px; font-size: 20px; color: #a5a3c7; }
+      .arrow { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+      .foot { position: absolute; left: 0; right: 0; bottom: 70px; text-align: center; font-size: 24px; color: #a5a3c7; }
+""", """      <div class="head" id="news-card-head">출시 직후 <b>혹평</b>에서, 며칠 만에 <b>재평가</b>로</div>
+      <div class="world" id="news-card-world">
+""" + "\n".join(post_html) + """
+        <svg class="arrow" viewBox="0 0 1920 1080"><path id="news-card-arrow" d="M 640 920 C 900 990, 1300 990, 1560 900" fill="none" stroke="#b4e61d" stroke-width="8" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1.2" stroke-dashoffset="1.1"/></svg>
+      </div>
+      <div class="foot" id="news-card-foot">예시 게시물 · 실제 영상에서는 원본 캡처와 링크를 씁니다</div>""", f"""
+        const F = {json.dumps(focus)};
+        const S = 1.55;
+        function cam(i) {{ return {{ x: 960 - F[i].cx * S, y: 540 - F[i].cy * S, scale: S }}; }}
+        const posts = ["#news-card-p0", "#news-card-p1", "#news-card-p2"];
+        gsap.set(["#news-card-head", "#news-card-foot"], {{ opacity: 0 }});
+        // 1) 세 장이 차례로 떨어진다 (전체 보기)
+        posts.forEach(function (p, i) {{ tl.fromTo(p, {{ opacity: 0, y: 80, rotation: (i - 1) * 3 }}, {{ opacity: 1, y: 0, rotation: (i - 1) * 1.2, duration: 0.6, ease: "expo.out" }}, 0.2 + i * 0.15); }});
+        // 2) 카메라: 카드 1로 푸시인
+        tl.fromTo("#news-card-world", {{ x: 0, y: 0, scale: 1 }}, Object.assign(cam(0), {{ duration: 0.8, ease: "power3.inOut" }}), 1.1);
+        tl.fromTo("#news-card-m0", {{ "--s": 0 }}, {{ "--s": 1, duration: 0.45, ease: "expo.out" }}, 2.0);
+        // 3) 카드 2로 휩팬 (빠른 이동 + 가로 블러)
+        tl.to("#news-card-world", Object.assign(cam(1), {{ duration: 0.45, ease: "power3.inOut" }}), 3.0);
+        tl.fromTo("#news-card-world", {{ filter: "blur(0px)" }}, {{ filter: "blur(6px)", duration: 0.2, ease: "power2.in", yoyo: true, repeat: 1 }}, 3.02);
+        tl.fromTo("#news-card-m1", {{ "--s": 0 }}, {{ "--s": 1, duration: 0.5, ease: "expo.out" }}, 3.6);
+        // 4) 카드 3으로 패닝, 사진에 살짝 더 줌
+        tl.to("#news-card-world", Object.assign(cam(2), {{ duration: 0.7, ease: "power2.inOut" }}), 4.8);
+        tl.fromTo("#news-card-p2 .media img", {{ scale: 1 }}, {{ scale: 1.12, duration: 1.4, ease: "sine.out" }}, 5.1);
+        tl.fromTo("#news-card-m2", {{ "--s": 0 }}, {{ "--s": 1, duration: 0.45, ease: "expo.out" }}, 5.4);
+        // 5) 풀아웃: 전체 흐름 + 화살표 + 헤드라인
+        tl.to("#news-card-world", {{ x: 0, y: 70, scale: 0.9, duration: 0.9, ease: "power3.inOut" }}, 6.4);
+        tl.fromTo("#news-card-arrow", {{ strokeDashoffset: 1.1 }}, {{ strokeDashoffset: 0, duration: 0.7, ease: "power2.out" }}, 7.0);
+        tl.fromTo("#news-card-head", {{ opacity: 0, y: -20, filter: "blur(8px)" }}, {{ opacity: 1, y: 0, filter: "blur(0px)", duration: 0.4, ease: "expo.out" }}, 7.1);
+        tl.fromTo("#news-card-foot", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.3 }}, 7.4);
+"""))
