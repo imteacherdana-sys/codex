@@ -269,10 +269,20 @@ write("authority-card", page("authority-card", 7, """
       .title { margin-top: 24px; font-size: 40px; font-weight: 700; color: #f5f3ff; }
       .chips { margin-top: 26px; display: flex; gap: 14px; flex-wrap: wrap; }
       .chip { padding: 12px 20px; border-radius: 12px; background: rgba(124,58,237,.28); box-shadow: inset 0 0 0 2px rgba(124,58,237,.75); font-size: 30px; font-weight: 700; }
-      .tag { position: absolute; right: 60px; top: 48px; font-size: 22px; color: #a5a3c7; }
+      .tag { position: absolute; left: 120px; top: 56px; font-size: 22px; color: #a5a3c7; }
+      .portrait { position: absolute; left: 1190px; top: 130px; width: 600px; height: 750px; transform: rotate(2deg); }
+      .portrait .ph { position: absolute; inset: 0; border-radius: 28px; overflow: hidden; box-shadow: 0 40px 90px rgba(0,0,0,.55), inset 0 0 0 2px rgba(255,255,255,.18); }
+      .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; display: block; transform-origin: 50% 30%; }
+      .portrait .rim { position: absolute; inset: -14px; border-radius: 38px; box-shadow: inset 0 0 0 4px #b4e61d; }
+      .portrait .cap { position: absolute; left: -26px; bottom: 54px; padding: 10px 18px; border-radius: 10px; background: #7c3aed; color: #f5f3ff; font-size: 26px; font-weight: 800; transform: rotate(-4deg); }
 """, f"""      <div class="cam" id="authority-card-cam">
         <div class="plate" id="authority-card-plate"></div>
         <div class="shade"></div>
+        <div class="portrait" id="authority-card-portrait">
+          <div class="rim" id="authority-card-rim"></div>
+          <div class="ph" id="authority-card-ph"><img id="authority-card-photo" src="assets/images/danasam-portrait.jpg" alt="단아쌤 프로필 사진"></div>
+          <span class="cap" id="authority-card-cap">단아쌤</span>
+        </div>
         <div class="card" id="authority-card-card">
           <span class="eyebrow" id="authority-card-eyebrow">AI 교수</span>
           <div class="name" id="authority-card-name"></div>
@@ -287,6 +297,8 @@ write("authority-card", page("authority-card", 7, """
         const nameText = vars.name || "단아쌤";
         if (vars.eyebrow) document.getElementById("authority-card-eyebrow").textContent = vars.eyebrow;
         if (vars.title) document.getElementById("authority-card-title").textContent = vars.title;
+        if (vars.photo) document.getElementById("authority-card-photo").src = vars.photo;
+        document.getElementById("authority-card-cap").textContent = nameText;
         if (vars.chips) vars.chips.split(",").forEach(function (c, i) {{ const el = document.getElementById("authority-card-c" + i); if (el) el.textContent = c.trim(); }});
         const nameEl = document.getElementById("authority-card-name");
         const letters = Array.from(nameText).map(function (ch) {{ const s = document.createElement("i"); s.textContent = ch; nameEl.appendChild(s); return s; }});
@@ -295,6 +307,13 @@ write("authority-card", page("authority-card", 7, """
         gsap.set("#authority-card-uline", {{ scaleX: 0 }});
         // 푸티지 자리: 느린 켄번즈 푸시인 (실제 영상에서는 단아쌤 촬영본이 이 자리에 온다)
         tl.fromTo("#authority-card-plate", {{ scale: 1.0 }}, {{ scale: 1.14, duration: 7, ease: "sine.inOut" }}, 0);
+        // 프로필 사진: 기울어진 액자가 위로 열리고, 안쪽 사진은 천천히 풀아웃
+        gsap.set(["#authority-card-rim", "#authority-card-cap"], {{ opacity: 0 }});
+        tl.fromTo("#authority-card-portrait", {{ y: 80, rotation: 7, opacity: 0 }}, {{ y: 0, rotation: 2, opacity: 1, duration: 0.8, ease: "expo.out" }}, 0.15);
+        tl.fromTo("#authority-card-ph", {{ clipPath: "inset(100% 0% 0% 0% round 28px)" }}, {{ clipPath: "inset(0% 0% 0% 0% round 28px)", duration: 0.8, ease: "expo.out" }}, 0.15);
+        tl.fromTo("#authority-card-photo", {{ scale: 1.18 }}, {{ scale: 1.0, duration: 6.5, ease: "sine.out" }}, 0.15);
+        tl.fromTo("#authority-card-rim", {{ opacity: 0, scale: 0.96 }}, {{ opacity: 1, scale: 1, duration: 0.5, ease: "expo.out" }}, 0.7);
+        tl.fromTo("#authority-card-cap", {{ opacity: 0, x: -40, rotation: -12 }}, {{ opacity: 1, x: 0, rotation: -4, duration: 0.45, ease: "back.out(2)" }}, 0.9);
         // 카드: 아래에서 마스크로 열림
         tl.fromTo("#authority-card-card", {{ clipPath: "inset(100% 0% 0% 0% round 28px)", y: 40 }}, {{ clipPath: "inset(0% 0% 0% 0% round 28px)", y: 0, duration: 0.7, ease: "expo.out" }}, 0.4);
         tl.fromTo("#authority-card-eyebrow", {{ opacity: 0, x: -30 }}, {{ opacity: 1, x: 0, duration: 0.4, ease: "expo.out" }}, 0.8);
@@ -308,11 +327,13 @@ write("authority-card", page("authority-card", 7, """
         // 퇴장: 카드가 아래로 접히며 사라지고 카메라는 원래대로
         tl.to("#authority-card-card", {{ clipPath: "inset(0% 0% 100% 0% round 28px)", duration: 0.4, ease: "power3.in" }}, 6.3);
         tl.to("#authority-card-cam", {{ scale: 1, duration: 0.5, ease: "power2.inOut" }}, 6.2);
+        tl.to("#authority-card-portrait", {{ y: -40, opacity: 0, duration: 0.4, ease: "power3.in" }}, 6.35);
 """, [
     {"id": "name", "type": "string", "label": "이름", "default": "단아쌤"},
     {"id": "eyebrow", "type": "string", "label": "머리표", "default": "AI 교수"},
     {"id": "title", "type": "string", "label": "직함 한 줄", "default": "경희대 교수 · 기업 대표"},
     {"id": "chips", "type": "string", "label": "이력 칩 (쉼표로 3개)", "default": ", ".join(AUTH_CHIPS)},
+    {"id": "photo", "type": "string", "label": "프로필 사진 경로", "default": "assets/images/danasam-portrait.jpg"},
 ]))
 
 # ---------------------------------------------------------------- X 뉴스 카드 (최신 반응 3장 + 카메라 이동)
