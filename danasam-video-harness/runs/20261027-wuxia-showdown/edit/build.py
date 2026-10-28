@@ -23,33 +23,36 @@ NODE_MODULES = (ROOT / "../../../../examples/motion-masterclass/node_modules").r
 MODELS = {
     "kling4_0": ("Kling 4.0", "#b4e61d"),
     "seedance_2_5": ("Seedance 2.5", "#ff6b5b"),
-    "veo3_1": ("Veo 3.1", "#5b8cff"),
-    "wan3_0": ("Wan 3.0", "#ffbf3c"),
+    "seedance_2_0": ("Seedance 2.0", "#ffa58f"),
     "minimax_h3": ("MiniMax H3", "#3fd6c6"),
-    "grok_video_v15": ("Grok 1.5", "#c9a7ff"),
+    "wan3_0": ("Wan 3.0", "#ffbf3c"),
+    "grok_video_v15": ("Grok Imagine 1.5", "#c9a7ff"),
+    "flux_3_video": ("FLUX 3", "#e8e8f2"),
+    "gemini_omni_flash_1_1": ("Gemini Omni 1.1", "#5b8cff"),
 }
-MODEL_KO = {"kling4_0": "클링", "seedance_2_5": "시댄스", "veo3_1": "비오", "wan3_0": "완",
-            "minimax_h3": "미니맥스", "grok_video_v15": "그록"}
-# 8초 한 클립 견적 (힉스필드, 2026-10-27~28). R4는 레퍼런스 모드 가격
+# 8초 한 클립 견적 (Higgsfield, 2026-10-27~28). R4는 Reference 모드 가격
 CREDITS = {
-    "r1": {"kling4_0": 4, "seedance_2_5": 56, "veo3_1": 80, "wan3_0": 14, "minimax_h3": 16, "grok_video_v15": 36},
-    "r4": {"kling4_0": 18, "seedance_2_5": 56, "veo3_1": 80, "wan3_0": 14, "minimax_h3": 16, "grok_video_v15": 36},
+    "r1": {"kling4_0": 4, "seedance_2_5": 56, "seedance_2_0": 36, "minimax_h3": 16, "wan3_0": 14, "grok_video_v15": 36,
+           "flux_3_video": 48, "gemini_omni_flash_1_1": 24},
 }
-for r in ("r2", "r3", "r5"):
-    CREDITS[r] = CREDITS["r1"]
+CREDITS["r2"] = CREDITS["r3"] = CREDITS["r5"] = CREDITS["r1"]
+# R4 Gemini는 안전 필터로 2회 거절, 크레딧 환불 → 0
+CREDITS["r4"] = dict(CREDITS["r1"], kling4_0=18, gemini_omni_flash_1_1=0)
 TOTAL = {m: sum(CREDITS[r][m] for r in ("r1", "r2", "r3", "r4", "r5")) for m in MODELS}
-# 블라인드 번호 (1..6) → 모델
+# 결과가 없는 칸
+FAILED = {("r4", "gemini_omni_flash_1_1"): "안전 필터로 생성 거절 (2회 시도)"}
+# 블라인드 번호 (1..8) → 모델 (라운드마다 다르게 섞음)
 BLIND = {
-    "r1": ["wan3_0", "veo3_1", "minimax_h3", "grok_video_v15", "kling4_0", "seedance_2_5"],
-    "r2": ["seedance_2_5", "wan3_0", "veo3_1", "kling4_0", "grok_video_v15", "minimax_h3"],
-    "r3": ["minimax_h3", "kling4_0", "grok_video_v15", "seedance_2_5", "veo3_1", "wan3_0"],
-    "r4": ["veo3_1", "grok_video_v15", "kling4_0", "wan3_0", "seedance_2_5", "minimax_h3"],
-    "r5": ["grok_video_v15", "minimax_h3", "seedance_2_5", "kling4_0", "wan3_0", "veo3_1"],
+    "r1": ["seedance_2_0", "minimax_h3", "flux_3_video", "gemini_omni_flash_1_1", "seedance_2_5", "grok_video_v15", "wan3_0", "kling4_0"],
+    "r2": ["wan3_0", "kling4_0", "flux_3_video", "minimax_h3", "seedance_2_0", "grok_video_v15", "seedance_2_5", "gemini_omni_flash_1_1"],
+    "r3": ["flux_3_video", "seedance_2_5", "grok_video_v15", "kling4_0", "gemini_omni_flash_1_1", "seedance_2_0", "wan3_0", "minimax_h3"],
+    "r4": ["flux_3_video", "gemini_omni_flash_1_1", "seedance_2_0", "kling4_0", "minimax_h3", "grok_video_v15", "seedance_2_5", "wan3_0"],
+    "r5": ["seedance_2_0", "grok_video_v15", "gemini_omni_flash_1_1", "seedance_2_5", "wan3_0", "flux_3_video", "kling4_0", "minimax_h3"],
 }
-ROUND_NAME = {"r1": "시험 1 · 장풍", "r2": "시험 2 · 경공", "r3": "시험 3 · 비무", "r4": "시험 4 · 레퍼런스", "r5": "시험 5 · 현판"}
+ROUND_NAME = {"r1": "시험 1 · 장풍", "r2": "시험 2 · 경공", "r3": "시험 3 · 비무", "r4": "시험 4 · Reference", "r5": "시험 5 · 현판"}
 # 라운드 1등 (1차 채점, 단아쌤 확인 필요)
-WINNERS = {"r1": ["veo3_1"], "r2": ["wan3_0"], "r3": ["grok_video_v15"], "r4": ["kling4_0"],
-           "r5": ["kling4_0", "seedance_2_5", "grok_video_v15"]}
+WINNERS = {"r1": ["flux_3_video"], "r2": ["wan3_0"], "r3": ["grok_video_v15", "gemini_omni_flash_1_1"], "r4": ["kling4_0", "flux_3_video", "wan3_0"],
+           "r5": ["kling4_0", "seedance_2_5", "grok_video_v15", "flux_3_video", "gemini_omni_flash_1_1"]}
 
 PROMPTS = {
     "r1": ("A Chinese woman in her early 20s ... stands in a misty bamboo forest at dawn. She draws a slow breath, "
@@ -75,6 +78,25 @@ PROMPTS = {
 }
 
 CPS = 6.2  # 자막 읽기 속도 (글자/초) — 녹음 멘트 길이의 추정치
+
+
+CAP_MAX_PX = 1560  # 자막 한 줄 최대 폭 (42px Pretendard 기준 추정)
+
+
+def cap_width(t):
+    w = 0.0
+    for ch in t:
+        if "\uac00" <= ch <= "\ud7a3":
+            w += 41
+        elif ch == " ":
+            w += 12
+        elif ch.isdigit():
+            w += 25
+        elif ch.isascii() and ch.isalpha():
+            w += 25 if ch.isupper() else 22
+        else:
+            w += 16
+    return w + 56
 
 
 def line_dur(t):
@@ -113,11 +135,10 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--
   background-size: 48px 48px; -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 25%, transparent 72%); mask-image: radial-gradient(ellipse at 50% 50%, #000 25%, transparent 72%); }
 .cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
 .cap { position: absolute; left: 160px; right: 160px; bottom: 64px; display: flex; justify-content: center; }
-.cap span { display: inline-block; max-width: 1500px; padding: 14px 28px 16px; border-radius: 14px; background: rgba(5,6,15,.78);
+.cap span { display: inline-block; white-space: nowrap; padding: 14px 28px 16px; border-radius: 14px; background: rgba(5,6,15,.78);
   font-size: 42px; font-weight: 700; line-height: 1.38; text-align: center; letter-spacing: -0.01em; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
 .chip { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 12px; font-weight: 800; font-size: 30px; }
 .tag { position: absolute; left: 60px; top: 44px; font-size: 24px; font-weight: 700; color: var(--mute); letter-spacing: .04em; }
-.ad { position: absolute; right: 60px; top: 44px; font-size: 22px; font-weight: 700; color: var(--mute); padding: 6px 12px; border: 2px solid rgba(165,163,199,.5); border-radius: 8px; }
 .frame { position: absolute; border-radius: 22px; overflow: hidden; background: #000; box-shadow: 0 30px 80px rgba(0,0,0,.5), inset 0 0 0 2px rgba(255,255,255,.08); }
 .frame video, .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 .hl { background: linear-gradient(transparent 55%, rgba(180,230,29,.55) 55%); }
@@ -144,6 +165,8 @@ class Scene:
         t = lead
         self.cap_times = []
         for c in self.caps:
+            if cap_width(c) > CAP_MAX_PX:
+                raise ValueError(f"자막이 한 줄을 넘습니다 ({cap_width(c):.0f}px): {c}")
             d = line_dur(c)
             self.cap_times.append((t, d))
             t += d
@@ -207,8 +230,6 @@ def render_talk(s):
                 f'<div id="title" style="margin-top:28px; font-size:{k.get("size", 88)}px; font-weight:900; line-height:1.18; letter-spacing:-0.02em;">{title_html}</div>'
                 f'<div id="sub" style="margin-top:26px; font-size:36px; font-weight:600; color:var(--mute); line-height:1.4;">{sub}</div></div>')
     body.append("</div>")
-    if k.get("ad"):
-        body.append('<div class="ad">유료 광고 포함</div>')
     body.append(s.caption_html())
     js = [gridbg_js(s.dur), cam_js(k.get("cam", "push"), s.dur),
           'tl.fromTo("#kicker", {opacity: 0, x: -30}, {opacity: 1, x: 0, duration: 0.4, ease: "expo.out"}, 0.15);',
@@ -224,15 +245,23 @@ def render_clip(s):
     k = s.kw
     key = k["key"]
     model = k.get("model")
-    vlen = clip_len(key) - k.get("media_start", 0)
-    vdur = min(vlen, s.dur)
-    still = f"assets/images/last_{key}.png"
-    make_last_frame(key)
-    body = ['<div class="cam" id="cam">',
-            f'<div class="frame" id="fr" style="left:160px; top:60px; width:1600px; height:900px;">'
-            f'<img src="{still}" alt="" />'
-            f'<video id="v" class="clip" src="assets/clips/{key}.mp4" data-start="0" data-duration="{vdur:.2f}" data-media-start="{k.get("media_start", 0)}" '
-            f'data-track-index="1" playsinline {"data-has-audio=\"true\" data-volume=\"0.8\"" if k.get("audio", True) else "muted"}></video></div>']
+    if key is None:
+        # 생성 결과가 없는 칸 (안전 필터 거절 등)
+        body = ['<div class="cam" id="cam">',
+                '<div class="frame" id="fr" style="left:160px; top:60px; width:1600px; height:900px; background:#10142e;">'
+                f'<div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px;">'
+                f'<div style="font-size:64px; font-weight:900; color:var(--coral);">{esc(k.get("failed", "결과 없음"))}</div>'
+                '<div style="font-size:30px; color:var(--mute); font-weight:600;">생성 결과가 없어 이 시험은 채점에서 제외합니다</div></div></div>']
+    else:
+        vlen = clip_len(key) - k.get("media_start", 0)
+        vdur = min(vlen, s.dur)
+        still = f"assets/images/last_{key}.png"
+        make_last_frame(key)
+        body = ['<div class="cam" id="cam">',
+                f'<div class="frame" id="fr" style="left:160px; top:60px; width:1600px; height:900px;">'
+                f'<img src="{still}" alt="" />'
+                f'<video id="v" class="clip" src="assets/clips/{key}.mp4" data-start="0" data-duration="{vdur:.2f}" data-media-start="{k.get("media_start", 0)}" '
+                f'data-track-index="1" playsinline {"data-has-audio=\"true\" data-volume=\"0.8\"" if k.get("audio", True) else "muted"}></video></div>']
     if k.get("mark"):
         x, y, r = k["mark"]
         body.append(f'<svg id="mark" style="position:absolute; left:{x - r - 20}px; top:{y - r - 20}px; width:{2 * r + 40}px; height:{2 * r + 40}px; overflow:visible;">'
@@ -267,27 +296,32 @@ def render_clip(s):
     return page(s.cid, s.dur, "\n".join(body), "\n".join(js))
 
 
-GRID = dict(W=560, H=315, gx=60, gy=40, y0=150)
+GRID = dict(W=420, H=236, gx=32, gy=44, y0=220, cols=4)
 
 
 def grid_pos(i):
     W, H, gx, gy = GRID["W"], GRID["H"], GRID["gx"], GRID["gy"]
-    x0 = (1920 - (3 * W + 2 * gx)) // 2
-    return x0 + (i % 3) * (W + gx), GRID["y0"] + (i // 3) * (H + gy)
+    c = GRID["cols"]
+    x0 = (1920 - (c * W + (c - 1) * gx)) // 2
+    return x0 + (i % c) * (W + gx), GRID["y0"] + (i // c) * (H + gy)
 
 
 def make_grid(rnd, prefix):
-    """6개 클립을 1920x1080 한 장으로 미리 합친다 (브라우저에서 영상 6개를 동시에 돌리면 렌더가 매우 느림)."""
+    """8개 클립을 1920x1080 한 장으로 미리 합친다 (브라우저에서 영상 여러 개를 동시에 돌리면 렌더가 매우 느림). 결과가 없는 칸은 빈 칸."""
     out = ROOT / "assets" / "clips" / f"grid_{prefix}.mp4"
     if out.exists():
         return f"grid_{prefix}"
     W, H = GRID["W"], GRID["H"]
     cmd = ["ffmpeg", "-loglevel", "error", "-y", "-f", "lavfi", "-i", "color=c=0x070a1c:s=1920x1080:r=30:d=8.4"]
     for m in BLIND[rnd]:
-        cmd += ["-i", str(ROOT / "assets" / "clips" / f"{prefix}_{m}.mp4")]
+        src = ROOT / "assets" / "clips" / f"{prefix}_{m}.mp4"
+        if src.exists():
+            cmd += ["-i", str(src)]
+        else:
+            cmd += ["-f", "lavfi", "-i", "color=c=0x10142e:s=1280x720:r=30:d=8"]
     fl = []
     last = "0:v"
-    for i in range(6):
+    for i in range(len(BLIND[rnd])):
         x, y = grid_pos(i)
         fl.append(f"[{i + 1}:v]fps=30,scale={W}:{H},setsar=1,tpad=stop_mode=clone:stop_duration=2[c{i}]")
         fl.append(f"[{last}][c{i}]overlay={x}:{y}:eof_action=repeat[o{i}]")
@@ -312,22 +346,22 @@ def render_grid(s):
     for i, m in enumerate(order):
         x, y = grid_pos(i)
         name, col = MODELS[m]
-        body.append(f'<div id="g{i}" style="position:absolute; left:{x}px; top:{y}px; width:{W}px; height:{H}px; border-radius:16px; box-shadow: 0 0 0 6px #070a1c, inset 0 0 0 2px rgba(255,255,255,.08);">'
-                    f'<div style="position:absolute; left:12px; top:12px; width:56px; height:56px; border-radius:12px; background:var(--lime); color:#05060f; font-size:36px; font-weight:900; display:flex; align-items:center; justify-content:center;">{i + 1}</div>'
-                    f'<div id="gn{i}" style="position:absolute; left:0; right:0; bottom:0; padding:10px 14px; background:rgba(5,6,15,.82); display:flex; justify-content:space-between; font-size:26px; font-weight:800; opacity:0; border-radius:0 0 14px 14px;">'
-                    f'<span style="color:{col}">{esc(name)}</span><span>{CREDITS[rnd][m]} 크레딧</span></div>'
+        fail = FAILED.get((rnd, m))
+        failhtml = (f'<div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 30px; font-size:24px; font-weight:800; color:var(--coral);">{esc(fail)}</div>' if fail else "")
+        body.append(f'<div id="g{i}" style="position:absolute; left:{x}px; top:{y}px; width:{W}px; height:{H}px; border-radius:14px; box-shadow: 0 0 0 6px #070a1c, inset 0 0 0 2px rgba(255,255,255,.08);">'
+                    f'{failhtml}<div style="position:absolute; left:10px; top:10px; width:46px; height:46px; border-radius:10px; background:var(--lime); color:#05060f; font-size:30px; font-weight:900; display:flex; align-items:center; justify-content:center;">{i + 1}</div>'
+                    f'<div id="gn{i}" style="position:absolute; left:0; right:0; bottom:0; padding:7px 12px; background:rgba(5,6,15,.85); display:flex; justify-content:space-between; font-size:21px; font-weight:800; opacity:0; border-radius:0 0 12px 12px;">'
+                    f'<span style="color:{col}">{esc(name)}</span><span>{"거절" if fail else str(CREDITS[rnd][m]) + " 크레딧"}</span></div>'
                     f'<div id="gw{i}" style="position:absolute; inset:0; border:6px solid var(--lime); border-radius:16px; opacity:0;"></div></div>')
     body.append("</div>")
     body.append(f'<div class="tag" id="ttl" style="font-size:30px; color:var(--fg); top:60px;">{esc(k.get("title", ROUND_NAME.get(rnd, "")))}</div>')
-    if k.get("ad"):
-        body.append('<div class="ad">유료 광고 포함</div>')
     body.append(s.caption_html())
     js = [cam_js(k.get("cam", "pull"), s.dur),
           'tl.fromTo("#ttl", {opacity: 0, y: -20}, {opacity: 1, y: 0, duration: 0.4}, 0.1);',
           'tl.fromTo("#cam", {opacity: 0}, {opacity: 1, duration: 0.4}, 0);']
     if k.get("reveal") is not None:
-        for i in range(6):
-            js.append(f'tl.to("#gn{i}", {{opacity: 1, duration: 0.3}}, {k["reveal"] + i * 0.18:.2f});')
+        for i in range(len(order)):
+            js.append(f'tl.to("#gn{i}", {{opacity: 1, duration: 0.3}}, {k["reveal"] + i * 0.15:.2f});')
     if k.get("winners_at") is not None:
         for i, m in enumerate(order):
             if m in k.get("winners", []):
@@ -380,20 +414,22 @@ def render_verdict(s):
 
 def render_specs(s):
     rows = [
-        ("kling4_0", "최대 30초 · 1080p · 레퍼런스 · 키프레임 · 영상 편집"),
-        ("seedance_2_5", "최대 30초 · 1080p · 레퍼런스 · 영상 이어 붙이기"),
-        ("veo3_1", "4·6·8초 · 시작 이미지 1장 · 힉스필드 자동 문장 보정"),
-        ("wan3_0", "최대 30초 · 1080p · 레퍼런스 · 소리 생성"),
-        ("minimax_h3", "최대 15초 · 2K 고정 · 레퍼런스"),
-        ("grok_video_v15", "최대 15초 · 1080p · 레퍼런스"),
+        ("kling4_0", "3~30초 멀티샷 · Keyframe 10장 · Omni Reference 15개 · 영상 편집"),
+        ("seedance_2_5", "30초 멀티샷 · Reference 50개 · 생성 후 편집"),
+        ("seedance_2_0", "최대 15초 · Seedance 2.5의 이전 버전 (기준점)"),
+        ("minimax_h3", "4~15초 · 2K 고정 (화질이 다른 모델보다 높음)"),
+        ("wan3_0", "2~30초 · 1080p · 소리 생성"),
+        ("grok_video_v15", "2~15초 · 1080p"),
+        ("flux_3_video", "5~20초 · 최대 4K · 소리 생성"),
+        ("gemini_omni_flash_1_1", "3~10초 · 최대 4K · 소리 생성"),
     ]
     body = ['<div class="cam" id="cam">',
-            '<div id="st" style="position:absolute; left:160px; top:90px; font-size:64px; font-weight:900;">오늘의 여섯 모델</div>']
+            '<div id="st" style="position:absolute; left:160px; top:90px; font-size:64px; font-weight:900;">오늘의 여덟 모델 <span style="font-size:30px; color:var(--mute); font-weight:600;">· 모두 8초 · 16:9 · 720p로 통일</span></div>']
     for i, (m, desc) in enumerate(rows):
         name, col = MODELS[m]
-        y = 190 + i * 104
-        body.append(f'<div id="row{i}" style="position:absolute; left:160px; top:{y}px; width:1600px; height:92px; border-radius:18px; background:rgba(16,20,46,.9); display:flex; align-items:center; gap:36px; padding:0 36px; box-shadow: inset 6px 0 0 {col};">'
-                    f'<span style="width:300px; font-size:38px; font-weight:900; color:{col};">{esc(name)}</span><span style="font-size:32px; font-weight:600;">{esc(desc)}</span></div>')
+        y = 186 + i * 84
+        body.append(f'<div id="row{i}" style="position:absolute; left:160px; top:{y}px; width:1600px; height:72px; border-radius:16px; background:rgba(16,20,46,.9); display:flex; align-items:center; gap:36px; padding:0 36px; box-shadow: inset 6px 0 0 {col};">'
+                    f'<span style="width:340px; font-size:34px; font-weight:900; color:{col};">{esc(name)}</span><span style="font-size:29px; font-weight:600;">{esc(desc)}</span></div>')
     body.append("</div>")
     body.append(s.caption_html())
     js = [gridbg_js(s.dur), cam_js("pull", s.dur), 'tl.fromTo("#st", {opacity: 0, y: -20}, {opacity: 1, y: 0, duration: 0.4}, 0.1);']
@@ -422,33 +458,33 @@ def render_rules(s):
 
 def render_board(s):
     rounds = ["r1", "r2", "r3", "r4", "r5"]
-    order = ["kling4_0", "grok_video_v15", "veo3_1", "wan3_0", "seedance_2_5", "minimax_h3"]
+    order = sorted(MODELS, key=lambda m: (-sum(1 for r in rounds if m in WINNERS[r]), TOTAL[m]))
     body = ['<div class="cam" id="cam">',
             '<div id="bt" style="position:absolute; left:160px; top:70px; font-size:60px; font-weight:900;">다섯 시험 성적표 <span style="font-size:30px; color:var(--mute); font-weight:600;">· 단아쌤 1차 채점</span></div>']
-    cols = ["장풍", "경공", "비무", "레퍼런스", "현판", "1등 횟수"]
+    cols = ["장풍", "경공", "비무", "Reference", "현판", "1등 횟수"]
     x0, cw = 520, 200
     for j, c in enumerate(cols):
         body.append(f'<div id="h{j}" style="position:absolute; left:{x0 + j * cw}px; top:180px; width:{cw}px; text-align:center; font-size:30px; font-weight:800; color:var(--mute);">{c}</div>')
     for i, m in enumerate(order):
         name, col = MODELS[m]
-        y = 240 + i * 108
+        y = 228 + i * 80
         wins = sum(1 for r in rounds if m in WINNERS[r])
-        body.append(f'<div id="br{i}" style="position:absolute; left:160px; top:{y}px; width:1600px; height:90px; border-radius:16px; background:rgba(16,20,46,.9);"></div>')
-        body.append(f'<div id="bn{i}" style="position:absolute; left:196px; top:{y + 22}px; font-size:38px; font-weight:900; color:{col};">{esc(name)}</div>')
+        body.append(f'<div id="br{i}" style="position:absolute; left:160px; top:{y}px; width:1600px; height:68px; border-radius:14px; background:rgba(16,20,46,.9);"></div>')
+        body.append(f'<div id="bn{i}" style="position:absolute; left:196px; top:{y + 14}px; font-size:32px; font-weight:900; color:{col};">{esc(name)}</div>')
         for j, r in enumerate(rounds):
-            mark = "🏆" if m in WINNERS[r] else ""
-            body.append(f'<div class="cell" id="c{i}_{j}" style="position:absolute; left:{x0 + j * cw}px; top:{y + 16}px; width:{cw}px; text-align:center; font-size:46px; font-family:Pretendard, \"Noto Color Emoji\";">{mark}</div>')
-        body.append(f'<div id="w{i}" style="position:absolute; left:{x0 + 5 * cw}px; top:{y + 14}px; width:{cw}px; text-align:center; font-size:52px; font-weight:900; color:{"#b4e61d" if wins >= 2 else "#f5f3ff"};">{wins}</div>')
+            mark = "🏆" if m in WINNERS[r] else ("—" if (r, m) in FAILED else "")
+            body.append(f'<div class="cell" id="c{i}_{j}" style="position:absolute; left:{x0 + j * cw}px; top:{y + 8}px; width:{cw}px; text-align:center; font-size:40px; color:var(--mute); font-family:Pretendard, \"Noto Color Emoji\";">{mark}</div>')
+        body.append(f'<div id="w{i}" style="position:absolute; left:{x0 + 5 * cw}px; top:{y + 6}px; width:{cw}px; text-align:center; font-size:46px; font-weight:900; color:{"#b4e61d" if wins >= 2 else "#f5f3ff"};">{wins}</div>')
     body.append("</div>")
     body.append(s.caption_html())
     js = [gridbg_js(s.dur), cam_js("push", s.dur), 'tl.fromTo("#bt", {opacity: 0}, {opacity: 1, duration: 0.4}, 0.1);']
     for j in range(len(cols)):
         js.append(f'tl.fromTo("#h{j}", {{opacity: 0}}, {{opacity: 1, duration: 0.3}}, 0.3);')
-    for i in range(6):
+    for i in range(len(order)):
         js.append(f'tl.fromTo(["#br{i}", "#bn{i}"], {{opacity: 0, x: -40}}, {{opacity: 1, x: 0, duration: 0.4, ease: "expo.out"}}, {0.4 + i * 0.1:.2f});')
     for j in range(5):
         js.append(f'tl.fromTo(".cell[id$=\'_{j}\']", {{opacity: 0, scale: 0.4}}, {{opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)"}}, {1.4 + j * 0.45:.2f});')
-    for i in range(6):
+    for i in range(len(order)):
         js.append(f'tl.fromTo("#w{i}", {{opacity: 0, scale: 0.5}}, {{opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)"}}, 3.9);')
     js.append(s.caption_js())
     return page(s.cid, s.dur, "\n".join(body), "\n".join(js))
@@ -459,19 +495,19 @@ def render_credits(s):
     mx = max(TOTAL.values())
     body = ['<div class="cam" id="cam">',
             '<div id="ct" style="position:absolute; left:160px; top:80px; font-size:60px; font-weight:900;">시험 5개에 든 크레딧</div>',
-            '<div id="cs" style="position:absolute; left:160px; top:160px; font-size:28px; color:var(--mute); font-weight:600;">8초 클립 5개 합계 · 힉스필드 견적 · 2026년 10월 27~28일 기준 · 클링은 출시 할인가</div>']
+            '<div id="cs" style="position:absolute; left:160px; top:160px; font-size:28px; color:var(--mute); font-weight:600;">8초 클립 5개 합계 · Higgsfield 견적 · 2026년 10월 27~28일 기준 · Kling은 출시 할인가</div>']
     for i, m in enumerate(order):
         name, col = MODELS[m]
-        y = 220 + i * 100
-        w = int(1100 * TOTAL[m] / mx)
-        body.append(f'<div id="cn{i}" style="position:absolute; left:160px; top:{y + 20}px; width:330px; font-size:38px; font-weight:900; color:{col};">{esc(name)}</div>')
-        body.append(f'<div id="cb{i}" style="position:absolute; left:500px; top:{y + 14}px; width:{max(w, 14)}px; height:64px; border-radius:12px; background:{col}; transform-origin:left center;"></div>')
-        body.append(f'<div id="cv{i}" style="position:absolute; left:{520 + max(w, 14)}px; top:{y + 18}px; font-size:46px; font-weight:900; font-variant-numeric: tabular-nums;" data-v="{TOTAL[m]}">0</div>')
+        y = 214 + i * 78
+        w = int(1050 * TOTAL[m] / mx)
+        body.append(f'<div id="cn{i}" style="position:absolute; left:160px; top:{y + 14}px; width:380px; font-size:34px; font-weight:900; color:{col};">{esc(name)}</div>')
+        body.append(f'<div id="cb{i}" style="position:absolute; left:550px; top:{y + 10}px; width:{max(w, 14)}px; height:52px; border-radius:10px; background:{col}; transform-origin:left center;"></div>')
+        body.append(f'<div id="cv{i}" style="position:absolute; left:{570 + max(w, 14)}px; top:{y + 10}px; font-size:40px; font-weight:900; font-variant-numeric: tabular-nums;" data-v="{TOTAL[m]}">0</div>')
     body.append("</div>")
     body.append(s.caption_html())
     js = [gridbg_js(s.dur), cam_js("punch", s.dur), 'tl.fromTo(["#ct", "#cs"], {opacity: 0}, {opacity: 1, duration: 0.4}, 0.1);']
-    for i in range(6):
-        t0 = 0.6 + i * 0.35
+    for i in range(len(order)):
+        t0 = 0.6 + i * 0.3
         js.append(f'tl.fromTo("#cn{i}", {{opacity: 0}}, {{opacity: 1, duration: 0.3}}, {t0:.2f});')
         js.append(f'tl.fromTo("#cb{i}", {{scaleX: 0}}, {{scaleX: 1, duration: 0.8, ease: "power3.out"}}, {t0:.2f});')
         js.append(f'(function(){{ const el = document.getElementById("cv{i}"); const o = {{v: 0}}; tl.to(o, {{v: +el.dataset.v, duration: 0.8, ease: "power3.out", onUpdate: function(){{ el.textContent = Math.round(o.v); }}}}, {t0:.2f}); tl.set(el, {{textContent: el.dataset.v}}, {t0 + 0.81:.2f}); }})();')
@@ -480,23 +516,27 @@ def render_credits(s):
 
 
 def render_faces(s):
-    """R4 마지막 클로즈업 6장 + 원본 시트."""
-    order = ["kling4_0", "wan3_0", "minimax_h3", "grok_video_v15", "seedance_2_5", "veo3_1"]
+    """R4 마지막 클로즈업 8칸 + 원본 시트 (결과 없는 모델은 거절 표시)."""
+    order = ["kling4_0", "wan3_0", "flux_3_video", "minimax_h3", "grok_video_v15", "seedance_2_0", "seedance_2_5", "gemini_omni_flash_1_1"]
     body = ['<div class="cam" id="cam">',
             '<div id="ref" class="frame" style="left:120px; top:120px; width:520px; height:600px;"><img src="assets/images/ref_pair.png" alt="" style="object-fit:cover" /></div>',
-            '<div id="reft" style="position:absolute; left:120px; top:730px; width:520px; text-align:center; font-size:32px; font-weight:800; color:var(--lime);">원본 레퍼런스</div>']
+            '<div id="reft" style="position:absolute; left:120px; top:730px; width:520px; text-align:center; font-size:32px; font-weight:800; color:var(--lime);">원본 Reference</div>']
     for i, m in enumerate(order):
         key = f"r4_{m}"
-        make_last_frame(key)
         name, col = MODELS[m]
-        x = 700 + (i % 3) * 380
-        y = 120 + (i // 3) * 330
-        body.append(f'<div class="frame" id="f{i}" style="left:{x}px; top:{y}px; width:360px; height:250px; border-radius:14px;"><img src="assets/images/last_{key}.png" alt="" style="object-fit:cover" /></div>'
-                    f'<div id="fn{i}" style="position:absolute; left:{x}px; top:{y + 258}px; width:360px; text-align:center; font-size:28px; font-weight:800; color:{col};">{esc(name)}</div>')
+        x = 690 + (i % 4) * 285
+        y = 150 + (i // 4) * 290
+        if ("r4", m) in FAILED:
+            inner = f'<div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 18px; font-size:22px; font-weight:800; color:var(--coral); background:#10142e;">{esc(FAILED[("r4", m)])}</div>'
+        else:
+            make_last_frame(key)
+            inner = f'<img src="assets/images/last_{key}.png" alt="" style="object-fit:cover" />'
+        body.append(f'<div class="frame" id="f{i}" style="left:{x}px; top:{y}px; width:270px; height:210px; border-radius:12px;">{inner}</div>'
+                    f'<div id="fn{i}" style="position:absolute; left:{x}px; top:{y + 216}px; width:270px; text-align:center; font-size:22px; font-weight:800; color:{col};">{esc(name)}</div>')
     body.append("</div>")
     body.append(s.caption_html())
     js = [gridbg_js(s.dur), cam_js("pan", s.dur), 'tl.fromTo(["#ref", "#reft"], {opacity: 0, x: -40}, {opacity: 1, x: 0, duration: 0.5, ease: "expo.out"}, 0.1);']
-    for i in range(6):
+    for i in range(len(order)):
         js.append(f'tl.fromTo(["#f{i}", "#fn{i}"], {{opacity: 0, y: 30}}, {{opacity: 1, y: 0, duration: 0.4, ease: "expo.out"}}, {0.5 + i * 0.12:.2f});')
     js.append(s.caption_js())
     return page(s.cid, s.dur, "\n".join(body), "\n".join(js))
@@ -543,7 +583,19 @@ def render_film(s):
     return page(s.cid, s.dur, "\n".join(body), "\n".join(js))
 
 
-RENDER = {"talk": render_talk, "clip": render_clip, "grid": render_grid, "prompt": render_prompt, "verdict": render_verdict,
+def render_screen(s):
+    """Higgsfield 작업 화면 녹화가 들어갈 자리. 녹화본으로 이 장면을 덮어쓴다."""
+    body = ['<div class="cam" id="cam">',
+            '<div id="slot" style="position:absolute; left:160px; top:70px; width:1600px; height:860px; border-radius:24px; border:4px dashed rgba(180,230,29,.7); background:rgba(16,20,46,.6); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;">'
+            '<div style="font-size:30px; font-weight:800; color:var(--lime); letter-spacing:.08em;">SCREEN RECORDING</div>'
+            '<div style="font-size:64px; font-weight:900;">Higgsfield 작업 화면이 들어갈 자리</div>'
+            '<div style="font-size:32px; color:var(--mute); font-weight:600;">모델 선택기 전환 · 프롬프트 붙여넣기 · 생성 버튼 · 크레딧 표시</div></div>',
+            "</div>", s.caption_html()]
+    js = [gridbg_js(s.dur), 'tl.fromTo("#slot", {opacity: 0, scale: 0.97}, {opacity: 1, scale: 1, duration: 0.5, ease: "expo.out"}, 0.1);', s.caption_js()]
+    return page(s.cid, s.dur, "\n".join(body), "\n".join(js))
+
+
+RENDER = {"screen": render_screen, "talk": render_talk, "clip": render_clip, "grid": render_grid, "prompt": render_prompt, "verdict": render_verdict,
           "specs": render_specs, "rules": render_rules, "board": render_board, "credits": render_credits, "faces": render_faces,
           "split": render_split, "film": render_film}
 
@@ -557,7 +609,64 @@ def make_last_frame(key):
 
 
 # ------------------------------------------------------------------ 대본 (장면 목록)
+# 시험별 모델 반응 (자막 한 줄씩). 1차 관찰 · 단아쌤 확인 필요
+OBS = {
+    "r1": {
+        "seedance_2_0": ["Seedance 2.0은 로우앵글로 대나무가 휘는 모습을 살렸습니다.", "다만 장풍 파동은 보이지 않습니다."],
+        "minimax_h3": ["MiniMax는 손바닥을 카메라 쪽으로 미는 구도가 시원합니다.", "대나무가 렌즈처럼 휘어 보이는 점은 아쉽습니다."],
+        "flux_3_video": ["FLUX 3는 공기 파동이 눈에 보입니다!", "카메라가 밀고 들어가는 연출까지 제일 장풍답습니다."],
+        "gemini_omni_flash_1_1": ["Gemini는 로우앵글과 낙엽은 좋습니다.", "다만 파동은 약하게 보입니다."],
+        "seedance_2_5": ["Seedance 2.5는 숨 고르는 장면까지 살렸습니다.", "그런데 옷감이 얇게 비쳐 보입니다."],
+        "grok_video_v15": ["Grok은 공기 소용돌이를 또렷하게 그렸습니다.", "다만 옆모습에 입을 벌린 표정이 조금 과합니다."],
+        "wan3_0": ["Wan은 정면 구도로 안정적입니다.", "소매와 낙엽이 바람 방향대로 움직입니다."],
+        "kling4_0": ["Kling은 마보 자세가 무협답습니다.", "그런데 정작 장풍 파동이 잘 보이지 않습니다."],
+    },
+    "r2": {
+        "wan3_0": ["Wan은 세 단계를 모두 해냈고,", "연못 위를 끝까지 달립니다!"],
+        "kling4_0": ["Kling도 지붕, 처마, 연못까지 순서대로 해냈습니다.", "다만 마지막은 뛰기보다 걷는 느낌입니다."],
+        "flux_3_video": ["FLUX 3는 지붕 위 도약은 좋습니다.", "하지만 연못에서는 물속에 서 있는 것처럼 보입니다."],
+        "minimax_h3": ["MiniMax는 걷는 느낌이라", "경공의 맛이 약합니다."],
+        "seedance_2_0": ["Seedance 2.0은 세 단계를 모두 해냈습니다.", "수면 위를 걷는 반사까지 자연스럽습니다."],
+        "grok_video_v15": ["Grok은 수면 물결 표현이 좋습니다.", "지붕 위에서 잠깐 멈칫하는 점은 아쉽습니다."],
+        "seedance_2_5": ["Seedance 2.5는 노을빛이 정말 영화 같습니다.", "그런데 걷다가 연못에 서서 끝납니다. 건너지 않았습니다."],
+        "gemini_omni_flash_1_1": ["Gemini도 지붕에서 연못까지", "세 단계를 모두 해냈습니다."],
+    },
+    "r3": {
+        "flux_3_video": ["FLUX 3는 카메라가 두 사람 사이로 파고듭니다.", "다만 첫 인사가 없습니다."],
+        "seedance_2_5": ["Seedance 2.5는 목검이 부딪히는 클로즈업이 영화 같습니다.", "하지만 시간 정지와 카메라 회전은 없습니다."],
+        "grok_video_v15": ["Grok은 인사로 시작하고, 낙엽이 공중에 멈춥니다.", "마지막에 다시 마주 섭니다. 순서를 잘 따랐습니다!"],
+        "kling4_0": ["Kling은 각도를 바꿔가며 보여줬지만,", "인사와 시간 정지가 빠졌습니다."],
+        "gemini_omni_flash_1_1": ["Gemini는 인사로 시작해 낙엽이 공중에 멈추고,", "마지막에 다시 인사합니다. 순서를 끝까지 지켰습니다!"],
+        "seedance_2_0": ["Seedance 2.0은 빙글빙글 도는 동작이 화려합니다.", "그런데 인사와 시간 정지는 없습니다."],
+        "wan3_0": ["Wan은 정면 구도로 안정적이지만,", "합이 적고 시간 정지가 없습니다."],
+        "minimax_h3": ["MiniMax는 합이 시원시원합니다.", "다만 시간 정지는 없었습니다."],
+    },
+    "r4": {
+        "flux_3_video": ["FLUX 3는 세 컷 순서를 지켰고,", "귀공자의 옥비녀와 옷 자수까지 그대로입니다!"],
+        "gemini_omni_flash_1_1": ["Gemini는 인물 사진을 넣자 안전 필터로 거절했습니다.", "같은 설정으로 한 번 더 시도했지만 또 거절됐습니다."],
+        "seedance_2_0": ["Seedance 2.0은 분위기는 좋지만,", "귀공자의 상투가 풀렸습니다."],
+        "kling4_0": ["Kling은 걷기, 다가오기, 클로즈업 순서를 지켰고,", "옥비녀와 자수까지 그대로입니다!"],
+        "minimax_h3": ["MiniMax는 두 사람의 얼굴을 잘 지켰지만,", "상투가 작게 바뀌었습니다."],
+        "grok_video_v15": ["Grok은 세 컷 구성은 좋지만,", "귀공자의 머리 모양이 조금 달라졌습니다."],
+        "seedance_2_5": ["Seedance 2.5는 클로즈업이 아름답지만,", "귀공자의 상투가 풀리고 표정이 달라졌습니다."],
+        "wan3_0": ["Wan도 옥비녀 상투와 자수를", "거의 그대로 지켰습니다!"],
+    },
+    "r5": {
+        "seedance_2_0": ["Seedance 2.0은 '단야객잔'.", "한 글자가 틀렸습니다."],
+        "grok_video_v15": ["Grok은 '단아객잔' 네 글자를", "정확히 썼습니다!"],
+        "gemini_omni_flash_1_1": ["Gemini도 '단아객잔'을", "정확히 썼습니다!"],
+        "seedance_2_5": ["Seedance 2.5도 정확합니다.", "차 따르는 손까지 자연스럽습니다."],
+        "wan3_0": ["Wan은 '단야객잔'.", "한 글자가 틀렸습니다."],
+        "flux_3_video": ["FLUX 3도 '단아객잔'을", "정확히 썼습니다!"],
+        "kling4_0": ["Kling도 네 글자를 정확히 썼습니다.", "현판으로 올라가는 카메라도 자연스럽습니다."],
+        "minimax_h3": ["MiniMax는 글자는 맞지만,", "현판이 비스듬히 기울어 보입니다."],
+    },
+}
+STAMP = {("r5", "seedance_2_0"): "단야?", ("r5", "wan3_0"): "단야?", ("r4", "gemini_omni_flash_1_1"): "거절"}
+
+
 def scenes():
+    """대본. 자막은 한 줄씩, 의미 단위로 끊는다. 말투는 '~입니다!' (합쇼체). 모델·서비스 이름은 영어 그대로."""
     S = []
     n = [0]
 
@@ -565,152 +674,201 @@ def scenes():
         n[0] += 1
         S.append(Scene(n[0], name, kind, caps, **kw))
 
-    # 1. 훅 · 판돈 · 소개
-    add("hook-grid", "grid", ["같은 문장 하나로 만든 장풍 영상 여섯 개예요. 만든 AI만 달라요.",
-                              "이 중에 진짜 무협 영화 같은 건 몇 번일까요? 정답은 끝에서 알려드릴게요."],
-        round="r1", title="같은 문장 · 다른 AI 여섯 개", cam="push", ad=True, music="wuxia", sfx=[("whoosh", 0.1)])
-    add("hook-question", "talk", ["클링 4.0이 나왔어요. 역대 최고 영상 AI라는 말까지 나와요.",
-                                  "시댄스 2.5보다 낫다는 사람도 있고요. 진짜일까요, 그냥 과장일까요?"],
-        kicker="NEW · KLING 4.0", title="클링 4.0, 진짜 최고일까?", hl=["진짜 최고"], sub="시댄스 2.5 · 비오 3.1 · 완 3.0 · 미니맥스 H3 · 그록 1.5", cam="push", ad=True, music="wuxia", sfx=[("ding", 0.3)])
-    add("authority", "clip", ["저는 경희대 경영대학원에서 AI와 이커머스를 가르치고, 기업의 AX 도입을 돕는 단아쌤, 김경은이에요."],
+    def round_clips(rnd, cams=("push", "pan", "pull")):
+        for i, m in enumerate(BLIND[rnd]):
+            fail = FAILED.get((rnd, m))
+            kw = dict(model=m, credits=CREDITS[rnd][m], label=f"{ROUND_NAME[rnd]} · {i + 1}번", cam=cams[i % 3], music="wuxia" if rnd in ("r1", "r2", "r3") else "calm", min_dur=8.6)
+            if fail:
+                kw.update(key=None, failed=fail, credits=None)
+            else:
+                kw.update(key=f"{rnd}_{m}")
+            if (rnd, m) in STAMP:
+                kw.update(stamp=STAMP[(rnd, m)], stamp_at=2.6 if not fail else 0.8, sfx=[("stamp", 2.6 if not fail else 0.8)])
+            if m == "minimax_h3":
+                kw.update(note="2K 고정 (다른 모델은 720p)")
+            add(f"{rnd}-{i + 1}-{m}", "clip", OBS[rnd][m], **kw)
+
+    # 1. 훅 · 질문 · 소개
+    add("hook-grid", "grid", ["같은 프롬프트 하나로 만든 장풍 영상 여덟 개입니다.",
+                              "만든 AI만 다릅니다.",
+                              "이 중 진짜 무협 영화 같은 건 몇 번일까요?",
+                              "정답은 마지막에 공개합니다!"],
+        round="r1", title="같은 프롬프트 · 다른 AI 여덟 개", cam="push", music="wuxia", sfx=[("whoosh", 0.1)])
+    add("hook-question", "talk", ["Kling 4.0이 나왔습니다.",
+                                  "Seedance 2.5보다 낫다는 사람도 있습니다.",
+                                  "정말일까요, 그냥 과장일까요?",
+                                  "여덟 개 모델로 직접 확인했습니다!"],
+        kicker="NEW · Kling 4.0", title="Kling 4.0, 진짜 최고일까?", hl=["진짜 최고"], sub="Seedance 2.5 · Seedance 2.0 · MiniMax H3 · Wan 3.0 · Grok Imagine 1.5 · FLUX 3 · Gemini Omni 1.1", cam="push", music="wuxia", sfx=[("ding", 0.3)])
+    add("authority", "clip", ["경희대 경영대학원 AI/이커머스 겸임교수,",
+                              "단아쌤 김경은입니다!"],
         key="authority", audio=False, cam="punch", music="wuxia", min_dur=7.0)
-    add("stakes", "talk", ["그래서 직접 확인했어요. 영상 AI 여섯 개에 똑같은 문장을 넣고, 크레딧을 천 개 넘게 썼어요.",
-                           "시험은 무협으로 냈어요. 쉬운 장면은 다 잘하거든요."],
-        kicker="AI 교수의 시험지", title="영상 AI 6개 × 무협 시험 5개", hl=["무협 시험 5개"], sub="장풍 · 경공 · 비무 · 레퍼런스 · 현판(함정)", cam="pan", music="wuxia", sfx=[("brush", 0.2)])
-    add("rules", "rules", ["조건은 똑같아요. 같은 문장, 8초, 다시 뽑기 없이 첫 결과만.",
-                           "각 모델이 얼마 들었는지는 마지막에 보여드릴게요. 솔직히 그게 결론을 바꿔요."],
-        title="공정 조건", items=["6개 모델에 같은 문장", "8초 · 16:9 · 같은 설정", "다시 뽑기 없이 첫 결과만", "가격은 마지막에 공개"], music="calm", sfx=[("tick", 0.85), ("tick", 1.2), ("tick", 1.55), ("tick", 1.9)])
-    add("sponsor", "talk", ["먼저 말씀드릴게요. 이 영상에는 힉스필드 유료 광고가 포함돼 있어요.",
-                            "여섯 개 모델을 전부 힉스필드 한 계정에서 돌렸어요. 모델만 바꾸면 문장은 그대로예요.",
-                            "지금 클링 4.0 출시 할인도 하고 있어요. 링크는 설명란에 있어요."],
-        kicker="유료 광고 포함", title="여섯 모델을 한 계정에서", hl=["한 계정"], sub="힉스필드 · 모델만 바꾸면 문장은 그대로", cam="push", ad=True, music="calm")
-    add("specs", "specs", ["시작 전에 여섯 모델을 30초만 볼게요.",
-                           "클링 4.0은 기억할 사진, 즉 레퍼런스를 여러 장 넣을 수 있고, 만든 영상을 고치는 편집 기능이 있어요.",
-                           "비오는 힉스필드가 문장을 자동으로 다듬어서 넣고, 미니맥스는 2K로만 나와요. 화면에 표시해 둘게요."],
+    add("stakes", "talk", ["시험은 무협으로 냈습니다.",
+                           "쉬운 장면은 다 잘하기 때문입니다.",
+                           "장풍, 경공, 비무, 같은 인물 유지,",
+                           "그리고 마지막에 함정 하나입니다!"],
+        kicker="AI 교수의 시험지", title="영상 AI 8개 × 무협 시험 5개", hl=["무협 시험 5개"], sub="장풍 · 경공 · 비무 · Reference · 현판(함정)", cam="pan", music="wuxia", sfx=[("brush", 0.2)])
+    add("rules", "rules", ["조건은 모두 같습니다.",
+                           "여덟 개 모델 모두 Higgsfield에서 돌렸고,",
+                           "모두 똑같은 프롬프트와 똑같은 설정을 넣었습니다.",
+                           "8초, 16:9, 다시 뽑기 없이 첫 결과만 씁니다.",
+                           "MiniMax만 2K로 고정돼 화질이 다릅니다.",
+                           "모델별 비용은 마지막에 공개합니다!"],
+        title="공정 조건", items=["8개 모델 모두 Higgsfield에서", "같은 프롬프트 · 같은 설정", "8초 · 16:9 · 첫 결과만", "가격은 마지막에 공개"], music="calm", sfx=[("tick", 0.85), ("tick", 1.2), ("tick", 1.55), ("tick", 1.9)])
+    add("screen", "screen", ["Higgsfield에서는 모델 선택기에서 모델만 바꾸면 됩니다.",
+                             "프롬프트는 그대로 남아 있어서",
+                             "여덟 번 복사할 필요가 없습니다.",
+                             "지금 Kling 4.0 출시 할인도 진행 중입니다.",
+                             "링크는 설명란 맨 위에 있습니다!"],
+        min_dur=20.0, music="calm")
+    add("specs", "specs", ["시작 전에 여덟 모델을 짧게 보겠습니다.",
+                           "Kling 4.0은 Reference를 15개까지 넣을 수 있고,",
+                           "만든 영상을 고치는 편집 기능도 있습니다.",
+                           "Seedance 2.0은 2.5의 이전 버전이라",
+                           "한 세대 사이에 얼마나 달라졌는지도 보겠습니다!"],
         music="calm")
 
     # 2. 시험 1 장풍
-    add("r1-prompt", "prompt", ["첫 번째 시험, 장풍이에요. 손바닥에서 바람이 나가서 대나무가 휘고 낙엽이 날아가야 해요."],
+    add("r1-prompt", "prompt", ["첫 번째 시험, 장풍입니다!",
+                                "손바닥에서 바람이 나가 대나무가 휘어야 하고,",
+                                "낙엽이 날아가야 합니다."],
         round="r1", sub="보이지 않는 힘을 보이게 만드는 시험", music="wuxia", sfx=[("brush", 0.1)])
-    add("r1-grid", "grid", ["크레딧부터 볼게요. 클링 4, 완 14, 미니맥스 16, 그록 36, 시댄스 56, 비오 80.",
-                            "같은 8초인데 스무 배 차이예요."],
-        round="r1", reveal=1.0, music="wuxia", sfx=[("tick", 1.0), ("tick", 1.18), ("tick", 1.36), ("tick", 1.54), ("tick", 1.72), ("tick", 1.9)])
-    add("r1-veo", "clip", ["비오는 제가 부탁한 로우앵글을 지켰고, 낙엽 폭풍이 제일 극적이에요. 대신 화면 위아래에 검은 띠가 생겼어요."],
-        key="r1_veo3_1", model="veo3_1", credits=80, note="힉스필드 자동 문장 보정 적용", music="wuxia")
-    add("r1-grok", "clip", ["그록은 유일하게 공기 소용돌이를 눈에 보이게 그렸어요. 다만 옆모습에 입을 벌린 표정이라 조금 과해요."],
-        key="r1_grok_video_v15", model="grok_video_v15", credits=36, mark=(1240, 420, 170), mark_at=4.5, cam="pull", music="wuxia")
-    add("r1-seedance", "clip", ["시댄스는 숨 고르는 장면까지 살렸어요. 그런데 옷감이 얇게 비쳐 보여서 바로 쓰기는 조금 망설여져요."],
-        key="r1_seedance_2_5", model="seedance_2_5", credits=56, cam="push", music="wuxia")
-    add("r1-kling", "clip", ["클링은 마보 자세가 무협다운데, 정작 장풍 파동이 잘 안 보여요. 이건 아쉬워요."],
-        key="r1_kling4_0", model="kling4_0", credits=4, cam="pan", music="wuxia")
-    add("r1-split", "split", ["완은 안정적이고, 미니맥스는 손바닥을 카메라 쪽으로 미는 구도가 시원해요."],
-        a=("r1_wan3_0", "Wan 3.0 · 14"), b=("r1_minimax_h3", "MiniMax H3 · 16 (2K)"), colors=["#ffbf3c", "#3fd6c6"], music="wuxia")
-    add("r1-verdict", "verdict", ["장풍은 비오가 가져가요. 그런데 서서 쏘는 장풍은 쉬운 편이에요. 지붕 위를 날아다니면 어떨까요?"],
-        round="r1", hand="로우앵글 + 낙엽 폭풍", music="wuxia", sfx=[("stamp", 0.65)])
+    add("r1-grid", "grid", ["크레딧부터 보겠습니다.",
+                            "같은 8초인데 Kling은 4, Seedance 2.5는 56입니다.",
+                            "한 편씩 보겠습니다!"],
+        round="r1", reveal=1.0, music="wuxia", sfx=[("tick", 1.0), ("tick", 1.3), ("tick", 1.6), ("tick", 1.9)])
+    round_clips("r1")
+    add("r1-verdict", "verdict", ["장풍은 FLUX 3가 가져갑니다!",
+                                  "그런데 서서 쏘는 장풍은 쉬운 편입니다.",
+                                  "지붕 위를 날아다니면 어떨까요?"],
+        round="r1", hand="공기 파동 + 카메라 푸시인", music="wuxia", sfx=[("stamp", 0.65)])
 
     # 3. 시험 2 경공
-    add("r2-prompt", "prompt", ["두 번째, 경공이에요. 지붕을 달리고, 처마에서 처마로 뛰고, 연못 위를 밟고 건너야 해요."],
-        round="r2", sub="순서 세 단계 · 하나라도 빠지면 바로 보여요", music="wuxia", sfx=[("brush", 0.1)])
-    add("r2-grid", "grid", ["이번 번호는 섞었어요. 몇 번이 세 단계를 다 했을까요?"], round="r2", reveal=3.2, music="wuxia",
+    add("r2-prompt", "prompt", ["두 번째 시험, 경공입니다!",
+                                "지붕을 달리고, 처마에서 처마로 뛰고,",
+                                "연못 위를 밟고 건너야 합니다."],
+        round="r2", sub="순서 세 단계 · 하나라도 빠지면 바로 보입니다", music="wuxia", sfx=[("brush", 0.1)])
+    add("r2-grid", "grid", ["이번에는 번호를 섞었습니다.",
+                            "몇 번이 세 단계를 다 해냈을까요?"], round="r2", reveal=3.2, music="wuxia",
         sfx=[("whoosh", 3.1)])
-    add("r2-seedance", "clip", ["시댄스는 노을빛이 정말 영화 같아요. 그런데 옷자락이 웨딩드레스처럼 길어지고, 걷다가 연못에 서서 끝나요. 연못을 건너지 않았어요."],
-        key="r2_seedance_2_5", model="seedance_2_5", credits=56, cam="push", music="wuxia")
-    add("r2-veo", "clip", ["비오는 제일 역동적으로 뛰어요. 그런데 착지할 때 물보라가 커서 물에 빠지는 것처럼 보여요."],
-        key="r2_veo3_1", model="veo3_1", credits=80, cam="pan", music="wuxia")
-    add("r2-kling", "clip", ["클링은 지붕, 처마, 연못까지 세 단계를 순서대로 다 했어요. 다만 마지막엔 뛰기보다 걷는 느낌이에요."],
-        key="r2_kling4_0", model="kling4_0", credits=4, cam="pull", music="wuxia")
-    add("r2-wan", "clip", ["완도 세 단계를 다 했고, 연못 위를 끝까지 달려요. 이번 시험에서 제일 경공다웠어요."],
-        key="r2_wan3_0", model="wan3_0", credits=14, cam="push", music="wuxia")
-    add("r2-split", "split", ["미니맥스는 걷는 느낌이라 경공 맛이 약하고, 그록은 수면 물결 표현이 좋아요."],
-        a=("r2_minimax_h3", "MiniMax H3 · 16 (2K)"), b=("r2_grok_video_v15", "Grok 1.5 · 36"), colors=["#3fd6c6", "#c9a7ff"], music="wuxia")
-    add("r2-verdict", "verdict", ["경공은 완, 클링은 근소한 2등이에요. 화면이 제일 예쁜 건 시댄스였지만, 시킨 걸 다 한 건 완과 클링이었어요.",
-                                  "이 차이, 끝까지 기억해 주세요. 이제 두 사람이 붙으면 어떨까요?"],
+    round_clips("r2")
+    add("r2-verdict", "verdict", ["경공은 연못 위를 끝까지 달린 Wan입니다!",
+                                  "재미있는 건 Seedance 2.0은 연못을 건넜는데,",
+                                  "2.5는 건너지 않았다는 점입니다.",
+                                  "새 버전이 늘 시킨 대로 하는 건 아닙니다.",
+                                  "이제 두 사람이 붙으면 어떨까요?"],
         round="r2", hand="예쁜 것 ≠ 시킨 대로 한 것", music="wuxia", sfx=[("stamp", 0.65)])
 
     # 4. 시험 3 비무
-    add("r3-prompt", "prompt", ["세 번째는 비무예요. 인사하고, 정확히 다섯 번 겨루고, 시간이 멈추며 카메라가 돌고, 서로 포권.",
-                                "시킨 게 제일 많은 시험이에요. 순서대로 다 하는지 볼게요."],
+    add("r3-prompt", "prompt", ["세 번째 시험, 비무입니다!",
+                                "인사하고, 정확히 다섯 번 겨루고,",
+                                "시간이 멈추며 카메라가 돌고,",
+                                "마지막에 서로 포권합니다.",
+                                "순서대로 다 해내는지 보겠습니다."],
         round="r3", sub="지시 이행 시험 · 서소저 vs 귀공자", music="wuxia", sfx=[("brush", 0.1)])
-    add("r3-grid", "grid", ["여섯 개 모두 두 사람의 옷과 머리는 잘 지켰어요. 차이는 순서에서 났어요."], round="r3", reveal=2.6, music="wuxia",
+    add("r3-grid", "grid", ["여덟 개 모두 두 사람의 옷과 머리는 잘 지켰습니다.",
+                            "차이는 순서에서 났습니다."], round="r3", reveal=2.6, music="wuxia",
         sfx=[("whoosh", 2.5)])
-    add("r3-grok", "clip", ["그록은 인사로 시작해서, 목검이 부딪히는 순간 낙엽이 공중에 멈추고, 마지막에 다시 마주 서요. 순서를 제일 잘 따랐어요."],
-        key="r3_grok_video_v15", model="grok_video_v15", credits=36, cam="push", music="wuxia")
-    add("r3-seedance", "clip", ["시댄스는 클로즈업으로 목검이 부딪히는 장면이 정말 영화 같아요. 하지만 시간 정지와 카메라 회전은 없었어요."],
-        key="r3_seedance_2_5", model="seedance_2_5", credits=56, cam="pan", music="wuxia")
-    add("r3-kling", "clip", ["클링은 각도를 바꿔가며 보여줬지만, 인사와 시간 정지는 빠졌어요. 이번 시험은 클링이 약했어요."],
-        key="r3_kling4_0", model="kling4_0", credits=4, cam="pull", music="wuxia")
-    add("r3-split", "split", ["비오는 낙엽이 화려하고, 미니맥스는 합이 시원시원해요. 둘 다 시간 정지는 없었어요."],
-        a=("r3_veo3_1", "Veo 3.1 · 80"), b=("r3_minimax_h3", "MiniMax H3 · 16 (2K)"), colors=["#5b8cff", "#3fd6c6"], music="wuxia")
-    add("r3-verdict", "verdict", ["비무는 그록이에요. 그럼 같은 사람을 끝까지 유지하는 건 누가 잘할까요?"],
+    round_clips("r3")
+    add("r3-verdict", "verdict", ["비무는 Grok과 Gemini 공동 1등입니다!",
+                                  "그렇다면 같은 사람을 끝까지 유지하는 건",
+                                  "누가 가장 잘할까요?"],
         round="r3", hand="인사 → 합 → 정지 → 마주 서기", music="wuxia", sfx=[("stamp", 0.65)])
 
-    # 5. 시험 4 레퍼런스
-    add("r4-intro", "talk", ["네 번째는 제일 실용적인 시험이에요. 서소저와 귀공자 사진을 먼저 만들어서, 모든 모델에 똑같이 넣었어요.",
-                             "세 컷 내내 같은 얼굴, 같은 옷으로 나오는지 볼게요. 같은 인물로 이어 찍어야 하는 영상이라면 이게 제일 중요해요.",
-                             "비오는 시작 이미지 한 장만 받을 수 있어서, 두 사람이 함께 있는 첫 장면을 따로 만들어 넣었어요."],
-        kicker="시험 4 · 레퍼런스", title="같은 사람으로 끝까지", hl=["끝까지"], sub="인물 사진 시트 2장 → 6개 모델 공통", img="ref_sheets.png", img_w=780, img_h=620, fit="contain", cam="pan", music="calm", sfx=[("brush", 0.1)])
-    add("r4-grid", "grid", ["다리 위를 걷고, 다가와서 멈추고, 클로즈업으로 마주 보기. 세 컷 구성이에요."], round="r4", reveal=2.4, music="calm",
+    # 5. 시험 4 Reference
+    add("r4-intro", "talk", ["네 번째는 가장 실용적인 시험입니다.",
+                             "서소저와 귀공자 사진을 먼저 만들어",
+                             "모든 모델에 똑같이 넣었습니다.",
+                             "세 컷 내내 같은 얼굴, 같은 옷이 나와야 합니다!"],
+        kicker="시험 4 · Reference", title="같은 사람으로 끝까지", hl=["끝까지"], sub="인물 사진 시트 2장 → 8개 모델 공통", img="ref_sheets.png", img_w=780, img_h=620, fit="contain", cam="pan", music="calm", sfx=[("brush", 0.1)])
+    add("r4-grid", "grid", ["다리 위를 걷고, 다가와 멈추고,",
+                            "클로즈업으로 마주 보는 세 컷 구성입니다."], round="r4", reveal=2.4, music="calm",
         sfx=[("whoosh", 2.3)])
-    add("r4-faces", "faces", ["마지막 클로즈업을 원본 사진과 나란히 볼게요.",
-                              "클링은 귀공자의 옥비녀 상투와 옷 자수까지 그대로예요. 완도 거의 같아요.",
-                              "시댄스와 비오는 귀공자의 상투가 풀려버렸고, 얼굴도 조금씩 달라졌어요."], music="calm")
-    add("r4-kling", "clip", ["클링은 세 컷 순서도 그대로 지켰어요. 걷기, 다가오기, 클로즈업."],
-        key="r4_kling4_0", model="kling4_0", credits=18, note="레퍼런스 모드 · 720p", cam="push", music="calm")
-    add("r4-verdict", "verdict", ["레퍼런스는 클링이에요. 마지막은 함정이에요."],
+    round_clips("r4")
+    add("r4-faces", "faces", ["마지막 클로즈업을 원본 사진과 비교해 보겠습니다.",
+                              "옥비녀 상투와 옷 자수까지 지킨 건",
+                              "Kling, FLUX 3, Wan 세 모델입니다.",
+                              "Seedance 두 모델은 귀공자의 상투가 풀렸습니다."], music="calm")
+    add("r4-verdict", "verdict", ["Reference 시험은 Kling, FLUX 3, Wan 공동 1등입니다!",
+                                  "마지막 시험은 함정입니다."],
         round="r4", hand="옥비녀 하나까지 그대로", music="wuxia", sfx=[("stamp", 0.65)])
 
     # 6. 시험 5 현판 (함정)
-    add("r5-prompt", "prompt", ["객잔 현판에 '단아객잔' 네 글자, 그리고 차를 따르는 손. 영상 AI는 글자에 약하다고 알려져 있죠."],
+    add("r5-prompt", "prompt", ["객잔 현판에 '단아객잔' 네 글자를 쓰고,",
+                                "차를 따르는 손을 보여줘야 합니다.",
+                                "영상 AI는 글자에 약하다고 알려져 있습니다."],
         round="r5", sub="함정 · 한글 글자", music="calm", sfx=[("brush", 0.1)])
-    add("r5-grid", "grid", ["결과는 반전이에요. 클링, 시댄스, 그록, 미니맥스는 네 글자를 정확히 썼어요."],
-        round="r5", reveal=2.0, winners=["kling4_0", "seedance_2_5", "grok_video_v15", "minimax_h3"], winners_at=3.2, music="calm", sfx=[("ding", 3.2)])
-    add("r5-wan", "clip", ["완은 '단야객잔'. 한 글자가 틀렸어요."],
-        key="r5_wan3_0", model="wan3_0", credits=14, stamp="단야?", stamp_at=2.6, cam="push", music="calm", sfx=[("stamp", 2.6)], min_dur=8.0)
-    add("r5-veo", "clip", ["비오는 아예 한자로 바꿔버렸어요. 힉스필드가 문장을 자동으로 다듬는 과정에서 바뀐 것으로 보여요."],
-        key="r5_veo3_1", model="veo3_1", credits=80, stamp="한자?", stamp_at=5.6, cam="pan", music="calm", sfx=[("stamp", 5.6)], min_dur=8.0)
-    add("r5-twist", "talk", ["더 재밌는 건 이거예요. 함정을 피하려고 이미지 AI로 현판을 먼저 만들었는데요,",
-                             "이미지 AI가 '단'을 '탄'으로 틀렸어요. '탄아객잔'이 됐어요.",
-                             "결론은 하나예요. 글자는 어떤 AI든 꼭 눈으로 확인하세요."],
-        kicker="함정의 함정", title="글자는 꼭 눈으로 확인", hl=["눈으로 확인"], sub="이미지 AI도 틀린다: 단 → 탄", img="r5_signboard.png", img_w=780, img_h=440, cam="push", music="calm")
-    add("r5-verdict", "verdict", ["현판은 클링, 시댄스, 그록 공동 1등이에요."],
-        round="r5", hand="미니맥스는 글자가 기울어서 아깝게 탈락", music="wuxia", sfx=[("stamp", 0.65)])
+    add("r5-grid", "grid", ["결과는 반전입니다!",
+                            "여덟 개 중 다섯 개가 네 글자를 정확히 썼습니다."],
+        round="r5", reveal=2.0, winners=WINNERS["r5"], winners_at=3.6, music="calm", sfx=[("ding", 3.6)])
+    round_clips("r5")
+    add("r5-twist", "talk", ["더 재미있는 일이 있었습니다.",
+                             "함정을 피하려고 이미지 AI로 현판을 먼저 만들었는데,",
+                             "이미지 AI가 '단'을 '탄'으로 틀렸습니다.",
+                             "결론은 하나입니다.",
+                             "글자는 어떤 AI든 꼭 눈으로 확인하십시오!"],
+        kicker="함정의 함정", title="글자는 꼭 눈으로 확인", hl=["눈으로 확인"], sub="이미지 AI도 틀립니다: 단 → 탄", img="r5_signboard.png", img_w=780, img_h=440, cam="push", music="calm")
+    add("r5-verdict", "verdict", ["현판 시험은 다섯 모델 공동 1등입니다!"],
+        round="r5", hand="Wan · Seedance 2.0은 단야, MiniMax는 기울어짐", music="wuxia", sfx=[("stamp", 0.65)])
 
     # 7. 점수 · 반전 · 강점
-    add("board", "board", ["다섯 시험 결과예요. 1등을 두 번 한 모델은 클링과 그록이에요.",
-                           "솔직히 제일 영화 같은 화면은 시댄스였어요. 그런데 시킨 걸 끝까지 따르는 모델은 시험마다 달랐어요.",
-                           "그럼 누가 정답일까요? 아직 돈 얘기를 안 했어요."], music="calm", sfx=[("tick", 1.4), ("tick", 1.85), ("tick", 2.3), ("tick", 2.75), ("tick", 3.2), ("ding", 3.9)])
-    add("credits", "credits", ["다섯 시험에 든 크레딧이에요. 클링 34, 완 70, 미니맥스 80, 그록 180, 시댄스 280, 비오 400.",
-                               "같은 시험을 클링은 시댄스의 8분의 1, 비오의 12분의 1 가격으로 끝냈어요.",
-                               "지금은 출시 할인가라는 것도 꼭 말씀드릴게요. 할인이 끝나면 가격은 오를 수 있어요."],
-        music="wuxia", sfx=[("tick", 0.6), ("tick", 0.95), ("tick", 1.3), ("tick", 1.65), ("tick", 2.0), ("tick", 2.35)])
-    add("kling-why", "talk", ["그리고 클링은 싸기만 한 게 아니에요. 레퍼런스 시험 1등, 현판 글자도 정확했어요.",
-                              "같은 인물로 여러 컷을 시킨 대로 만드는 일, 우리가 실제로 제일 많이 하는 일이죠."],
-        kicker="그래서 클링", title="싸고, 사람을 기억하고, 글자도 맞게", hl=["사람을 기억"], sub="레퍼런스 1등 · 현판 공동 1등 · 크레딧 최저", cam="push", music="wuxia")
-    add("edit-demo", "split", ["클링에는 만든 영상을 고치는 편집 기능도 있어요. 장풍 파동이 안 보였던 영상을 그 부분만 고쳐봤는데요,",
-                               "솔직히 이번엔 바람 번짐만 살짝 생겼어요. 편집도 한 번에 되진 않아요."],
-        a=("r1_kling4_0", "원본 (시험 1)"), b=("edit_r1_kling", "클링 편집 후"), music="calm")
-    add("edit-fix", "split", ["대신 처음부터 '눈에 보이는 충격파'라고 쓰고, 서소저 사진을 레퍼런스로 넣었더니 이렇게 나왔어요."],
-        a=("r1_kling4_0", "시험 1 · 글만"), b=("film_s2b", "단편 샷 · 레퍼런스 + 구체적 문장"), music="calm")
-    add("film-intro", "talk", ["그래서 오늘 결과로 클링 하나만 써서 30초 무협 단편을 만들어봤어요.",
-                               "이건 비교가 아니라 작품이라, 샷마다 두 번씩 뽑아서 좋은 걸 골랐어요."],
-        kicker="클링 4.0 단편", title="단아검법", sub="레퍼런스 · 1080p · 샷당 2회 생성", img="ref_sheets.png", img_w=780, img_h=620, fit="contain", cam="pull", music="calm")
+    add("board", "board", ["다섯 시험 결과입니다.",
+                           "1등을 가장 많이 한 모델은 FLUX 3, 세 번입니다!",
+                           "두 번 한 모델은 Kling, Wan, Gemini, Grok입니다.",
+                           "가장 영화 같은 화면은 Seedance 2.5였습니다.",
+                           "그렇다면 정답은 FLUX 3일까요?",
+                           "아직 비용 이야기를 하지 않았습니다!"], music="calm", sfx=[("tick", 1.4), ("tick", 1.85), ("tick", 2.3), ("tick", 2.75), ("tick", 3.2), ("ding", 3.9)])
+    add("credits", "credits", ["다섯 시험에 든 크레딧입니다.",
+                               "Kling 34, Wan 70, MiniMax 80, Gemini 96,",
+                               "Seedance 2.0 180, Grok 180, FLUX 3 240, Seedance 2.5 280.",
+                               "FLUX 3는 Kling의 7배,",
+                               "Seedance 2.5는 Kling의 8배를 썼습니다!",
+                               "다만 Kling은 지금 출시 할인가입니다.",
+                               "할인이 끝나면 가격이 오를 수 있습니다."],
+        music="wuxia", sfx=[("tick", 0.6), ("tick", 0.9), ("tick", 1.2), ("tick", 1.5), ("tick", 1.8), ("tick", 2.1), ("tick", 2.4), ("tick", 2.7)])
+    add("kling-why", "talk", ["Kling은 1등 두 번을 가장 싼 값에 해냈습니다.",
+                              "Reference 시험 1등, 현판 글자도 정확했습니다.",
+                              "같은 인물로 여러 컷을 시킨 대로 만드는 일,",
+                              "우리가 실제로 가장 많이 하는 일입니다!"],
+        kicker="그래서 Kling", title="싸고, 사람을 기억하고, 글자도 맞게", hl=["사람을 기억"], sub="Reference 공동 1등 · 현판 공동 1등 · 크레딧 최저", cam="push", music="wuxia")
+    add("edit-demo", "split", ["Kling에는 만든 영상을 고치는 편집 기능도 있습니다.",
+                               "장풍 파동이 안 보였던 부분만 고쳐봤습니다.",
+                               "솔직히 이번에는 바람 번짐만 살짝 생겼습니다.",
+                               "편집도 한 번에 완벽하지는 않습니다."],
+        a=("r1_kling4_0", "원본 (시험 1)"), b=("edit_r1_kling", "Kling 편집 후"), music="calm")
+    add("edit-fix", "split", ["대신 처음부터 '눈에 보이는 충격파'라고 쓰고,",
+                              "서소저 사진을 Reference로 넣었습니다.",
+                              "그랬더니 이렇게 나왔습니다!"],
+        a=("r1_kling4_0", "시험 1 · 글만"), b=("film_s2b", "단편 샷 · Reference + 구체적 문장"), music="calm")
+    add("film-intro", "talk", ["그래서 오늘 결과를 바탕으로",
+                               "Kling 하나만으로 30초 무협 단편을 만들었습니다.",
+                               "비교가 아닌 작품이라,",
+                               "샷마다 두 번씩 뽑아 좋은 것을 골랐습니다."],
+        kicker="Kling 4.0 단편", title="단아검법", sub="Reference · 1080p · 샷당 2회 생성", img="ref_sheets.png", img_w=780, img_h=620, fit="contain", cam="pull", music="calm")
     FILM = [("film_s1", 0, 4.0), ("film_s2b", 0, 5.0), ("film_s3a", 0, 6.0), ("film_s4b", 0, 8.0), ("film_s5", 0, 4.0), ("r5_kling4_0", 4.6, 3.4)]
     add("film", "film", [], min_dur=0.6 + sum(d for _, _, d in FILM) + 0.4, shots=FILM, music="none")
 
     # 8. 추천 · CTA
-    add("recommend", "talk", ["정리할게요. 제일 영화 같은 한 컷이 필요하고 예산이 넉넉하면 시댄스.",
-                              "같은 인물로 여러 컷을, 시킨 대로, 싸게 만들 거면 클링 4.0.",
-                              "꼭 하나만 고를 필요는 없어요. 장면마다 갈아타면 돼요. 그래서 저는 여섯 개를 한 곳에서 쓰는 힉스필드를 써요."],
-        kicker="이럴 땐 이 모델", title="한 컷 승부는 시댄스, 시리즈는 클링", hl=["시리즈는 클링"], sub="장면마다 갈아타기 · 힉스필드 한 계정", cam="push", music="wuxia")
-    add("cta", "talk", ["클링 4.0 할인은 지금 진행 중이에요. 설명란 링크로 들어가서 오늘 프롬프트 그대로 돌려보세요.",
-                        "장풍 하나에 4크레딧이에요."],
-        kicker="설명란 링크", title="오늘 프롬프트 그대로 돌려보세요", hl=["그대로"], sub="클링 4.0 출시 할인 중 · 크레딧은 2026년 10월 기준", cam="punch", ad=True, music="wuxia", sfx=[("ding", 0.4)])
-    add("answer", "grid", ["처음 문제 정답이에요. 1번 완, 2번 비오, 3번 미니맥스, 4번 그록, 5번 클링, 6번 시댄스.",
-                           "여러분이 고른 번호는 어떤 모델이었어요?"], round="r1", reveal=0.8, title="첫 문제 정답", cam="push", music="wuxia",
+    add("recommend", "talk", ["정리하겠습니다.",
+                              "한 컷의 완성도가 가장 중요하다면 Seedance 2.5나 FLUX 3,",
+                              "같은 인물로 여러 컷을 싸게 만든다면 Kling 4.0입니다!",
+                              "꼭 하나만 고를 필요는 없습니다.",
+                              "장면마다 갈아타면 됩니다.",
+                              "그래서 저는 여덟 개를 한 곳에서 쓰는 Higgsfield를 씁니다."],
+        kicker="이럴 땐 이 모델", title="한 컷 승부는 FLUX · Seedance, 시리즈는 Kling", hl=["시리즈는 Kling"], sub="장면마다 갈아타기 · Higgsfield 한 계정", cam="push", music="wuxia")
+    add("cta", "talk", ["오늘 여덟 모델은 모두 Higgsfield에서 돌렸습니다.",
+                        "설명란 링크에서 같은 프롬프트를 붙여넣고",
+                        "여러분의 1등을 직접 골라보십시오!",
+                        "장풍 하나에 Kling은 4크레딧입니다."],
+        kicker="설명란 링크", title="같은 프롬프트, 여러분의 1등은?", hl=["여러분의 1등"], sub="Kling 4.0 출시 할인 중 · 크레딧은 2026년 10월 기준", cam="punch", music="wuxia", sfx=[("ding", 0.4)])
+    add("answer", "grid", ["처음 문제의 정답입니다!",
+                           "1번 Seedance 2.0, 2번 MiniMax, 3번 FLUX 3, 4번 Gemini,",
+                           "5번 Seedance 2.5, 6번 Grok, 7번 Wan, 8번 Kling입니다.",
+                           "여러분이 고른 번호는 어떤 모델이었습니까?"], round="r1", reveal=0.8, title="첫 문제 정답", cam="push", music="wuxia",
         sfx=[("ding", 0.8)])
-    add("outro", "talk", ["여러분이 채점했다면 1등은 누구예요? 댓글로 알려주세요.",
-                          "다음 영상에서는 오늘 단편을 3분짜리로 늘려볼게요."],
-        kicker="다음 영상", title="단아검법, 3분으로", sub="구독하고 기다려 주세요", cam="pull", music="wuxia", tail=1.5)
+    add("outro", "talk", ["여러분이 채점했다면 1등은 누구입니까?",
+                          "댓글로 알려주십시오.",
+                          "다음 영상에서는 오늘 단편을 3분으로 늘려보겠습니다!"],
+        kicker="다음 영상", title="단아검법, 3분으로", sub="구독하고 기다려 주십시오", cam="pull", music="wuxia", tail=1.5)
     return S
 
 

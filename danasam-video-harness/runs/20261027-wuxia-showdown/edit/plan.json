@@ -1,5 +1,5 @@
 {
- "total": 582.8,
+ "total": 889.09,
  "scenes": [
   {
    "num": 1,
@@ -7,7 +7,7 @@
    "kind": "grid",
    "dir": "segments/01-hook-grid",
    "start": 0.0,
-   "dur": 11.82,
+   "dur": 13.79,
    "music": "wuxia",
    "sfx": [
     [
@@ -17,14 +17,24 @@
    ],
    "caps": [
     {
-     "text": "같은 문장 하나로 만든 장풍 영상 여섯 개예요. 만든 AI만 달라요.",
+     "text": "같은 프롬프트 하나로 만든 장풍 영상 여덟 개입니다.",
      "start": 0.4,
-     "dur": 5.22
+     "dur": 4.25
     },
     {
-     "text": "이 중에 진짜 무협 영화 같은 건 몇 번일까요? 정답은 끝에서 알려드릴게요.",
-     "start": 5.62,
-     "dur": 5.7
+     "text": "만든 AI만 다릅니다.",
+     "start": 4.65,
+     "dur": 2.4
+    },
+    {
+     "text": "이 중 진짜 무협 영화 같은 건 몇 번일까요?",
+     "start": 7.05,
+     "dur": 3.44
+    },
+    {
+     "text": "정답은 마지막에 공개합니다!",
+     "start": 10.49,
+     "dur": 2.8
     }
    ]
   },
@@ -33,8 +43,8 @@
    "name": "hook-question",
    "kind": "talk",
    "dir": "segments/02-hook-question",
-   "start": 11.82,
-   "dur": 11.98,
+   "start": 13.79,
+   "dur": 14.67,
    "music": "wuxia",
    "sfx": [
     [
@@ -44,14 +54,24 @@
    ],
    "caps": [
     {
-     "text": "클링 4.0이 나왔어요. 역대 최고 영상 AI라는 말까지 나와요.",
-     "start": 12.22,
-     "dur": 5.22
+     "text": "Kling 4.0이 나왔습니다.",
+     "start": 14.19,
+     "dur": 3.12
     },
     {
-     "text": "시댄스 2.5보다 낫다는 사람도 있고요. 진짜일까요, 그냥 과장일까요?",
-     "start": 17.43,
-     "dur": 5.86
+     "text": "Seedance 2.5보다 낫다는 사람도 있습니다.",
+     "start": 17.31,
+     "dur": 4.57
+    },
+    {
+     "text": "정말일까요, 그냥 과장일까요?",
+     "start": 21.88,
+     "dur": 2.96
+    },
+    {
+     "text": "여덟 개 모델로 직접 확인했습니다!",
+     "start": 24.84,
+     "dur": 3.12
     }
    ]
   },
@@ -60,15 +80,20 @@
    "name": "authority",
    "kind": "clip",
    "dir": "segments/03-authority",
-   "start": 23.79,
-   "dur": 9.02,
+   "start": 28.45,
+   "dur": 7.23,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "저는 경희대 경영대학원에서 AI와 이커머스를 가르치고, 기업의 AX 도입을 돕는 단아쌤, 김경은이에요.",
-     "start": 24.19,
-     "dur": 8.12
+     "text": "경희대 경영대학원 AI/이커머스 겸임교수,",
+     "start": 28.85,
+     "dur": 3.93
+    },
+    {
+     "text": "단아쌤 김경은입니다!",
+     "start": 32.78,
+     "dur": 2.4
     }
    ]
   },
@@ -77,8 +102,8 @@
    "name": "stakes",
    "kind": "talk",
    "dir": "segments/04-stakes",
-   "start": 32.81,
-   "dur": 12.46,
+   "start": 35.68,
+   "dur": 13.05,
    "music": "wuxia",
    "sfx": [
     [
@@ -88,14 +113,24 @@
    ],
    "caps": [
     {
-     "text": "그래서 직접 확인했어요. 영상 AI 여섯 개에 똑같은 문장을 넣고, 크레딧을 천 개 넘게 썼어요.",
-     "start": 33.21,
-     "dur": 7.15
+     "text": "시험은 무협으로 냈습니다.",
+     "start": 36.08,
+     "dur": 2.64
     },
     {
-     "text": "시험은 무협으로 냈어요. 쉬운 장면은 다 잘하거든요.",
-     "start": 40.36,
-     "dur": 4.41
+     "text": "쉬운 장면은 다 잘하기 때문입니다.",
+     "start": 38.72,
+     "dur": 3.12
+    },
+    {
+     "text": "장풍, 경공, 비무, 같은 인물 유지,",
+     "start": 41.84,
+     "dur": 3.28
+    },
+    {
+     "text": "그리고 마지막에 함정 하나입니다!",
+     "start": 45.12,
+     "dur": 3.12
     }
    ]
   },
@@ -104,8 +139,8 @@
    "name": "rules",
    "kind": "rules",
    "dir": "segments/05-rules",
-   "start": 45.27,
-   "dur": 12.14,
+   "start": 48.74,
+   "dur": 23.74,
    "music": "calm",
    "sfx": [
     [
@@ -127,41 +162,71 @@
    ],
    "caps": [
     {
-     "text": "조건은 똑같아요. 같은 문장, 8초, 다시 뽑기 없이 첫 결과만.",
-     "start": 45.67,
-     "dur": 5.05
+     "text": "조건은 모두 같습니다.",
+     "start": 49.14,
+     "dur": 2.4
     },
     {
-     "text": "각 모델이 얼마 들었는지는 마지막에 보여드릴게요. 솔직히 그게 결론을 바꿔요.",
-     "start": 50.73,
-     "dur": 6.18
+     "text": "여덟 개 모델 모두 Higgsfield에서 돌렸고,",
+     "start": 51.54,
+     "dur": 4.41
+    },
+    {
+     "text": "모두 똑같은 프롬프트와 똑같은 설정을 넣었습니다.",
+     "start": 55.95,
+     "dur": 4.25
+    },
+    {
+     "text": "8초, 16:9, 다시 뽑기 없이 첫 결과만 씁니다.",
+     "start": 60.19,
+     "dur": 4.25
+    },
+    {
+     "text": "MiniMax만 2K로 고정돼 화질이 다릅니다.",
+     "start": 64.44,
+     "dur": 4.25
+    },
+    {
+     "text": "모델별 비용은 마지막에 공개합니다!",
+     "start": 68.69,
+     "dur": 3.28
     }
    ]
   },
   {
    "num": 6,
-   "name": "sponsor",
-   "kind": "talk",
-   "dir": "segments/06-sponsor",
-   "start": 57.41,
-   "dur": 18.48,
+   "name": "screen",
+   "kind": "screen",
+   "dir": "segments/06-screen",
+   "start": 72.47,
+   "dur": 20.0,
    "music": "calm",
    "sfx": [],
    "caps": [
     {
-     "text": "먼저 말씀드릴게요. 이 영상에는 힉스필드 유료 광고가 포함돼 있어요.",
-     "start": 57.81,
+     "text": "Higgsfield에서는 모델 선택기에서 모델만 바꾸면 됩니다.",
+     "start": 72.87,
      "dur": 5.54
     },
     {
-     "text": "여섯 개 모델을 전부 힉스필드 한 계정에서 돌렸어요. 모델만 바꾸면 문장은 그대로예요.",
-     "start": 63.35,
-     "dur": 6.67
+     "text": "프롬프트는 그대로 남아 있어서",
+     "start": 78.41,
+     "dur": 2.8
     },
     {
-     "text": "지금 클링 4.0 출시 할인도 하고 있어요. 링크는 설명란에 있어요.",
-     "start": 70.02,
-     "dur": 5.38
+     "text": "여덟 번 복사할 필요가 없습니다.",
+     "start": 81.21,
+     "dur": 2.96
+    },
+    {
+     "text": "지금 Kling 4.0 출시 할인도 진행 중입니다.",
+     "start": 84.16,
+     "dur": 4.25
+    },
+    {
+     "text": "링크는 설명란 맨 위에 있습니다!",
+     "start": 88.41,
+     "dur": 2.96
     }
    ]
   },
@@ -170,25 +235,35 @@
    "name": "specs",
    "kind": "specs",
    "dir": "segments/07-specs",
-   "start": 75.9,
-   "dur": 20.1,
+   "start": 92.47,
+   "dur": 21.82,
    "music": "calm",
    "sfx": [],
    "caps": [
     {
-     "text": "시작 전에 여섯 모델을 30초만 볼게요.",
-     "start": 76.3,
+     "text": "시작 전에 여덟 모델을 짧게 보겠습니다.",
+     "start": 92.87,
      "dur": 3.44
     },
     {
-     "text": "클링 4.0은 기억할 사진, 즉 레퍼런스를 여러 장 넣을 수 있고, 만든 영상을 고치는 편집 기능이 있어요.",
-     "start": 79.74,
-     "dur": 7.8
+     "text": "Kling 4.0은 Reference를 15개까지 넣을 수 있고,",
+     "start": 96.31,
+     "dur": 5.54
     },
     {
-     "text": "비오는 힉스필드가 문장을 자동으로 다듬어서 넣고, 미니맥스는 2K로만 나와요. 화면에 표시해 둘게요.",
-     "start": 87.54,
-     "dur": 7.96
+     "text": "만든 영상을 고치는 편집 기능도 있습니다.",
+     "start": 101.85,
+     "dur": 3.6
+    },
+    {
+     "text": "Seedance 2.0은 2.5의 이전 버전이라",
+     "start": 105.45,
+     "dur": 4.25
+    },
+    {
+     "text": "한 세대 사이에 얼마나 달라졌는지도 보겠습니다!",
+     "start": 109.7,
+     "dur": 4.09
     }
    ]
   },
@@ -197,8 +272,8 @@
    "name": "r1-prompt",
    "kind": "prompt",
    "dir": "segments/08-r1-prompt",
-   "start": 95.99,
-   "dur": 7.89,
+   "start": 114.29,
+   "dur": 9.94,
    "music": "wuxia",
    "sfx": [
     [
@@ -208,9 +283,19 @@
    ],
    "caps": [
     {
-     "text": "첫 번째 시험, 장풍이에요. 손바닥에서 바람이 나가서 대나무가 휘고 낙엽이 날아가야 해요.",
-     "start": 96.39,
-     "dur": 6.99
+     "text": "첫 번째 시험, 장풍입니다!",
+     "start": 114.69,
+     "dur": 2.64
+    },
+    {
+     "text": "손바닥에서 바람이 나가 대나무가 휘어야 하고,",
+     "start": 117.33,
+     "dur": 3.93
+    },
+    {
+     "text": "낙엽이 날아가야 합니다.",
+     "start": 121.25,
+     "dur": 2.47
     }
    ]
   },
@@ -219,8 +304,8 @@
    "name": "r1-grid",
    "kind": "grid",
    "dir": "segments/09-r1-grid",
-   "start": 103.88,
-   "dur": 11.01,
+   "start": 124.23,
+   "dur": 11.64,
    "music": "wuxia",
    "sfx": [
     [
@@ -229,19 +314,11 @@
     ],
     [
      "tick",
-     1.18
+     1.3
     ],
     [
      "tick",
-     1.36
-    ],
-    [
-     "tick",
-     1.54
-    ],
-    [
-     "tick",
-     1.72
+     1.6
     ],
     [
      "tick",
@@ -250,109 +327,205 @@
    ],
    "caps": [
     {
-     "text": "크레딧부터 볼게요. 클링 4, 완 14, 미니맥스 16, 그록 36, 시댄스 56, 비오 80.",
-     "start": 104.28,
-     "dur": 7.15
+     "text": "크레딧부터 보겠습니다.",
+     "start": 124.63,
+     "dur": 2.47
     },
     {
-     "text": "같은 8초인데 스무 배 차이예요.",
-     "start": 111.44,
-     "dur": 2.96
+     "text": "같은 8초인데 Kling은 4, Seedance 2.5는 56입니다.",
+     "start": 127.1,
+     "dur": 5.86
+    },
+    {
+     "text": "한 편씩 보겠습니다!",
+     "start": 132.96,
+     "dur": 2.4
     }
    ]
   },
   {
    "num": 10,
-   "name": "r1-veo",
+   "name": "r1-1-seedance_2_0",
    "kind": "clip",
-   "dir": "segments/10-r1-veo",
-   "start": 114.89,
-   "dur": 9.18,
+   "dir": "segments/10-r1-1-seedance_2_0",
+   "start": 135.86,
+   "dur": 9.88,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "비오는 제가 부탁한 로우앵글을 지켰고, 낙엽 폭풍이 제일 극적이에요. 대신 화면 위아래에 검은 띠가 생겼어요.",
-     "start": 115.29,
-     "dur": 8.28
+     "text": "Seedance 2.0은 로우앵글로 대나무가 휘는 모습을 살렸습니다.",
+     "start": 136.26,
+     "dur": 5.86
+    },
+    {
+     "text": "다만 장풍 파동은 보이지 않습니다.",
+     "start": 142.12,
+     "dur": 3.12
     }
    ]
   },
   {
    "num": 11,
-   "name": "r1-grok",
+   "name": "r1-2-minimax_h3",
    "kind": "clip",
-   "dir": "segments/11-r1-grok",
-   "start": 124.07,
-   "dur": 8.7,
+   "dir": "segments/11-r1-2-minimax_h3",
+   "start": 145.74,
+   "dur": 10.36,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "그록은 유일하게 공기 소용돌이를 눈에 보이게 그렸어요. 다만 옆모습에 입을 벌린 표정이라 조금 과해요.",
-     "start": 124.47,
-     "dur": 7.8
+     "text": "MiniMax는 손바닥을 카메라 쪽으로 미는 구도가 시원합니다.",
+     "start": 146.14,
+     "dur": 5.38
+    },
+    {
+     "text": "대나무가 렌즈처럼 휘어 보이는 점은 아쉽습니다.",
+     "start": 151.52,
+     "dur": 4.09
     }
    ]
   },
   {
    "num": 12,
-   "name": "r1-seedance",
+   "name": "r1-3-flux_3_video",
    "kind": "clip",
-   "dir": "segments/12-r1-seedance",
-   "start": 132.77,
-   "dur": 8.54,
+   "dir": "segments/12-r1-3-flux_3_video",
+   "start": 156.11,
+   "dur": 8.91,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "시댄스는 숨 고르는 장면까지 살렸어요. 그런데 옷감이 얇게 비쳐 보여서 바로 쓰기는 조금 망설여져요.",
-     "start": 133.17,
-     "dur": 7.64
+     "text": "FLUX 3는 공기 파동이 눈에 보입니다!",
+     "start": 156.51,
+     "dur": 3.6
+    },
+    {
+     "text": "카메라가 밀고 들어가는 연출까지 제일 장풍답습니다.",
+     "start": 160.11,
+     "dur": 4.41
     }
    ]
   },
   {
    "num": 13,
-   "name": "r1-kling",
+   "name": "r1-4-gemini_omni_flash_1_1",
    "kind": "clip",
-   "dir": "segments/13-r1-kling",
-   "start": 141.31,
-   "dur": 7.08,
+   "dir": "segments/13-r1-4-gemini_omni_flash_1_1",
+   "start": 165.02,
+   "dur": 8.6,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "클링은 마보 자세가 무협다운데, 정작 장풍 파동이 잘 안 보여요. 이건 아쉬워요.",
-     "start": 141.71,
-     "dur": 6.18
+     "text": "Gemini는 로우앵글과 낙엽은 좋습니다.",
+     "start": 165.42,
+     "dur": 3.93
+    },
+    {
+     "text": "다만 파동은 약하게 보입니다.",
+     "start": 169.35,
+     "dur": 2.8
     }
    ]
   },
   {
    "num": 14,
-   "name": "r1-split",
-   "kind": "split",
-   "dir": "segments/14-r1-split",
-   "start": 148.39,
-   "dur": 6.92,
+   "name": "r1-5-seedance_2_5",
+   "kind": "clip",
+   "dir": "segments/14-r1-5-seedance_2_5",
+   "start": 173.62,
+   "dur": 8.91,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "완은 안정적이고, 미니맥스는 손바닥을 카메라 쪽으로 미는 구도가 시원해요.",
-     "start": 148.79,
-     "dur": 6.02
+     "text": "Seedance 2.5는 숨 고르는 장면까지 살렸습니다.",
+     "start": 174.02,
+     "dur": 4.89
+    },
+    {
+     "text": "그런데 옷감이 얇게 비쳐 보입니다.",
+     "start": 178.91,
+     "dur": 3.12
     }
    ]
   },
   {
    "num": 15,
+   "name": "r1-6-grok_video_v15",
+   "kind": "clip",
+   "dir": "segments/15-r1-6-grok_video_v15",
+   "start": 182.53,
+   "dur": 9.07,
+   "music": "wuxia",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Grok은 공기 소용돌이를 또렷하게 그렸습니다.",
+     "start": 182.93,
+     "dur": 4.25
+    },
+    {
+     "text": "다만 옆모습에 입을 벌린 표정이 조금 과합니다.",
+     "start": 187.18,
+     "dur": 3.93
+    }
+   ]
+  },
+  {
+   "num": 16,
+   "name": "r1-7-wan3_0",
+   "kind": "clip",
+   "dir": "segments/16-r1-7-wan3_0",
+   "start": 191.61,
+   "dur": 8.6,
+   "music": "wuxia",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Wan은 정면 구도로 안정적입니다.",
+     "start": 192.01,
+     "dur": 3.28
+    },
+    {
+     "text": "소매와 낙엽이 바람 방향대로 움직입니다.",
+     "start": 195.29,
+     "dur": 3.6
+    }
+   ]
+  },
+  {
+   "num": 17,
+   "name": "r1-8-kling4_0",
+   "kind": "clip",
+   "dir": "segments/17-r1-8-kling4_0",
+   "start": 200.21,
+   "dur": 8.6,
+   "music": "wuxia",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Kling은 마보 자세가 무협답습니다.",
+     "start": 200.61,
+     "dur": 3.6
+    },
+    {
+     "text": "그런데 정작 장풍 파동이 잘 보이지 않습니다.",
+     "start": 204.21,
+     "dur": 3.76
+    }
+   ]
+  },
+  {
+   "num": 18,
    "name": "r1-verdict",
    "kind": "verdict",
-   "dir": "segments/15-r1-verdict",
-   "start": 155.31,
-   "dur": 8.37,
+   "dir": "segments/18-r1-verdict",
+   "start": 208.81,
+   "dur": 10.42,
    "music": "wuxia",
    "sfx": [
     [
@@ -362,19 +535,29 @@
    ],
    "caps": [
     {
-     "text": "장풍은 비오가 가져가요. 그런데 서서 쏘는 장풍은 쉬운 편이에요. 지붕 위를 날아다니면 어떨까요?",
-     "start": 155.71,
-     "dur": 7.47
+     "text": "장풍은 FLUX 3가 가져갑니다!",
+     "start": 209.21,
+     "dur": 3.12
+    },
+    {
+     "text": "그런데 서서 쏘는 장풍은 쉬운 편입니다.",
+     "start": 212.33,
+     "dur": 3.44
+    },
+    {
+     "text": "지붕 위를 날아다니면 어떨까요?",
+     "start": 215.77,
+     "dur": 2.96
     }
    ]
   },
   {
-   "num": 16,
+   "num": 19,
    "name": "r2-prompt",
    "kind": "prompt",
-   "dir": "segments/16-r2-prompt",
-   "start": 163.69,
-   "dur": 7.89,
+   "dir": "segments/19-r2-prompt",
+   "start": 219.23,
+   "dur": 9.77,
    "music": "wuxia",
    "sfx": [
     [
@@ -384,19 +567,29 @@
    ],
    "caps": [
     {
-     "text": "두 번째, 경공이에요. 지붕을 달리고, 처마에서 처마로 뛰고, 연못 위를 밟고 건너야 해요.",
-     "start": 164.09,
-     "dur": 6.99
+     "text": "두 번째 시험, 경공입니다!",
+     "start": 219.63,
+     "dur": 2.64
+    },
+    {
+     "text": "지붕을 달리고, 처마에서 처마로 뛰고,",
+     "start": 222.26,
+     "dur": 3.44
+    },
+    {
+     "text": "연못 위를 밟고 건너야 합니다.",
+     "start": 225.7,
+     "dur": 2.8
     }
    ]
   },
   {
-   "num": 17,
+   "num": 20,
    "name": "r2-grid",
    "kind": "grid",
-   "dir": "segments/17-r2-grid",
-   "start": 171.58,
-   "dur": 5.31,
+   "dir": "segments/20-r2-grid",
+   "start": 229.0,
+   "dur": 6.65,
    "music": "wuxia",
    "sfx": [
     [
@@ -406,104 +599,200 @@
    ],
    "caps": [
     {
-     "text": "이번 번호는 섞었어요. 몇 번이 세 단계를 다 했을까요?",
-     "start": 171.98,
-     "dur": 4.41
-    }
-   ]
-  },
-  {
-   "num": 18,
-   "name": "r2-seedance",
-   "kind": "clip",
-   "dir": "segments/18-r2-seedance",
-   "start": 176.89,
-   "dur": 10.95,
-   "music": "wuxia",
-   "sfx": [],
-   "caps": [
+     "text": "이번에는 번호를 섞었습니다.",
+     "start": 229.4,
+     "dur": 2.8
+    },
     {
-     "text": "시댄스는 노을빛이 정말 영화 같아요. 그런데 옷자락이 웨딩드레스처럼 길어지고, 걷다가 연못에 서서 끝나요. 연못을 건너지 않았어요.",
-     "start": 177.29,
-     "dur": 10.05
-    }
-   ]
-  },
-  {
-   "num": 19,
-   "name": "r2-veo",
-   "kind": "clip",
-   "dir": "segments/19-r2-veo",
-   "start": 187.84,
-   "dur": 7.89,
-   "music": "wuxia",
-   "sfx": [],
-   "caps": [
-    {
-     "text": "비오는 제일 역동적으로 뛰어요. 그런데 착지할 때 물보라가 커서 물에 빠지는 것처럼 보여요.",
-     "start": 188.24,
-     "dur": 6.99
-    }
-   ]
-  },
-  {
-   "num": 20,
-   "name": "r2-kling",
-   "kind": "clip",
-   "dir": "segments/20-r2-kling",
-   "start": 195.73,
-   "dur": 8.7,
-   "music": "wuxia",
-   "sfx": [],
-   "caps": [
-    {
-     "text": "클링은 지붕, 처마, 연못까지 세 단계를 순서대로 다 했어요. 다만 마지막엔 뛰기보다 걷는 느낌이에요.",
-     "start": 196.13,
-     "dur": 7.8
+     "text": "몇 번이 세 단계를 다 해냈을까요?",
+     "start": 232.2,
+     "dur": 2.96
     }
    ]
   },
   {
    "num": 21,
-   "name": "r2-wan",
+   "name": "r2-1-wan3_0",
    "kind": "clip",
-   "dir": "segments/21-r2-wan",
-   "start": 204.43,
-   "dur": 7.41,
+   "dir": "segments/21-r2-1-wan3_0",
+   "start": 235.65,
+   "dur": 8.6,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "완도 세 단계를 다 했고, 연못 위를 끝까지 달려요. 이번 시험에서 제일 경공다웠어요.",
-     "start": 204.83,
-     "dur": 6.51
+     "text": "Wan은 세 단계를 모두 해냈고,",
+     "start": 236.05,
+     "dur": 2.96
+    },
+    {
+     "text": "연못 위를 끝까지 달립니다!",
+     "start": 239.01,
+     "dur": 2.64
     }
    ]
   },
   {
    "num": 22,
-   "name": "r2-split",
-   "kind": "split",
-   "dir": "segments/22-r2-split",
-   "start": 211.84,
-   "dur": 6.92,
+   "name": "r2-2-kling4_0",
+   "kind": "clip",
+   "dir": "segments/22-r2-2-kling4_0",
+   "start": 244.25,
+   "dur": 9.4,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "미니맥스는 걷는 느낌이라 경공 맛이 약하고, 그록은 수면 물결 표현이 좋아요.",
-     "start": 212.24,
-     "dur": 6.02
+     "text": "Kling도 지붕, 처마, 연못까지 순서대로 해냈습니다.",
+     "start": 244.65,
+     "dur": 4.89
+    },
+    {
+     "text": "다만 마지막은 뛰기보다 걷는 느낌입니다.",
+     "start": 249.55,
+     "dur": 3.6
     }
    ]
   },
   {
    "num": 23,
+   "name": "r2-3-flux_3_video",
+   "kind": "clip",
+   "dir": "segments/23-r2-3-flux_3_video",
+   "start": 253.65,
+   "dur": 8.6,
+   "music": "wuxia",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "FLUX 3는 지붕 위 도약은 좋습니다.",
+     "start": 254.05,
+     "dur": 3.44
+    },
+    {
+     "text": "하지만 연못에서는 물속에 서 있는 것처럼 보입니다.",
+     "start": 257.49,
+     "dur": 4.25
+    }
+   ]
+  },
+  {
+   "num": 24,
+   "name": "r2-4-minimax_h3",
+   "kind": "clip",
+   "dir": "segments/24-r2-4-minimax_h3",
+   "start": 262.25,
+   "dur": 8.6,
+   "music": "wuxia",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "MiniMax는 걷는 느낌이라",
+     "start": 262.65,
+     "dur": 2.96
+    },
+    {
+     "text": "경공의 맛이 약합니다.",
+     "start": 265.61,
+     "dur": 2.4
+    }
+   ]
+  },
+  {
+   "num": 25,
+   "name": "r2-5-seedance_2_0",
+   "kind": "clip",
+   "dir": "segments/25-r2-5-seedance_2_0",
+   "start": 270.85,
+   "dur": 9.07,
+   "music": "wuxia",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Seedance 2.0은 세 단계를 모두 해냈습니다.",
+     "start": 271.25,
+     "dur": 4.57
+    },
+    {
+     "text": "수면 위를 걷는 반사까지 자연스럽습니다.",
+     "start": 275.82,
+     "dur": 3.6
+    }
+   ]
+  },
+  {
+   "num": 26,
+   "name": "r2-6-grok_video_v15",
+   "kind": "clip",
+   "dir": "segments/26-r2-6-grok_video_v15",
+   "start": 279.93,
+   "dur": 8.6,
+   "music": "wuxia",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Grok은 수면 물결 표현이 좋습니다.",
+     "start": 280.33,
+     "dur": 3.44
+    },
+    {
+     "text": "지붕 위에서 잠깐 멈칫하는 점은 아쉽습니다.",
+     "start": 283.77,
+     "dur": 3.76
+    }
+   ]
+  },
+  {
+   "num": 27,
+   "name": "r2-7-seedance_2_5",
+   "kind": "clip",
+   "dir": "segments/27-r2-7-seedance_2_5",
+   "start": 288.53,
+   "dur": 10.36,
+   "music": "wuxia",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Seedance 2.5는 노을빛이 정말 영화 같습니다.",
+     "start": 288.93,
+     "dur": 4.73
+    },
+    {
+     "text": "그런데 걷다가 연못에 서서 끝납니다. 건너지 않았습니다.",
+     "start": 293.66,
+     "dur": 4.73
+    }
+   ]
+  },
+  {
+   "num": 28,
+   "name": "r2-8-gemini_omni_flash_1_1",
+   "kind": "clip",
+   "dir": "segments/28-r2-8-gemini_omni_flash_1_1",
+   "start": 298.89,
+   "dur": 8.6,
+   "music": "wuxia",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Gemini도 지붕에서 연못까지",
+     "start": 299.29,
+     "dur": 3.12
+    },
+    {
+     "text": "세 단계를 모두 해냈습니다.",
+     "start": 302.41,
+     "dur": 2.64
+    }
+   ]
+  },
+  {
+   "num": 29,
    "name": "r2-verdict",
    "kind": "verdict",
-   "dir": "segments/23-r2-verdict",
-   "start": 218.76,
-   "dur": 14.4,
+   "dir": "segments/29-r2-verdict",
+   "start": 307.49,
+   "dur": 19.08,
    "music": "wuxia",
    "sfx": [
     [
@@ -513,24 +802,39 @@
    ],
    "caps": [
     {
-     "text": "경공은 완, 클링은 근소한 2등이에요. 화면이 제일 예쁜 건 시댄스였지만, 시킨 걸 다 한 건 완과 클링이었어요.",
-     "start": 219.16,
-     "dur": 8.28
+     "text": "경공은 연못 위를 끝까지 달린 Wan입니다!",
+     "start": 307.89,
+     "dur": 3.76
     },
     {
-     "text": "이 차이, 끝까지 기억해 주세요. 이제 두 사람이 붙으면 어떨까요?",
-     "start": 227.44,
-     "dur": 5.22
+     "text": "재미있는 건 Seedance 2.0은 연못을 건넜는데,",
+     "start": 311.65,
+     "dur": 4.73
+    },
+    {
+     "text": "2.5는 건너지 않았다는 점입니다.",
+     "start": 316.39,
+     "dur": 3.28
+    },
+    {
+     "text": "새 버전이 늘 시킨 대로 하는 건 아닙니다.",
+     "start": 319.67,
+     "dur": 3.44
+    },
+    {
+     "text": "이제 두 사람이 붙으면 어떨까요?",
+     "start": 323.11,
+     "dur": 2.96
     }
    ]
   },
   {
-   "num": 24,
+   "num": 30,
    "name": "r3-prompt",
    "kind": "prompt",
-   "dir": "segments/24-r3-prompt",
-   "start": 233.15,
-   "dur": 13.11,
+   "dir": "segments/30-r3-prompt",
+   "start": 326.57,
+   "dur": 15.21,
    "music": "wuxia",
    "sfx": [
     [
@@ -540,24 +844,39 @@
    ],
    "caps": [
     {
-     "text": "세 번째는 비무예요. 인사하고, 정확히 다섯 번 겨루고, 시간이 멈추며 카메라가 돌고, 서로 포권.",
-     "start": 233.55,
-     "dur": 7.47
+     "text": "세 번째 시험, 비무입니다!",
+     "start": 326.97,
+     "dur": 2.64
     },
     {
-     "text": "시킨 게 제일 많은 시험이에요. 순서대로 다 하는지 볼게요.",
-     "start": 241.03,
-     "dur": 4.73
+     "text": "인사하고, 정확히 다섯 번 겨루고,",
+     "start": 329.6,
+     "dur": 3.12
+    },
+    {
+     "text": "시간이 멈추며 카메라가 돌고,",
+     "start": 332.72,
+     "dur": 2.8
+    },
+    {
+     "text": "마지막에 서로 포권합니다.",
+     "start": 335.52,
+     "dur": 2.64
+    },
+    {
+     "text": "순서대로 다 해내는지 보겠습니다.",
+     "start": 338.15,
+     "dur": 3.12
     }
    ]
   },
   {
-   "num": 25,
+   "num": 31,
    "name": "r3-grid",
    "kind": "grid",
-   "dir": "segments/25-r3-grid",
-   "start": 246.26,
-   "dur": 6.6,
+   "dir": "segments/31-r3-grid",
+   "start": 341.77,
+   "dur": 7.62,
    "music": "wuxia",
    "sfx": [
     [
@@ -567,87 +886,200 @@
    ],
    "caps": [
     {
-     "text": "여섯 개 모두 두 사람의 옷과 머리는 잘 지켰어요. 차이는 순서에서 났어요.",
-     "start": 246.66,
+     "text": "여덟 개 모두 두 사람의 옷과 머리는 잘 지켰습니다.",
+     "start": 342.17,
+     "dur": 4.09
+    },
+    {
+     "text": "차이는 순서에서 났습니다.",
+     "start": 346.26,
+     "dur": 2.64
+    }
+   ]
+  },
+  {
+   "num": 32,
+   "name": "r3-1-flux_3_video",
+   "kind": "clip",
+   "dir": "segments/32-r3-1-flux_3_video",
+   "start": 349.4,
+   "dur": 8.6,
+   "music": "wuxia",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "FLUX 3는 카메라가 두 사람 사이로 파고듭니다.",
+     "start": 349.8,
+     "dur": 4.25
+    },
+    {
+     "text": "다만 첫 인사가 없습니다.",
+     "start": 354.05,
+     "dur": 2.47
+    }
+   ]
+  },
+  {
+   "num": 33,
+   "name": "r3-2-seedance_2_5",
+   "kind": "clip",
+   "dir": "segments/33-r3-2-seedance_2_5",
+   "start": 358.0,
+   "dur": 10.36,
+   "music": "wuxia",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Seedance 2.5는 목검이 부딪히는 클로즈업이 영화 같습니다.",
+     "start": 358.4,
      "dur": 5.7
+    },
+    {
+     "text": "하지만 시간 정지와 카메라 회전은 없습니다.",
+     "start": 364.1,
+     "dur": 3.76
     }
    ]
   },
   {
-   "num": 26,
-   "name": "r3-grok",
+   "num": 34,
+   "name": "r3-3-grok_video_v15",
    "kind": "clip",
-   "dir": "segments/26-r3-grok",
-   "start": 252.86,
-   "dur": 9.99,
+   "dir": "segments/34-r3-3-grok_video_v15",
+   "start": 368.36,
+   "dur": 9.72,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "그록은 인사로 시작해서, 목검이 부딪히는 순간 낙엽이 공중에 멈추고, 마지막에 다시 마주 서요. 순서를 제일 잘 따랐어요.",
-     "start": 253.26,
-     "dur": 9.09
+     "text": "Grok은 인사로 시작하고, 낙엽이 공중에 멈춥니다.",
+     "start": 368.76,
+     "dur": 4.57
+    },
+    {
+     "text": "마지막에 다시 마주 섭니다. 순서를 잘 따랐습니다!",
+     "start": 373.33,
+     "dur": 4.25
     }
    ]
   },
   {
-   "num": 27,
-   "name": "r3-seedance",
+   "num": 35,
+   "name": "r3-4-kling4_0",
    "kind": "clip",
-   "dir": "segments/27-r3-seedance",
-   "start": 262.85,
-   "dur": 9.18,
+   "dir": "segments/35-r3-4-kling4_0",
+   "start": 378.08,
+   "dur": 8.6,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "시댄스는 클로즈업으로 목검이 부딪히는 장면이 정말 영화 같아요. 하지만 시간 정지와 카메라 회전은 없었어요.",
-     "start": 263.25,
-     "dur": 8.28
+     "text": "Kling은 각도를 바꿔가며 보여줬지만,",
+     "start": 378.48,
+     "dur": 3.76
+    },
+    {
+     "text": "인사와 시간 정지가 빠졌습니다.",
+     "start": 382.25,
+     "dur": 2.96
     }
    ]
   },
   {
-   "num": 28,
-   "name": "r3-kling",
+   "num": 36,
+   "name": "r3-5-gemini_omni_flash_1_1",
    "kind": "clip",
-   "dir": "segments/28-r3-kling",
-   "start": 272.03,
-   "dur": 8.37,
+   "dir": "segments/36-r3-5-gemini_omni_flash_1_1",
+   "start": 386.68,
+   "dur": 9.88,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "클링은 각도를 바꿔가며 보여줬지만, 인사와 시간 정지는 빠졌어요. 이번 시험은 클링이 약했어요.",
-     "start": 272.43,
-     "dur": 7.47
+     "text": "Gemini는 인사로 시작해 낙엽이 공중에 멈추고,",
+     "start": 387.08,
+     "dur": 4.41
+    },
+    {
+     "text": "마지막에 다시 인사합니다. 순서를 끝까지 지켰습니다!",
+     "start": 391.49,
+     "dur": 4.57
     }
    ]
   },
   {
-   "num": 29,
-   "name": "r3-split",
-   "kind": "split",
-   "dir": "segments/29-r3-split",
-   "start": 280.4,
-   "dur": 7.57,
+   "num": 37,
+   "name": "r3-6-seedance_2_0",
+   "kind": "clip",
+   "dir": "segments/37-r3-6-seedance_2_0",
+   "start": 396.56,
+   "dur": 9.24,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "비오는 낙엽이 화려하고, 미니맥스는 합이 시원시원해요. 둘 다 시간 정지는 없었어요.",
-     "start": 280.8,
-     "dur": 6.67
+     "text": "Seedance 2.0은 빙글빙글 도는 동작이 화려합니다.",
+     "start": 396.96,
+     "dur": 5.05
+    },
+    {
+     "text": "그런데 인사와 시간 정지는 없습니다.",
+     "start": 402.02,
+     "dur": 3.28
     }
    ]
   },
   {
-   "num": 30,
+   "num": 38,
+   "name": "r3-7-wan3_0",
+   "kind": "clip",
+   "dir": "segments/38-r3-7-wan3_0",
+   "start": 405.8,
+   "dur": 8.6,
+   "music": "wuxia",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Wan은 정면 구도로 안정적이지만,",
+     "start": 406.2,
+     "dur": 3.28
+    },
+    {
+     "text": "합이 적고 시간 정지가 없습니다.",
+     "start": 409.48,
+     "dur": 2.96
+    }
+   ]
+  },
+  {
+   "num": 39,
+   "name": "r3-8-minimax_h3",
+   "kind": "clip",
+   "dir": "segments/39-r3-8-minimax_h3",
+   "start": 414.4,
+   "dur": 8.6,
+   "music": "wuxia",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "MiniMax는 합이 시원시원합니다.",
+     "start": 414.8,
+     "dur": 3.6
+    },
+    {
+     "text": "다만 시간 정지는 없었습니다.",
+     "start": 418.4,
+     "dur": 2.8
+    }
+   ]
+  },
+  {
+   "num": 40,
    "name": "r3-verdict",
    "kind": "verdict",
-   "dir": "segments/30-r3-verdict",
-   "start": 287.97,
-   "dur": 6.6,
+   "dir": "segments/40-r3-verdict",
+   "start": 423.0,
+   "dur": 10.99,
    "music": "wuxia",
    "sfx": [
     [
@@ -657,19 +1089,29 @@
    ],
    "caps": [
     {
-     "text": "비무는 그록이에요. 그럼 같은 사람을 끝까지 유지하는 건 누가 잘할까요?",
-     "start": 288.37,
-     "dur": 5.7
+     "text": "비무는 Grok과 Gemini 공동 1등입니다!",
+     "start": 423.4,
+     "dur": 4.25
+    },
+    {
+     "text": "그렇다면 같은 사람을 끝까지 유지하는 건",
+     "start": 427.65,
+     "dur": 3.44
+    },
+    {
+     "text": "누가 가장 잘할까요?",
+     "start": 431.09,
+     "dur": 2.4
     }
    ]
   },
   {
-   "num": 31,
+   "num": 41,
    "name": "r4-intro",
    "kind": "talk",
-   "dir": "segments/31-r4-intro",
-   "start": 294.57,
-   "dur": 24.61,
+   "dir": "segments/41-r4-intro",
+   "start": 433.99,
+   "dur": 14.18,
    "music": "calm",
    "sfx": [
     [
@@ -679,29 +1121,34 @@
    ],
    "caps": [
     {
-     "text": "네 번째는 제일 실용적인 시험이에요. 서소저와 귀공자 사진을 먼저 만들어서, 모든 모델에 똑같이 넣었어요.",
-     "start": 294.97,
-     "dur": 8.12
+     "text": "네 번째는 가장 실용적인 시험입니다.",
+     "start": 434.39,
+     "dur": 3.28
     },
     {
-     "text": "세 컷 내내 같은 얼굴, 같은 옷으로 나오는지 볼게요. 같은 인물로 이어 찍어야 하는 영상이라면 이게 제일 중요해요.",
-     "start": 303.09,
-     "dur": 8.44
+     "text": "서소저와 귀공자 사진을 먼저 만들어",
+     "start": 437.67,
+     "dur": 3.12
     },
     {
-     "text": "비오는 시작 이미지 한 장만 받을 수 있어서, 두 사람이 함께 있는 첫 장면을 따로 만들어 넣었어요.",
-     "start": 311.53,
-     "dur": 7.15
+     "text": "모든 모델에 똑같이 넣었습니다.",
+     "start": 440.79,
+     "dur": 2.96
+    },
+    {
+     "text": "세 컷 내내 같은 얼굴, 같은 옷이 나와야 합니다!",
+     "start": 443.75,
+     "dur": 3.93
     }
    ]
   },
   {
-   "num": 32,
+   "num": 42,
    "name": "r4-grid",
    "kind": "grid",
-   "dir": "segments/32-r4-grid",
-   "start": 319.18,
-   "dur": 7.08,
+   "dir": "segments/42-r4-grid",
+   "start": 448.17,
+   "dur": 7.46,
    "music": "calm",
    "sfx": [
     [
@@ -711,63 +1158,237 @@
    ],
    "caps": [
     {
-     "text": "다리 위를 걷고, 다가와서 멈추고, 클로즈업으로 마주 보기. 세 컷 구성이에요.",
-     "start": 319.58,
-     "dur": 6.18
+     "text": "다리 위를 걷고, 다가와 멈추고,",
+     "start": 448.57,
+     "dur": 2.96
+    },
+    {
+     "text": "클로즈업으로 마주 보는 세 컷 구성입니다.",
+     "start": 451.53,
+     "dur": 3.6
     }
    ]
   },
   {
-   "num": 33,
-   "name": "r4-faces",
-   "kind": "faces",
-   "dir": "segments/33-r4-faces",
-   "start": 326.27,
-   "dur": 16.55,
+   "num": 43,
+   "name": "r4-1-flux_3_video",
+   "kind": "clip",
+   "dir": "segments/43-r4-1-flux_3_video",
+   "start": 455.63,
+   "dur": 8.6,
    "music": "calm",
    "sfx": [],
    "caps": [
     {
-     "text": "마지막 클로즈업을 원본 사진과 나란히 볼게요.",
-     "start": 326.67,
+     "text": "FLUX 3는 세 컷 순서를 지켰고,",
+     "start": 456.03,
+     "dur": 3.12
+    },
+    {
+     "text": "귀공자의 옥비녀와 옷 자수까지 그대로입니다!",
+     "start": 459.15,
+     "dur": 3.93
+    }
+   ]
+  },
+  {
+   "num": 44,
+   "name": "r4-2-gemini_omni_flash_1_1",
+   "kind": "clip",
+   "dir": "segments/44-r4-2-gemini_omni_flash_1_1",
+   "start": 464.23,
+   "dur": 10.04,
+   "music": "calm",
+   "sfx": [
+    [
+     "stamp",
+     0.8
+    ]
+   ],
+   "caps": [
+    {
+     "text": "Gemini는 인물 사진을 넣자 안전 필터로 거절했습니다.",
+     "start": 464.63,
+     "dur": 4.89
+    },
+    {
+     "text": "같은 설정으로 한 번 더 시도했지만 또 거절됐습니다.",
+     "start": 469.53,
+     "dur": 4.25
+    }
+   ]
+  },
+  {
+   "num": 45,
+   "name": "r4-3-seedance_2_0",
+   "kind": "clip",
+   "dir": "segments/45-r4-3-seedance_2_0",
+   "start": 474.27,
+   "dur": 8.6,
+   "music": "calm",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Seedance 2.0은 분위기는 좋지만,",
+     "start": 474.67,
      "dur": 3.93
     },
     {
-     "text": "클링은 귀공자의 옥비녀 상투와 옷 자수까지 그대로예요. 완도 거의 같아요.",
-     "start": 330.59,
-     "dur": 5.86
-    },
-    {
-     "text": "시댄스와 비오는 귀공자의 상투가 풀려버렸고, 얼굴도 조금씩 달라졌어요.",
-     "start": 336.45,
-     "dur": 5.86
+     "text": "귀공자의 상투가 풀렸습니다.",
+     "start": 478.6,
+     "dur": 2.8
     }
    ]
   },
   {
-   "num": 34,
-   "name": "r4-kling",
+   "num": 46,
+   "name": "r4-4-kling4_0",
    "kind": "clip",
-   "dir": "segments/34-r4-kling",
-   "start": 342.82,
-   "dur": 6.28,
+   "dir": "segments/46-r4-4-kling4_0",
+   "start": 482.87,
+   "dur": 8.75,
    "music": "calm",
    "sfx": [],
    "caps": [
     {
-     "text": "클링은 세 컷 순서도 그대로 지켰어요. 걷기, 다가오기, 클로즈업.",
-     "start": 343.22,
-     "dur": 5.38
+     "text": "Kling은 걷기, 다가오기, 클로즈업 순서를 지켰고,",
+     "start": 483.27,
+     "dur": 4.73
+    },
+    {
+     "text": "옥비녀와 자수까지 그대로입니다!",
+     "start": 488.01,
+     "dur": 3.12
     }
    ]
   },
   {
-   "num": 35,
+   "num": 47,
+   "name": "r4-5-minimax_h3",
+   "kind": "clip",
+   "dir": "segments/47-r4-5-minimax_h3",
+   "start": 491.63,
+   "dur": 8.6,
+   "music": "calm",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "MiniMax는 두 사람의 얼굴을 잘 지켰지만,",
+     "start": 492.03,
+     "dur": 4.09
+    },
+    {
+     "text": "상투가 작게 바뀌었습니다.",
+     "start": 496.11,
+     "dur": 2.64
+    }
+   ]
+  },
+  {
+   "num": 48,
+   "name": "r4-6-grok_video_v15",
+   "kind": "clip",
+   "dir": "segments/48-r4-6-grok_video_v15",
+   "start": 500.23,
+   "dur": 8.6,
+   "music": "calm",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Grok은 세 컷 구성은 좋지만,",
+     "start": 500.63,
+     "dur": 2.96
+    },
+    {
+     "text": "귀공자의 머리 모양이 조금 달라졌습니다.",
+     "start": 503.58,
+     "dur": 3.6
+    }
+   ]
+  },
+  {
+   "num": 49,
+   "name": "r4-7-seedance_2_5",
+   "kind": "clip",
+   "dir": "segments/49-r4-7-seedance_2_5",
+   "start": 508.83,
+   "dur": 9.24,
+   "music": "calm",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Seedance 2.5는 클로즈업이 아름답지만,",
+     "start": 509.23,
+     "dur": 4.41
+    },
+    {
+     "text": "귀공자의 상투가 풀리고 표정이 달라졌습니다.",
+     "start": 513.64,
+     "dur": 3.93
+    }
+   ]
+  },
+  {
+   "num": 50,
+   "name": "r4-8-wan3_0",
+   "kind": "clip",
+   "dir": "segments/50-r4-8-wan3_0",
+   "start": 518.06,
+   "dur": 8.6,
+   "music": "calm",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Wan도 옥비녀 상투와 자수를",
+     "start": 518.46,
+     "dur": 2.8
+    },
+    {
+     "text": "거의 그대로 지켰습니다!",
+     "start": 521.26,
+     "dur": 2.47
+    }
+   ]
+  },
+  {
+   "num": 51,
+   "name": "r4-faces",
+   "kind": "faces",
+   "dir": "segments/51-r4-faces",
+   "start": 526.66,
+   "dur": 17.09,
+   "music": "calm",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "마지막 클로즈업을 원본 사진과 비교해 보겠습니다.",
+     "start": 527.06,
+     "dur": 4.25
+    },
+    {
+     "text": "옥비녀 상투와 옷 자수까지 지킨 건",
+     "start": 531.31,
+     "dur": 2.96
+    },
+    {
+     "text": "Kling, FLUX 3, Wan 세 모델입니다.",
+     "start": 534.27,
+     "dur": 4.25
+    },
+    {
+     "text": "Seedance 두 모델은 귀공자의 상투가 풀렸습니다.",
+     "start": 538.52,
+     "dur": 4.73
+    }
+   ]
+  },
+  {
+   "num": 52,
    "name": "r4-verdict",
    "kind": "verdict",
-   "dir": "segments/35-r4-verdict",
-   "start": 349.09,
-   "dur": 4.99,
+   "dir": "segments/52-r4-verdict",
+   "start": 543.75,
+   "dur": 9.88,
    "music": "wuxia",
    "sfx": [
     [
@@ -777,19 +1398,24 @@
    ],
    "caps": [
     {
-     "text": "레퍼런스는 클링이에요. 마지막은 함정이에요.",
-     "start": 349.49,
-     "dur": 4.09
+     "text": "Reference 시험은 Kling, FLUX 3, Wan 공동 1등입니다!",
+     "start": 544.15,
+     "dur": 6.35
+    },
+    {
+     "text": "마지막 시험은 함정입니다.",
+     "start": 550.49,
+     "dur": 2.64
     }
    ]
   },
   {
-   "num": 36,
+   "num": 53,
    "name": "r5-prompt",
    "kind": "prompt",
-   "dir": "segments/36-r5-prompt",
-   "start": 354.08,
-   "dur": 8.54,
+   "dir": "segments/53-r5-prompt",
+   "start": 553.63,
+   "dur": 11.55,
    "music": "calm",
    "sfx": [
     [
@@ -799,41 +1425,56 @@
    ],
    "caps": [
     {
-     "text": "객잔 현판에 '단아객잔' 네 글자, 그리고 차를 따르는 손. 영상 AI는 글자에 약하다고 알려져 있죠.",
-     "start": 354.48,
-     "dur": 7.64
+     "text": "객잔 현판에 '단아객잔' 네 글자를 쓰고,",
+     "start": 554.03,
+     "dur": 3.6
+    },
+    {
+     "text": "차를 따르는 손을 보여줘야 합니다.",
+     "start": 557.63,
+     "dur": 3.12
+    },
+    {
+     "text": "영상 AI는 글자에 약하다고 알려져 있습니다.",
+     "start": 560.75,
+     "dur": 3.93
     }
    ]
   },
   {
-   "num": 37,
+   "num": 54,
    "name": "r5-grid",
    "kind": "grid",
-   "dir": "segments/37-r5-grid",
-   "start": 362.62,
-   "dur": 7.25,
+   "dir": "segments/54-r5-grid",
+   "start": 565.18,
+   "dur": 7.23,
    "music": "calm",
    "sfx": [
     [
      "ding",
-     3.2
+     3.6
     ]
    ],
    "caps": [
     {
-     "text": "결과는 반전이에요. 클링, 시댄스, 그록, 미니맥스는 네 글자를 정확히 썼어요.",
-     "start": 363.02,
-     "dur": 6.35
+     "text": "결과는 반전입니다!",
+     "start": 565.58,
+     "dur": 2.4
+    },
+    {
+     "text": "여덟 개 중 다섯 개가 네 글자를 정확히 썼습니다.",
+     "start": 567.98,
+     "dur": 3.93
     }
    ]
   },
   {
-   "num": 38,
-   "name": "r5-wan",
+   "num": 55,
+   "name": "r5-1-seedance_2_0",
    "kind": "clip",
-   "dir": "segments/38-r5-wan",
-   "start": 369.86,
-   "dur": 8.0,
+   "dir": "segments/55-r5-1-seedance_2_0",
+   "start": 572.4,
+   "dur": 8.6,
    "music": "calm",
    "sfx": [
     [
@@ -843,68 +1484,220 @@
    ],
    "caps": [
     {
-     "text": "완은 '단야객잔'. 한 글자가 틀렸어요.",
-     "start": 370.26,
-     "dur": 3.6
-    }
-   ]
-  },
-  {
-   "num": 39,
-   "name": "r5-veo",
-   "kind": "clip",
-   "dir": "segments/39-r5-veo",
-   "start": 377.86,
-   "dur": 8.54,
-   "music": "calm",
-   "sfx": [
-    [
-     "stamp",
-     5.6
-    ]
-   ],
-   "caps": [
+     "text": "Seedance 2.0은 '단야객잔'.",
+     "start": 572.8,
+     "dur": 3.76
+    },
     {
-     "text": "비오는 아예 한자로 바꿔버렸어요. 힉스필드가 문장을 자동으로 다듬는 과정에서 바뀐 것으로 보여요.",
-     "start": 378.26,
-     "dur": 7.64
+     "text": "한 글자가 틀렸습니다.",
+     "start": 576.57,
+     "dur": 2.4
     }
    ]
   },
   {
-   "num": 40,
-   "name": "r5-twist",
-   "kind": "talk",
-   "dir": "segments/40-r5-twist",
-   "start": 386.4,
-   "dur": 17.84,
+   "num": 56,
+   "name": "r5-2-grok_video_v15",
+   "kind": "clip",
+   "dir": "segments/56-r5-2-grok_video_v15",
+   "start": 581.0,
+   "dur": 8.6,
    "music": "calm",
    "sfx": [],
    "caps": [
     {
-     "text": "더 재밌는 건 이거예요. 함정을 피하려고 이미지 AI로 현판을 먼저 만들었는데요,",
-     "start": 386.8,
-     "dur": 6.35
+     "text": "Grok은 '단아객잔' 네 글자를",
+     "start": 581.4,
+     "dur": 3.12
     },
     {
-     "text": "이미지 AI가 '단'을 '탄'으로 틀렸어요. '탄아객잔'이 됐어요.",
-     "start": 393.14,
-     "dur": 5.7
-    },
-    {
-     "text": "결론은 하나예요. 글자는 어떤 AI든 꼭 눈으로 확인하세요.",
-     "start": 398.84,
-     "dur": 4.89
+     "text": "정확히 썼습니다!",
+     "start": 584.52,
+     "dur": 2.4
     }
    ]
   },
   {
-   "num": 41,
+   "num": 57,
+   "name": "r5-3-gemini_omni_flash_1_1",
+   "kind": "clip",
+   "dir": "segments/57-r5-3-gemini_omni_flash_1_1",
+   "start": 589.6,
+   "dur": 8.6,
+   "music": "calm",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Gemini도 '단아객잔'을",
+     "start": 590.0,
+     "dur": 2.96
+    },
+    {
+     "text": "정확히 썼습니다!",
+     "start": 592.96,
+     "dur": 2.4
+    }
+   ]
+  },
+  {
+   "num": 58,
+   "name": "r5-4-seedance_2_5",
+   "kind": "clip",
+   "dir": "segments/58-r5-4-seedance_2_5",
+   "start": 598.2,
+   "dur": 8.6,
+   "music": "calm",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Seedance 2.5도 정확합니다.",
+     "start": 598.6,
+     "dur": 3.6
+    },
+    {
+     "text": "차 따르는 손까지 자연스럽습니다.",
+     "start": 602.21,
+     "dur": 3.12
+    }
+   ]
+  },
+  {
+   "num": 59,
+   "name": "r5-5-wan3_0",
+   "kind": "clip",
+   "dir": "segments/59-r5-5-wan3_0",
+   "start": 606.8,
+   "dur": 8.6,
+   "music": "calm",
+   "sfx": [
+    [
+     "stamp",
+     2.6
+    ]
+   ],
+   "caps": [
+    {
+     "text": "Wan은 '단야객잔'.",
+     "start": 607.2,
+     "dur": 2.47
+    },
+    {
+     "text": "한 글자가 틀렸습니다.",
+     "start": 609.68,
+     "dur": 2.4
+    }
+   ]
+  },
+  {
+   "num": 60,
+   "name": "r5-6-flux_3_video",
+   "kind": "clip",
+   "dir": "segments/60-r5-6-flux_3_video",
+   "start": 615.4,
+   "dur": 8.6,
+   "music": "calm",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "FLUX 3도 '단아객잔'을",
+     "start": 615.8,
+     "dur": 2.8
+    },
+    {
+     "text": "정확히 썼습니다!",
+     "start": 618.6,
+     "dur": 2.4
+    }
+   ]
+  },
+  {
+   "num": 61,
+   "name": "r5-7-kling4_0",
+   "kind": "clip",
+   "dir": "segments/61-r5-7-kling4_0",
+   "start": 624.0,
+   "dur": 8.6,
+   "music": "calm",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "Kling도 네 글자를 정확히 썼습니다.",
+     "start": 624.4,
+     "dur": 3.6
+    },
+    {
+     "text": "현판으로 올라가는 카메라도 자연스럽습니다.",
+     "start": 628.01,
+     "dur": 3.93
+    }
+   ]
+  },
+  {
+   "num": 62,
+   "name": "r5-8-minimax_h3",
+   "kind": "clip",
+   "dir": "segments/62-r5-8-minimax_h3",
+   "start": 632.6,
+   "dur": 8.6,
+   "music": "calm",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "MiniMax는 글자는 맞지만,",
+     "start": 633.0,
+     "dur": 3.12
+    },
+    {
+     "text": "현판이 비스듬히 기울어 보입니다.",
+     "start": 636.12,
+     "dur": 3.12
+    }
+   ]
+  },
+  {
+   "num": 63,
+   "name": "r5-twist",
+   "kind": "talk",
+   "dir": "segments/63-r5-twist",
+   "start": 641.2,
+   "dur": 18.52,
+   "music": "calm",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "더 재미있는 일이 있었습니다.",
+     "start": 641.6,
+     "dur": 2.8
+    },
+    {
+     "text": "함정을 피하려고 이미지 AI로 현판을 먼저 만들었는데,",
+     "start": 644.4,
+     "dur": 4.57
+    },
+    {
+     "text": "이미지 AI가 '단'을 '탄'으로 틀렸습니다.",
+     "start": 648.97,
+     "dur": 4.09
+    },
+    {
+     "text": "결론은 하나입니다.",
+     "start": 653.06,
+     "dur": 2.4
+    },
+    {
+     "text": "글자는 어떤 AI든 꼭 눈으로 확인하십시오!",
+     "start": 655.46,
+     "dur": 3.76
+    }
+   ]
+  },
+  {
+   "num": 64,
    "name": "r5-verdict",
    "kind": "verdict",
-   "dir": "segments/41-r5-verdict",
-   "start": 404.24,
-   "dur": 4.83,
+   "dir": "segments/64-r5-verdict",
+   "start": 659.72,
+   "dur": 4.34,
    "music": "wuxia",
    "sfx": [
     [
@@ -914,19 +1707,19 @@
    ],
    "caps": [
     {
-     "text": "현판은 클링, 시댄스, 그록 공동 1등이에요.",
-     "start": 404.64,
-     "dur": 3.93
+     "text": "현판 시험은 다섯 모델 공동 1등입니다!",
+     "start": 660.12,
+     "dur": 3.44
     }
    ]
   },
   {
-   "num": 42,
+   "num": 65,
    "name": "board",
    "kind": "board",
-   "dir": "segments/42-board",
-   "start": 409.06,
-   "dur": 17.68,
+   "dir": "segments/65-board",
+   "start": 664.06,
+   "dur": 24.7,
    "music": "calm",
    "sfx": [
     [
@@ -956,29 +1749,44 @@
    ],
    "caps": [
     {
-     "text": "다섯 시험 결과예요. 1등을 두 번 한 모델은 클링과 그록이에요.",
-     "start": 409.46,
-     "dur": 5.05
+     "text": "다섯 시험 결과입니다.",
+     "start": 664.46,
+     "dur": 2.4
     },
     {
-     "text": "솔직히 제일 영화 같은 화면은 시댄스였어요. 그런데 시킨 걸 끝까지 따르는 모델은 시험마다 달랐어요.",
-     "start": 414.52,
-     "dur": 7.64
+     "text": "1등을 가장 많이 한 모델은 FLUX 3, 세 번입니다!",
+     "start": 666.86,
+     "dur": 4.41
     },
     {
-     "text": "그럼 누가 정답일까요? 아직 돈 얘기를 안 했어요.",
-     "start": 422.15,
-     "dur": 4.09
+     "text": "두 번 한 모델은 Kling, Wan, Gemini, Grok입니다.",
+     "start": 671.27,
+     "dur": 5.7
+    },
+    {
+     "text": "가장 영화 같은 화면은 Seedance 2.5였습니다.",
+     "start": 676.97,
+     "dur": 4.73
+    },
+    {
+     "text": "그렇다면 정답은 FLUX 3일까요?",
+     "start": 681.71,
+     "dur": 3.28
+    },
+    {
+     "text": "아직 비용 이야기를 하지 않았습니다!",
+     "start": 684.99,
+     "dur": 3.28
     }
    ]
   },
   {
-   "num": 43,
+   "num": 66,
    "name": "credits",
    "kind": "credits",
-   "dir": "segments/43-credits",
-   "start": 426.74,
-   "dur": 22.03,
+   "dir": "segments/66-credits",
+   "start": 688.77,
+   "dur": 33.22,
    "music": "wuxia",
    "sfx": [
     [
@@ -987,171 +1795,254 @@
     ],
     [
      "tick",
-     0.95
+     0.9
     ],
     [
      "tick",
-     1.3
+     1.2
     ],
     [
      "tick",
-     1.65
+     1.5
     ],
     [
      "tick",
-     2.0
+     1.8
     ],
     [
      "tick",
-     2.35
+     2.1
+    ],
+    [
+     "tick",
+     2.4
+    ],
+    [
+     "tick",
+     2.7
     ]
    ],
    "caps": [
     {
-     "text": "다섯 시험에 든 크레딧이에요. 클링 34, 완 70, 미니맥스 80, 그록 180, 시댄스 280, 비오 400.",
-     "start": 427.14,
-     "dur": 8.44
+     "text": "다섯 시험에 든 크레딧입니다.",
+     "start": 689.17,
+     "dur": 2.8
     },
     {
-     "text": "같은 시험을 클링은 시댄스의 8분의 1, 비오의 12분의 1 가격으로 끝냈어요.",
-     "start": 435.58,
-     "dur": 6.18
+     "text": "Kling 34, Wan 70, MiniMax 80, Gemini 96,",
+     "start": 691.96,
+     "dur": 6.02
     },
     {
-     "text": "지금은 출시 할인가라는 것도 꼭 말씀드릴게요. 할인이 끝나면 가격은 오를 수 있어요.",
-     "start": 441.76,
-     "dur": 6.51
+     "text": "Seedance 2.0 180, Grok 180, FLUX 3 240, Seedance 2.5 280.",
+     "start": 697.99,
+     "dur": 8.28
+    },
+    {
+     "text": "FLUX 3는 Kling의 7배,",
+     "start": 706.27,
+     "dur": 3.12
+    },
+    {
+     "text": "Seedance 2.5는 Kling의 8배를 썼습니다!",
+     "start": 709.39,
+     "dur": 4.89
+    },
+    {
+     "text": "다만 Kling은 지금 출시 할인가입니다.",
+     "start": 714.28,
+     "dur": 3.76
+    },
+    {
+     "text": "할인이 끝나면 가격이 오를 수 있습니다.",
+     "start": 718.05,
+     "dur": 3.44
     }
    ]
   },
   {
-   "num": 44,
+   "num": 67,
    "name": "kling-why",
    "kind": "talk",
-   "dir": "segments/44-kling-why",
-   "start": 448.77,
-   "dur": 13.59,
+   "dir": "segments/67-kling-why",
+   "start": 721.99,
+   "dur": 17.09,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "그리고 클링은 싸기만 한 게 아니에요. 레퍼런스 시험 1등, 현판 글자도 정확했어요.",
-     "start": 449.17,
-     "dur": 6.51
+     "text": "Kling은 1등 두 번을 가장 싼 값에 해냈습니다.",
+     "start": 722.39,
+     "dur": 4.25
     },
     {
-     "text": "같은 인물로 여러 컷을 시킨 대로 만드는 일, 우리가 실제로 제일 많이 하는 일이죠.",
-     "start": 455.68,
-     "dur": 6.18
+     "text": "Reference 시험 1등, 현판 글자도 정확했습니다.",
+     "start": 726.64,
+     "dur": 4.89
+    },
+    {
+     "text": "같은 인물로 여러 컷을 시킨 대로 만드는 일,",
+     "start": 731.53,
+     "dur": 3.6
+    },
+    {
+     "text": "우리가 실제로 가장 많이 하는 일입니다!",
+     "start": 735.13,
+     "dur": 3.44
     }
    ]
   },
   {
-   "num": 45,
+   "num": 68,
    "name": "edit-demo",
    "kind": "split",
-   "dir": "segments/45-edit-demo",
-   "start": 462.36,
-   "dur": 14.24,
+   "dir": "segments/68-edit-demo",
+   "start": 739.07,
+   "dur": 16.6,
    "music": "calm",
    "sfx": [],
    "caps": [
     {
-     "text": "클링에는 만든 영상을 고치는 편집 기능도 있어요. 장풍 파동이 안 보였던 영상을 그 부분만 고쳐봤는데요,",
-     "start": 462.76,
-     "dur": 7.8
+     "text": "Kling에는 만든 영상을 고치는 편집 기능도 있습니다.",
+     "start": 739.47,
+     "dur": 4.73
     },
     {
-     "text": "솔직히 이번엔 바람 번짐만 살짝 생겼어요. 편집도 한 번에 되진 않아요.",
-     "start": 470.56,
-     "dur": 5.54
+     "text": "장풍 파동이 안 보였던 부분만 고쳐봤습니다.",
+     "start": 744.21,
+     "dur": 3.76
+    },
+    {
+     "text": "솔직히 이번에는 바람 번짐만 살짝 생겼습니다.",
+     "start": 747.97,
+     "dur": 3.93
+    },
+    {
+     "text": "편집도 한 번에 완벽하지는 않습니다.",
+     "start": 751.9,
+     "dur": 3.28
     }
    ]
   },
   {
-   "num": 46,
+   "num": 69,
    "name": "edit-fix",
    "kind": "split",
-   "dir": "segments/46-edit-fix",
-   "start": 476.6,
-   "dur": 8.7,
+   "dir": "segments/69-edit-fix",
+   "start": 755.68,
+   "dur": 12.03,
    "music": "calm",
    "sfx": [],
    "caps": [
     {
-     "text": "대신 처음부터 '눈에 보이는 충격파'라고 쓰고, 서소저 사진을 레퍼런스로 넣었더니 이렇게 나왔어요.",
-     "start": 477.0,
-     "dur": 7.8
-    }
-   ]
-  },
-  {
-   "num": 47,
-   "name": "film-intro",
-   "kind": "talk",
-   "dir": "segments/47-film-intro",
-   "start": 485.29,
-   "dur": 11.98,
-   "music": "calm",
-   "sfx": [],
-   "caps": [
-    {
-     "text": "그래서 오늘 결과로 클링 하나만 써서 30초 무협 단편을 만들어봤어요.",
-     "start": 485.69,
-     "dur": 5.54
+     "text": "대신 처음부터 '눈에 보이는 충격파'라고 쓰고,",
+     "start": 756.08,
+     "dur": 4.09
     },
     {
-     "text": "이건 비교가 아니라 작품이라, 샷마다 두 번씩 뽑아서 좋은 걸 골랐어요.",
-     "start": 491.23,
-     "dur": 5.54
+     "text": "서소저 사진을 Reference로 넣었습니다.",
+     "start": 760.16,
+     "dur": 4.25
+    },
+    {
+     "text": "그랬더니 이렇게 나왔습니다!",
+     "start": 764.41,
+     "dur": 2.8
     }
    ]
   },
   {
-   "num": 48,
+   "num": 70,
+   "name": "film-intro",
+   "kind": "talk",
+   "dir": "segments/70-film-intro",
+   "start": 767.71,
+   "dur": 14.27,
+   "music": "calm",
+   "sfx": [],
+   "caps": [
+    {
+     "text": "그래서 오늘 결과를 바탕으로",
+     "start": 768.11,
+     "dur": 2.64
+    },
+    {
+     "text": "Kling 하나만으로 30초 무협 단편을 만들었습니다.",
+     "start": 770.75,
+     "dur": 4.73
+    },
+    {
+     "text": "비교가 아닌 작품이라,",
+     "start": 775.48,
+     "dur": 2.4
+    },
+    {
+     "text": "샷마다 두 번씩 뽑아 좋은 것을 골랐습니다.",
+     "start": 777.88,
+     "dur": 3.6
+    }
+   ]
+  },
+  {
+   "num": 71,
    "name": "film",
    "kind": "film",
-   "dir": "segments/48-film",
-   "start": 497.27,
+   "dir": "segments/71-film",
+   "start": 781.98,
    "dur": 31.4,
    "music": "none",
    "sfx": [],
    "caps": []
   },
   {
-   "num": 49,
+   "num": 72,
    "name": "recommend",
    "kind": "talk",
-   "dir": "segments/49-recommend",
-   "start": 528.67,
-   "dur": 19.77,
+   "dir": "segments/72-recommend",
+   "start": 813.38,
+   "dur": 25.35,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "정리할게요. 제일 영화 같은 한 컷이 필요하고 예산이 넉넉하면 시댄스.",
-     "start": 529.07,
-     "dur": 5.54
+     "text": "정리하겠습니다.",
+     "start": 813.78,
+     "dur": 2.4
     },
     {
-     "text": "같은 인물로 여러 컷을, 시킨 대로, 싸게 만들 거면 클링 4.0.",
-     "start": 534.61,
+     "text": "한 컷의 완성도가 가장 중요하다면 Seedance 2.5나 FLUX 3,",
+     "start": 816.18,
+     "dur": 5.86
+    },
+    {
+     "text": "같은 인물로 여러 컷을 싸게 만든다면 Kling 4.0입니다!",
+     "start": 822.04,
      "dur": 5.05
     },
     {
-     "text": "꼭 하나만 고를 필요는 없어요. 장면마다 갈아타면 돼요. 그래서 저는 여섯 개를 한 곳에서 쓰는 힉스필드를 써요.",
-     "start": 539.66,
-     "dur": 8.28
+     "text": "꼭 하나만 고를 필요는 없습니다.",
+     "start": 827.1,
+     "dur": 2.96
+    },
+    {
+     "text": "장면마다 갈아타면 됩니다.",
+     "start": 830.05,
+     "dur": 2.64
+    },
+    {
+     "text": "그래서 저는 여덟 개를 한 곳에서 쓰는 Higgsfield를 씁니다.",
+     "start": 832.69,
+     "dur": 5.54
     }
    ]
   },
   {
-   "num": 50,
+   "num": 73,
    "name": "cta",
    "kind": "talk",
-   "dir": "segments/50-cta",
-   "start": 548.45,
-   "dur": 11.17,
+   "dir": "segments/73-cta",
+   "start": 838.73,
+   "dur": 16.6,
    "music": "wuxia",
    "sfx": [
     [
@@ -1161,24 +2052,34 @@
    ],
    "caps": [
     {
-     "text": "클링 4.0 할인은 지금 진행 중이에요. 설명란 링크로 들어가서 오늘 프롬프트 그대로 돌려보세요.",
-     "start": 548.85,
-     "dur": 7.47
+     "text": "오늘 여덟 모델은 모두 Higgsfield에서 돌렸습니다.",
+     "start": 839.13,
+     "dur": 5.05
     },
     {
-     "text": "장풍 하나에 4크레딧이에요.",
-     "start": 556.32,
-     "dur": 2.8
+     "text": "설명란 링크에서 같은 프롬프트를 붙여넣고",
+     "start": 844.18,
+     "dur": 3.6
+    },
+    {
+     "text": "여러분의 1등을 직접 골라보십시오!",
+     "start": 847.79,
+     "dur": 3.28
+    },
+    {
+     "text": "장풍 하나에 Kling은 4크레딧입니다.",
+     "start": 851.07,
+     "dur": 3.76
     }
    ]
   },
   {
-   "num": 51,
+   "num": 74,
    "name": "answer",
    "kind": "grid",
-   "dir": "segments/51-answer",
-   "start": 559.62,
-   "dur": 11.98,
+   "dir": "segments/74-answer",
+   "start": 855.33,
+   "dur": 21.28,
    "music": "wuxia",
    "sfx": [
     [
@@ -1188,36 +2089,51 @@
    ],
    "caps": [
     {
-     "text": "처음 문제 정답이에요. 1번 완, 2번 비오, 3번 미니맥스, 4번 그록, 5번 클링, 6번 시댄스.",
-     "start": 560.02,
-     "dur": 7.47
+     "text": "처음 문제의 정답입니다!",
+     "start": 855.73,
+     "dur": 2.47
     },
     {
-     "text": "여러분이 고른 번호는 어떤 모델이었어요?",
-     "start": 567.49,
-     "dur": 3.6
+     "text": "1번 Seedance 2.0, 2번 MiniMax, 3번 FLUX 3, 4번 Gemini,",
+     "start": 858.21,
+     "dur": 7.31
+    },
+    {
+     "text": "5번 Seedance 2.5, 6번 Grok, 7번 Wan, 8번 Kling입니다.",
+     "start": 865.52,
+     "dur": 6.83
+    },
+    {
+     "text": "여러분이 고른 번호는 어떤 모델이었습니까?",
+     "start": 872.35,
+     "dur": 3.76
     }
    ]
   },
   {
-   "num": 52,
+   "num": 75,
    "name": "outro",
    "kind": "talk",
-   "dir": "segments/52-outro",
-   "start": 571.59,
-   "dur": 11.2,
+   "dir": "segments/75-outro",
+   "start": 876.61,
+   "dur": 12.47,
    "music": "wuxia",
    "sfx": [],
    "caps": [
     {
-     "text": "여러분이 채점했다면 1등은 누구예요? 댓글로 알려주세요.",
-     "start": 571.99,
-     "dur": 4.89
+     "text": "여러분이 채점했다면 1등은 누구입니까?",
+     "start": 877.01,
+     "dur": 3.6
     },
     {
-     "text": "다음 영상에서는 오늘 단편을 3분짜리로 늘려볼게요.",
-     "start": 576.89,
-     "dur": 4.41
+     "text": "댓글로 알려주십시오.",
+     "start": 880.62,
+     "dur": 2.4
+    },
+    {
+     "text": "다음 영상에서는 오늘 단편을 3분으로 늘려보겠습니다!",
+     "start": 883.02,
+     "dur": 4.57
     }
    ]
   }

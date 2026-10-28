@@ -159,5 +159,62 @@
  "r4_minimax_h3": {
   "job": "2d4a56ce-c8bf-48bd-8a56-522140acea62",
   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_072020_2d4a56ce-c8bf-48bd-8a56-522140acea62.mp4"
+ },
+ "r1_gemini_omni_flash_1_1": {
+  "job": "4ef8f5ab-3f78-4fa1-8001-a541b09348c0",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141322_4ef8f5ab-3f78-4fa1-8001-a541b09348c0.mp4"
+ },
+ "r2_gemini_omni_flash_1_1": {
+  "job": "fa068d7e-205e-497c-9943-38ee846f21cd",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141322_fa068d7e-205e-497c-9943-38ee846f21cd.mp4"
+ },
+ "r3_gemini_omni_flash_1_1": {
+  "job": "7ffdbc89-f47b-4faf-85f4-1db683c60f33",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141322_7ffdbc89-f47b-4faf-85f4-1db683c60f33.mp4"
+ },
+ "r5_gemini_omni_flash_1_1": {
+  "job": "280f3d2a-dc8f-4bab-a9ae-b462b0cb4e2e",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141326_280f3d2a-dc8f-4bab-a9ae-b462b0cb4e2e.mp4"
+ },
+ "r1_flux_3_video": {
+  "job": "34053be5-2576-4bbc-8867-78f493c3d5a5",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141322_34053be5-2576-4bbc-8867-78f493c3d5a5.mp4"
+ },
+ "r2_flux_3_video": {
+  "job": "b82b3f07-2f62-4fbd-8a25-cf63da179fde",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141322_b82b3f07-2f62-4fbd-8a25-cf63da179fde.mp4"
+ },
+ "r3_flux_3_video": {
+  "job": "a9c4842b-d4b4-47f8-a1b2-b62171267e57",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141322_a9c4842b-d4b4-47f8-a1b2-b62171267e57.mp4"
+ },
+ "r4_flux_3_video": {
+  "job": "5fc5c41b-4cd1-49c3-b817-c3f6782c1753",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141322_5fc5c41b-4cd1-49c3-b817-c3f6782c1753.mp4"
+ },
+ "r5_flux_3_video": {
+  "job": "2acb9a5e-883f-4a05-923b-c6a7281e8bf1",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141327_2acb9a5e-883f-4a05-923b-c6a7281e8bf1.mp4"
+ },
+ "_r4_gemini_note": "Gemini Omni 1.1 Reference 시험: 6f8aa3fd / 791b3b9a 두 번 모두 안전 필터(nsfw)로 거절, 결과 없음",
+ "r1_seedance_2_0": {
+  "job": "a4e42079-0109-41aa-9b3d-fcf76adce491",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141322_a4e42079-0109-41aa-9b3d-fcf76adce491.mp4"
+ },
+ "r2_seedance_2_0": {
+  "job": "9000e777-22b4-4a6d-beca-777bd318517a",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141322_9000e777-22b4-4a6d-beca-777bd318517a.mp4"
+ },
+ "r3_seedance_2_0": {
+  "job": "5f1dadc6-64bd-4590-865f-42eaf72cbecc",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141323_5f1dadc6-64bd-4590-865f-42eaf72cbecc.mp4"
+ },
+ "r5_seedance_2_0": {
+  "job": "3074d868-05ec-4383-8b0e-a3036dd6d3f6",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141328_3074d868-05ec-4383-8b0e-a3036dd6d3f6.mp4"
+ },
+ "r4_seedance_2_0": {
+  "job": "e062d837-39bd-4e57-8040-01ce24ea523f",
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_35ezoi0Ea20rdd07XH64h5ZhO0m/hf_20261028_141323_e062d837-39bd-4e57-8040-01ce24ea523f.mp4"
  }
 }
