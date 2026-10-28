@@ -15,3 +15,5 @@ edit/assets/face/*.wav
 edit/assets/face/*.jpg
 edit/assets/screen/frames/
 edit/assets/fonts/*.ttf
+edit/assets/transform/*.png
+edit/assets/transform/*.mp4

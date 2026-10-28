@@ -41,8 +41,11 @@ def run(cmd):
     subprocess.run(cmd, check=True)
 
 
+ALL_WORDS = sorted(((w["start"], w["end"]) for seg in transcript for w in seg["words"]))
+
+
 def pieces_of(name):
-    """장면의 [(원본 시작, 원본 끝, 자막)] — 말소리 구간 그대로 (앞뒤 여유 없음)."""
+    """장면의 [(원본 시작, 원본 끝, 자막, 문장 번호)] — 말소리 구간 그대로 (앞뒤 여유 없음)."""
     out = []
     for ref, text in EDL.get(name, []):
         if isinstance(ref, tuple):
@@ -50,18 +53,63 @@ def pieces_of(name):
         else:
             i = ref
             a, b = transcript[i]["start"] - PAD_IN, transcript[i]["end"] + PAD_OUT
-        out.append((a, b, text))
+        out.append((a, b, text, i))
     return out
 
 
+def room(a, b):
+    """[a, b] 앞뒤로 다른 말이 시작·끝나는 지점 (여유를 붙여도 남의 말이 섞이지 않게)."""
+    prev_end = max((e for st, e in ALL_WORDS if st < a - 0.05 and e <= a + 0.05), default=0.0)
+    next_start = min((st for st, e in ALL_WORDS if e > b + 0.05 and st >= b - 0.05), default=1e9)
+    return prev_end + 0.03, next_start - 0.03
+
+
+_CUTS = None
+
+
 def source_cuts(name):
-    """장면에 쓸 원본 구간들. 말소리 앞뒤로 숨 쉴 틈(LEAD/GAP/TAIL)을 붙인다."""
+    """장면에 쓸 원본 구간들 (모든 장면을 함께 보고 겹치는 곳을 정리한 결과)."""
+    global _CUTS
+    if _CUTS is None:
+        _CUTS = all_cuts()
+    return _CUTS.get(name, [])
+
+
+def speech_span(i, a, b):
+    ws = [w for w in transcript[i]["words"] if w["end"] > a + 0.02 and w["start"] < b - 0.02]
+    return (ws[0]["start"], ws[-1]["end"]) if ws else (a, b)
+
+
+def all_cuts():
+    """장면 사이에서도 원본 구간이 겹치지 않게 한다. 겹치면 앞 문장의 마지막 단어 끝과
+    뒤 문장의 첫 단어 시작 사이에서 자른다 (장면이 바뀔 때 말이 두 번 들리던 문제)."""
+    rows = []
+    for s in scene_list():
+        ps = pieces_of(s["name"])
+        for k, (c, (a, b, _, i)) in enumerate(zip(raw_cuts(s["name"]), ps)):
+            sa, sb = speech_span(i, a, b)
+            rows.append({"scene": s["name"], "k": k, "c": list(c), "sa": sa, "sb": sb})
+    order = sorted(rows, key=lambda r: r["sa"])
+    for x, y in zip(order, order[1:]):
+        if y["c"][0] < x["c"][1]:
+            cut = (x["sb"] + y["sa"]) / 2 if y["sa"] > x["sb"] else y["sa"]
+            x["c"][1] = min(x["c"][1], max(cut, x["sb"]))
+            y["c"][0] = max(y["c"][0], min(cut, y["sa"]))
+    out = {}
+    for r in rows:
+        out.setdefault(r["scene"], []).append(tuple(r["c"]))
+    return out
+
+
+def raw_cuts(name):
+    """장면에 쓸 원본 구간들. 말소리 앞뒤로 숨 쉴 틈(LEAD/GAP/TAIL)을 붙이되, 다른 말이 섞이지 않게 자른다."""
     ps = pieces_of(name)
     cuts = []
-    for k, (a, b, _) in enumerate(ps):
+    for k, (a, b, _, _) in enumerate(ps):
         pre = LEAD if k == 0 else GAP / 2
         post = TAIL if k == len(ps) - 1 else GAP / 2
-        cuts.append([max(0.0, a - pre), b + post])
+        lo, hi = room(a, b)
+        cuts.append([max(0.0, min(a, max(a - pre, lo))), max(b, min(b + post, hi))])
     # 붙어 있는 문장끼리 겹치면 가운데에서 나눈다 (같은 소리가 두 번 들리지 않게)
     for k in range(1, len(cuts)):
         if cuts[k][0] < cuts[k - 1][1]:
@@ -73,6 +121,9 @@ def source_cuts(name):
 def scene_list():
     plan = json.loads((ROOT / "plan.json").read_text())
     intro = {"num": 0, "name": "intro", "kind": "intro", "dur": 0, "music": "calm", "sfx": []}
+    tr = transform_window(raw_cuts("intro")) if TRANSFORM.exists() else None
+    if tr:
+        intro["sfx"] = [("whoosh", tr[0] - 0.25), ("stamp", tr[0]), ("whoosh", tr[1] - 0.25)]
     return [intro] + plan["scenes"]
 
 
@@ -135,6 +186,29 @@ def face_chain(cuts, first_input):
     return inputs, parts
 
 
+TRANSFORM = ROOT / "assets/transform/transformed.mp4"
+TRANSFORM_SRC = 27.70  # 변신 영상이 따라 한 원본 구간의 시작 (assets/transform/motion.mp4)
+TRANSFORM_SPAN = (28.6, 36.9)  # 원본 시각 기준으로 변신해 있는 구간 (약 8초)
+
+
+def src_to_scene(cuts, x):
+    acc = 0.0
+    for a, b in cuts:
+        if a <= x <= b:
+            return acc + x - a
+        acc += b - a
+    return None
+
+
+def transform_window(cuts):
+    if not TRANSFORM.exists():
+        return None
+    t_in, t_out = (src_to_scene(cuts, x) for x in TRANSFORM_SPAN)
+    if t_in is None or t_out is None:
+        return None
+    return t_in, t_out, TRANSFORM_SPAN[0] - TRANSFORM_SRC
+
+
 def compose_scene(s, d, res_dir):
     """장면 하나: 화면 영상(무음) + 목소리 wav + 클립 소리 wav를 out/final_work/에 만든다."""
     name = s["name"]
@@ -160,7 +234,20 @@ def compose_scene(s, d, res_dir):
         thumb = ROOT / "assets/images/ref_welcome_wuxia_thumb.png"
         inputs += ["-loop", "1", "-t", f"{d:.3f}", "-i", str(thumb)]
         name_at = 4.95 - cuts[0][0]
-        fc += ["[fvc]fps=30,scale=1920:1080,setsar=1[bg]",
+        tr = transform_window(cuts)
+        if tr:
+            # 서소저 변신: Kling Motion Control로 같은 움직임을 따라 한 영상을 그 구간에 덮는다 (입 모양은 원래 녹화와 같음)
+            t_in, t_out, src_off = tr
+            inputs += ["-i", str(TRANSFORM)]
+            ti = extra + 1
+            fc += [f"[{ti}:v]fps=30,scale=1920:1080,setsar=1,trim={src_off:.3f}:{src_off + t_out - t_in:.3f},setpts=PTS-STARTPTS+{t_in:.3f}/TB,format=rgba,"
+                   f"fade=t=in:st={t_in:.3f}:d=0.45:alpha=1,fade=t=out:st={t_out - 0.45:.3f}:d=0.45:alpha=1[tr]",
+                   f"color=c=white:s=1920x1080:r=30:d={d:.3f},format=rgba,colorchannelmixer=aa=0,"
+                   f"geq=r=255:g=255:b=255:a='255*0.85*(exp(-pow((T-{t_in:.3f})/0.12,2))+exp(-pow((T-{t_out:.3f})/0.12,2)))'[flash]"]
+            fc += ["[fvc]fps=30,scale=1920:1080,setsar=1[bg0]", "[bg0][tr]overlay=eof_action=pass[bg1]", "[bg1][flash]overlay[bg]"]
+        else:
+            fc += ["[fvc]fps=30,scale=1920:1080,setsar=1[bg]"]
+        fc += [
                f"[{extra}:v]scale=700:-2,pad=iw+12:ih+12:6:6:color=white,format=rgba,"
                f"fade=t=in:st={name_at:.2f}:d=0.3:alpha=1,fade=t=out:st={name_at + 6.5:.2f}:d=0.4:alpha=1[th]",
                "[bg][th]overlay=x=W-w-90:y=110:shortest=1,trim=0:" + f"{d:.3f}" + "[v]"]
@@ -222,22 +309,54 @@ def write_wav(p, x):
         w.writeframes((x * 32767).astype("<i2").tobytes())
 
 
+ENDINGS = ("고", "서", "데", "며", "면", "는", "은", "을", "를", "가", "이", "도", "에", "로", "만", "까", "지")
+
+
 def split_caption(text, limit=22):
-    """자막을 한 줄(약 22자 이하)씩, 띄어쓰기 기준으로 나눈다."""
-    words, lines, cur = text.split(), [], ""
-    for w in words:
-        if cur and len(cur) + 1 + len(w) > limit:
-            lines.append(cur)
-            cur = w
+    """자막을 한 줄씩 나눈다: 문장부호에서 먼저 끊고, 긴 구절은 뜻이 이어지는 곳(조사·어미 뒤)에서 반으로 나눈다.
+    「…」, '…' 안은 끊지 않는다."""
+    import re
+    keep = re.sub(r"(「[^」]*」|'[^']*')", lambda m: m.group(0).replace(" ", "\u00a0"), text)
+    clauses = [c.strip() for c in re.split(r"(?<=[,.?!])\s+", keep) if c.strip()]
+
+    def halve(c):
+        if len(c) <= limit:
+            return [c]
+        ws = c.split(" ")
+        best, score = 1, 1e9
+        for k in range(1, len(ws)):
+            left, right = " ".join(ws[:k]), " ".join(ws[k:])
+            sc = abs(len(left) - len(right)) - (6 if left.endswith(ENDINGS) else 0)
+            if len(left) < 5 or len(right) < 5:
+                sc += 50
+            if right.split(" ")[0] in ("수", "것", "거", "때", "중", "적", "번", "건", "게"):
+                sc += 40  # "오를 / 수 있다"처럼 붙어야 하는 말은 떼지 않는다
+            if sc < score:
+                best, score = k, sc
+        return halve(" ".join(ws[:best])) + halve(" ".join(ws[best:]))
+
+    lines = []
+    for c in clauses:
+        lines += halve(c)
+    # 짧은 줄은 이웃과 합친다
+    merged = []
+    for ln in lines:
+        if merged and len(merged[-1]) + 1 + len(ln) <= (limit if len(ln) > 6 and len(merged[-1]) > 6 else limit + 3):
+            merged[-1] = merged[-1] + " " + ln
         else:
-            cur = f"{cur} {w}".strip()
-    if cur:
-        lines.append(cur)
-    # 마지막 줄이 너무 짧으면 앞줄과 다시 나눈다
-    if len(lines) > 1 and len(lines[-1]) <= 4 and len(lines[-2]) + len(lines[-1]) + 1 <= limit + 6:
-        last = lines.pop()
-        lines[-1] = lines[-1] + " " + last
-    return lines
+            merged.append(ln)
+    return [m.replace("\u00a0", " ") for m in merged]
+
+
+def char_clock(i, a, b):
+    """문장 i의 [a, b] 구간을 글자 단위 시간표로 (말한 글자 수 비율 → 시각)."""
+    ws = [w for w in transcript[i]["words"] if w["end"] > a and w["start"] < b] or [{"start": a, "end": b, "word": "x"}]
+    pts = []
+    for w in ws:
+        n = max(1, len(w["word"].strip()))
+        for c in range(n):
+            pts.append(w["start"] + (w["end"] - w["start"]) * c / n)
+    return pts
 
 
 def ass_time(t):
@@ -273,19 +392,28 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         for a, b in cuts:
             offs.append((a, acc))
             acc += b - a
-        for k, (a, b, text) in enumerate(ps):
+        scene_ev = []
+        for k, (a, b, text, i) in enumerate(ps):
             ca, off = offs[k]
-            t0 = starts[name] + off + (a - ca)
-            dur = b - a
+            to_tl = lambda x: starts[name] + off + (x - ca)
             lines = split_caption(text)
-            tot = sum(len(x) for x in lines)
-            t = t0
+            clock = char_clock(i, a, b)
+            tot = sum(len(x.replace(" ", "")) for x in lines)
+            c = 0
             for ln in lines:
-                dd = dur * len(ln) / tot
-                end = min(t + dd + 0.15, starts[name] + durs[name])
-                ev.append(f"Dialogue: 0,{ass_time(t)},{ass_time(end)},Cap,,60,{mr},58,,{ln}")
-                srt.append((t, end, ln))
-                t += dd
+                frac = c / tot
+                t = to_tl(clock[min(len(clock) - 1, int(frac * len(clock)))]) if c else to_tl(max(a, clock[0] - 0.08))
+                scene_ev.append([t, None, ln])
+                c += len(ln.replace(" ", ""))
+            scene_ev[-1][1] = to_tl(min(b, transcript[i]["end"]) + 0.35)
+        # 다음 줄이 나오기 직전까지 보여주고, 겹치지 않게 한다 (겹치면 자막이 위아래로 튄다)
+        for k in range(len(scene_ev)):
+            nxt = scene_ev[k + 1][0] if k + 1 < len(scene_ev) else starts[name] + durs[name]
+            end = scene_ev[k][1] if scene_ev[k][1] is not None else nxt
+            scene_ev[k][1] = max(scene_ev[k][0] + 0.6, min(end if k + 1 < len(scene_ev) and scene_ev[k][1] is not None else nxt, nxt) - 0.02)
+        for t, end, ln in scene_ev:
+            ev.append(f"Dialogue: 0,{ass_time(t)},{ass_time(end)},Cap,,60,{mr},58,,{ln}")
+            srt.append((t, end, ln))
     (WORK / "captions.ass").write_text(head + "\n".join(ev) + "\n")
     out = []
     for i, (a, b, ln) in enumerate(srt, 1):
