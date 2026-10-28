@@ -116,18 +116,20 @@ def face_box(cuts, w, h, top_bias):
 
 
 def face_chain(cuts, first_input):
-    """얼굴 원본 구간들을 이어 붙이는 필터 (영상 [fv], 목소리 [fa])."""
-    t0 = cuts[0][0]
-    parts, labels_v, labels_a = [], [], []
+    """얼굴 원본 구간들을 이어 붙이는 필터 (영상 [fvc], 목소리 [fa]).
+    구간마다 입력을 따로 연다 (한 입력을 여러 번 자르면 메모리를 많이 써서 멈춘다)."""
+    inputs, parts, labels_v, labels_a = [], [], [], []
     for k, (a, b) in enumerate(cuts):
-        parts.append(f"[{first_input}:v]trim={a - t0:.3f}:{b - t0:.3f},setpts=PTS-STARTPTS[fv{k}]")
-        parts.append(f"[{first_input}:a]atrim={a - t0:.3f}:{b - t0:.3f},asetpts=PTS-STARTPTS,afade=t=in:d=0.02,afade=t=out:st={b - a - 0.03:.3f}:d=0.03[fa{k}]")
+        i = first_input + k
+        inputs += ["-ss", f"{a:.3f}", "-t", f"{b - a:.3f}", "-i", str(FACE)]
+        parts.append(f"[{i}:v]setpts=PTS-STARTPTS[fv{k}]")
+        parts.append(f"[{i}:a]asetpts=PTS-STARTPTS,afade=t=in:d=0.02,afade=t=out:st={max(0.0, b - a - 0.03):.3f}:d=0.03[fa{k}]")
         labels_v.append(f"[fv{k}]")
         labels_a.append(f"[fa{k}]")
     n = len(cuts)
     parts.append("".join(labels_v) + f"concat=n={n}:v=1:a=0[fvc]")
     parts.append("".join(labels_a) + f"concat=n={n}:v=0:a=1[fa]")
-    return parts, t0, cuts[-1][1] - t0 + 0.2
+    return inputs, parts
 
 
 def compose_scene(s, d, res_dir):
@@ -142,12 +144,13 @@ def compose_scene(s, d, res_dir):
         inputs += ["-i", str(res_dir / f"{key}.mp4")]
     if cuts:
         fi = 0 if name == "intro" else 1
-        parts, t0, span = face_chain(cuts, fi)
-        inputs += ["-ss", f"{t0:.3f}", "-t", f"{span:.3f}", "-i", str(FACE)]
+        finputs, parts = face_chain(cuts, fi)
+        inputs += finputs
         fc += parts
         vlen = sum(b - a for a, b in cuts)
+        extra = fi + len(cuts)  # 다음 입력 번호
     else:
-        vlen, fi = 0, None
+        vlen, fi, extra = 0, None, 1
     base = f"color=c=0x05060f:s=1920x1080:r=30:d={d:.3f}"
     if name == "intro":
         # 얼굴 전체 화면 + 「웰컴 투 무협 월드」 썸네일 (강소라 배우 이름이 나올 때부터)
@@ -155,7 +158,7 @@ def compose_scene(s, d, res_dir):
         inputs += ["-loop", "1", "-t", f"{d:.3f}", "-i", str(thumb)]
         name_at = 4.95 - cuts[0][0]
         fc += ["[fvc]fps=30,scale=1920:1080,setsar=1[bg]",
-               "[1:v]scale=700:-2,pad=iw+12:ih+12:6:6:color=white,format=rgba,"
+               f"[{extra}:v]scale=700:-2,pad=iw+12:ih+12:6:6:color=white,format=rgba,"
                f"fade=t=in:st={name_at:.2f}:d=0.3:alpha=1,fade=t=out:st={name_at + 6.5:.2f}:d=0.4:alpha=1[th]",
                "[bg][th]overlay=x=W-w-90:y=110:shortest=1,trim=0:" + f"{d:.3f}" + "[v]"]
     elif s["kind"] in NO_FACE or not cuts:
@@ -173,18 +176,19 @@ def compose_scene(s, d, res_dir):
                f"fade=t=out:st={max(0.0, vlen - 0.35):.2f}:d=0.35:alpha=1[pip]",
                f"[0:v]fps=30,scale=1920:1080,setsar=1,tpad=stop_mode=clone:stop_duration=30,trim=0:{d:.3f},setpts=PTS-STARTPTS[main]",
                "[main][pip]overlay=x=W-w-36:y=H-h-36:eof_action=pass[v]"]
-    graph = ";".join(p for p in fc if not (fi is not None and p.startswith(f"[{fi}:a]")) and not p.endswith("[fa]"))
-    run(["ffmpeg", "-loglevel", "error", "-y", *inputs, "-filter_complex", graph, "-map", "[v]", "-t", f"{d:.3f}", "-an",
-         "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", "-pix_fmt", "yuv420p", str(vout)])
-    # 목소리
-    if cuts:
-        agraph = ";".join(p for p in fc if p.startswith(f"[{fi}:a]") or p.endswith("[fa]"))
-        ainputs = ["-ss", f"{cuts[0][0]:.3f}", "-t", f"{span:.3f}", "-i", str(FACE)]
-        agraph = agraph.replace(f"[{fi}:a]", "[0:a]")
-        agraph += f";[fa]aresample={SR},aformat=channel_layouts=stereo,apad,atrim=0:{d:.3f}[fo]"
-        run(["ffmpeg", "-loglevel", "error", "-y", *ainputs, "-filter_complex", agraph, "-map", "[fo]", "-c:a", "pcm_s16le", str(aout)])
-    else:
-        run(["ffmpeg", "-loglevel", "error", "-y", "-f", "lavfi", "-t", f"{d:.3f}", "-i", f"anullsrc=r={SR}:cl=stereo", str(aout)])
+    vparts = [p for p in fc if ":a]" not in p.split("]")[0] + "]" and not p.endswith("[fa]")]
+    graph = ";".join(vparts)
+    if not (vout.exists() and aout.exists()):
+        run(["ffmpeg", "-loglevel", "error", "-y", *inputs, "-filter_complex", graph, "-map", "[v]", "-t", f"{d:.3f}", "-an",
+             "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", "-pix_fmt", "yuv420p", str(vout)])
+        # 목소리
+        if cuts:
+            ainputs, aparts = face_chain(cuts, 0)
+            agraph = ";".join(p for p in aparts if ":a]" in p.split("]")[0] + "]" or p.endswith("[fa]"))
+            agraph += f";[fa]aresample={SR},aformat=channel_layouts=stereo,apad,atrim=0:{d:.3f}[fo]"
+            run(["ffmpeg", "-loglevel", "error", "-y", *ainputs, "-filter_complex", agraph, "-map", "[fo]", "-c:a", "pcm_s16le", str(aout)])
+        else:
+            run(["ffmpeg", "-loglevel", "error", "-y", "-f", "lavfi", "-t", f"{d:.3f}", "-i", f"anullsrc=r={SR}:cl=stereo", str(aout)])
     # 클립 소리 (렌더에 있으면)
     src = res_dir / f"{key}.mp4"
     has_a = name != "intro" and bool(subprocess.run(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", str(src)],
