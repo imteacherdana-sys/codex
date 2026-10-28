@@ -572,7 +572,7 @@ def scenes():
     add("hook-question", "talk", ["클링 4.0이 나왔어요. 역대 최고 영상 AI라는 말까지 나와요.",
                                   "시댄스 2.5보다 낫다는 사람도 있고요. 진짜일까요, 그냥 과장일까요?"],
         kicker="NEW · KLING 4.0", title="클링 4.0, 진짜 최고일까?", hl=["진짜 최고"], sub="시댄스 2.5 · 비오 3.1 · 완 3.0 · 미니맥스 H3 · 그록 1.5", cam="push", ad=True, music="wuxia", sfx=[("ding", 0.3)])
-    add("authority", "clip", ["저는 대학에서 AI를 가르치고, 회사를 운영하면서 매일 AI로 일하는 단아쌤이에요."],
+    add("authority", "clip", ["저는 경희대 경영대학원에서 AI와 이커머스를 가르치고, 기업의 AX 도입을 돕는 단아쌤, 김경은이에요."],
         key="authority", audio=False, cam="punch", music="wuxia", min_dur=7.0)
     add("stakes", "talk", ["그래서 직접 확인했어요. 영상 AI 여섯 개에 똑같은 문장을 넣고, 크레딧을 천 개 넘게 썼어요.",
                            "시험은 무협으로 냈어요. 쉬운 장면은 다 잘하거든요."],

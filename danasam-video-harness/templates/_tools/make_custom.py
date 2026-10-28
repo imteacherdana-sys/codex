@@ -254,8 +254,8 @@ write("shape-kit", page("shape-kit", 5, """
 """ + shape_js + "\n"))
 
 # ---------------------------------------------------------------- 권위 카드 (단아쌤 소개)
-# 경력 문구는 변수다. 기본값은 세진 PD 기획서에 나온 표현만 쓴 예시이며, 촬영 전 본인 확인 후 바꾼다.
-AUTH_CHIPS = ["경희대 교수", "기업 운영", "AI 생산성 강의"]
+# 경력 문구는 변수다. 기본값은 단아쌤이 확인해 준 경력 (2026-10-28, 템플릿 사이트 댓글).
+AUTH_CHIPS = ["컨설팅", "이커머스", "AX 도입"]
 chips_html = "\n".join(f'          <span class="chip" id="authority-card-c{i}">{c}</span>' for i, c in enumerate(AUTH_CHIPS))
 write("authority-card", page("authority-card", 7, """
       .plate { position: absolute; inset: -60px; background: url("assets/images/desk.jpg") center / cover; transform-origin: 62% 45%; }
@@ -281,24 +281,23 @@ write("authority-card", page("authority-card", 7, """
         <div class="portrait" id="authority-card-portrait">
           <div class="rim" id="authority-card-rim"></div>
           <div class="ph" id="authority-card-ph"><img id="authority-card-photo" src="assets/images/danasam-portrait.jpg" alt="단아쌤 프로필 사진"></div>
-          <span class="cap" id="authority-card-cap">단아쌤</span>
+          <span class="cap" id="authority-card-cap">AI 교수</span>
         </div>
         <div class="card" id="authority-card-card">
-          <span class="eyebrow" id="authority-card-eyebrow">AI 교수</span>
+          <span class="eyebrow" id="authority-card-eyebrow">단아쌤</span>
           <div class="name" id="authority-card-name"></div>
           <div class="uline" id="authority-card-uline"></div>
-          <div class="title" id="authority-card-title">경희대 교수 · 기업 대표</div>
+          <div class="title" id="authority-card-title">경희대 경영대학원 AI/이커머스 겸임교수</div>
           <div class="chips">
 {chips_html}
           </div>
         </div>
-      </div>
-      <div class="tag" id="authority-card-tag">예시 문구 · 경력은 본인 확인 후 확정</div>""", f"""
-        const nameText = vars.name || "단아쌤";
+      </div>""", f"""
+        const nameText = vars.name || "김경은";
         if (vars.eyebrow) document.getElementById("authority-card-eyebrow").textContent = vars.eyebrow;
         if (vars.title) document.getElementById("authority-card-title").textContent = vars.title;
         if (vars.photo) document.getElementById("authority-card-photo").src = vars.photo;
-        document.getElementById("authority-card-cap").textContent = nameText;
+        document.getElementById("authority-card-cap").textContent = vars.cap || "AI 교수";
         if (vars.chips) vars.chips.split(",").forEach(function (c, i) {{ const el = document.getElementById("authority-card-c" + i); if (el) el.textContent = c.trim(); }});
         const nameEl = document.getElementById("authority-card-name");
         const letters = Array.from(nameText).map(function (ch) {{ const s = document.createElement("i"); s.textContent = ch; nameEl.appendChild(s); return s; }});
@@ -329,11 +328,12 @@ write("authority-card", page("authority-card", 7, """
         tl.to("#authority-card-cam", {{ scale: 1, duration: 0.5, ease: "power2.inOut" }}, 6.2);
         tl.to("#authority-card-portrait", {{ y: -40, opacity: 0, duration: 0.4, ease: "power3.in" }}, 6.35);
 """, [
-    {"id": "name", "type": "string", "label": "이름", "default": "단아쌤"},
-    {"id": "eyebrow", "type": "string", "label": "머리표", "default": "AI 교수"},
-    {"id": "title", "type": "string", "label": "직함 한 줄", "default": "경희대 교수 · 기업 대표"},
+    {"id": "name", "type": "string", "label": "이름", "default": "김경은"},
+    {"id": "eyebrow", "type": "string", "label": "머리표", "default": "단아쌤"},
+    {"id": "title", "type": "string", "label": "직함 한 줄", "default": "경희대 경영대학원 AI/이커머스 겸임교수"},
     {"id": "chips", "type": "string", "label": "이력 칩 (쉼표로 3개)", "default": ", ".join(AUTH_CHIPS)},
     {"id": "photo", "type": "string", "label": "프로필 사진 경로", "default": "assets/images/danasam-portrait.jpg"},
+    {"id": "cap", "type": "string", "label": "사진 이름표", "default": "AI 교수"},
 ]))
 
 # ---------------------------------------------------------------- X 뉴스 카드 (최신 반응 3장 + 카메라 이동)

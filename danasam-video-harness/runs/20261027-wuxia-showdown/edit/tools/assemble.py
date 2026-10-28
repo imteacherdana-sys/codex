@@ -121,9 +121,9 @@ def main():
     # 3) 완성본: 클립 소리 + 배경음악·효과음, 마지막에 라우드니스 맞춤
     final = OUT / "wuxia-showdown-final.mp4"
     run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(video), "-i", str(OUT / "stems" / "music_sfx.wav"),
-         "-filter_complex", "[0:a]volume=0.9[c];[c][1:a]amix=inputs=2:normalize=0,alimiter=limit=0.95,loudnorm=I=-16:TP=-1.5:LRA=11[a]",
+         "-filter_complex", "[0:a]volume=0.9[c];[c][1:a]amix=inputs=2:normalize=0,alimiter=limit=0.95,loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000,alimiter=limit=0.89:level=false[a]",
          "-map", "0:v", "-map", "[a]", "-c:v", "libx264", "-preset", "medium", "-crf", "19", "-pix_fmt", "yuv420p",
-         "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", str(final)])
+         "-c:a", "aac", "-ar", "48000", "-b:a", "192k", "-movflags", "+faststart", str(final)])
 
     # 4) 자막과 녹음 대본
     srt, md = [], ["# 무협 쇼다운 녹음 대본", "", "완성본의 자막과 같은 문장이에요. 타임코드에 맞춰 읽고, 녹음본을 `stems/music_sfx.wav`·`stems/clip_audio.wav`와 함께 얹으면 돼요.", ""]
