@@ -51,8 +51,9 @@ BLIND = {
 }
 ROUND_NAME = {"r1": "시험 1 · 장풍", "r2": "시험 2 · 경공", "r3": "시험 3 · 비무", "r4": "시험 4 · Reference", "r5": "시험 5 · 현판"}
 # 라운드 1등 (1차 채점, 단아쌤 확인 필요)
-WINNERS = {"r1": ["flux_3_video"], "r2": ["wan3_0"], "r3": ["grok_video_v15", "gemini_omni_flash_1_1"], "r4": ["kling4_0", "flux_3_video", "wan3_0"],
-           "r5": ["kling4_0", "seedance_2_5", "grok_video_v15", "flux_3_video", "gemini_omni_flash_1_1"]}
+WINNERS = {"r1": ["flux_3_video"], "r2": ["seedance_2_0"], "r3": ["kling4_0"], "r4": ["kling4_0", "flux_3_video", "wan3_0"], "r5": ["kling4_0"]}
+# 현판 글자를 정확히 쓴 모델 (1등과 별개)
+R5_CORRECT = ["kling4_0", "seedance_2_5", "grok_video_v15", "flux_3_video", "gemini_omni_flash_1_1"]
 
 PROMPTS = {
     "r1": ("A Chinese woman in her early 20s ... stands in a misty bamboo forest at dawn. She draws a slow breath, "
@@ -609,7 +610,7 @@ def make_last_frame(key):
 
 
 # ------------------------------------------------------------------ 대본 (장면 목록)
-# 시험별 모델 반응 (자막 한 줄씩). 1차 관찰 · 단아쌤 확인 필요
+# 시험별 모델 반응 (자막 한 줄씩). 시험 2~5는 단아쌤 판정 반영
 OBS = {
     "r1": {
         "seedance_2_0": ["Seedance 2.0은 로우앵글로 대나무가 휘는 모습을 살렸습니다.", "다만 장풍 파동은 보이지 않습니다."],
@@ -626,7 +627,7 @@ OBS = {
         "kling4_0": ["Kling도 지붕, 처마, 연못까지 순서대로 해냈습니다.", "다만 마지막은 뛰기보다 걷는 느낌입니다."],
         "flux_3_video": ["FLUX 3는 지붕 위 도약은 좋습니다.", "하지만 연못에서는 물속에 서 있는 것처럼 보입니다."],
         "minimax_h3": ["MiniMax는 걷는 느낌이라", "경공의 맛이 약합니다."],
-        "seedance_2_0": ["Seedance 2.0은 세 단계를 모두 해냈습니다.", "수면 위를 걷는 반사까지 자연스럽습니다."],
+        "seedance_2_0": ["Seedance 2.0은 세 단계를 모두 해냈고,", "수면 위를 달리는 반사까지 가장 경공답습니다!"],
         "grok_video_v15": ["Grok은 수면 물결 표현이 좋습니다.", "지붕 위에서 잠깐 멈칫하는 점은 아쉽습니다."],
         "seedance_2_5": ["Seedance 2.5는 노을빛이 정말 영화 같습니다.", "그런데 걷다가 연못에 서서 끝납니다. 건너지 않았습니다."],
         "gemini_omni_flash_1_1": ["Gemini도 지붕에서 연못까지", "세 단계를 모두 해냈습니다."],
@@ -634,10 +635,10 @@ OBS = {
     "r3": {
         "flux_3_video": ["FLUX 3는 카메라가 두 사람 사이로 파고듭니다.", "다만 첫 인사가 없습니다."],
         "seedance_2_5": ["Seedance 2.5는 목검이 부딪히는 클로즈업이 영화 같습니다.", "하지만 시간 정지와 카메라 회전은 없습니다."],
-        "grok_video_v15": ["Grok은 인사로 시작하고, 낙엽이 공중에 멈춥니다.", "마지막에 다시 마주 섭니다. 순서를 잘 따랐습니다!"],
-        "kling4_0": ["Kling은 각도를 바꿔가며 보여줬지만,", "인사와 시간 정지가 빠졌습니다."],
-        "gemini_omni_flash_1_1": ["Gemini는 인사로 시작해 낙엽이 공중에 멈추고,", "마지막에 다시 인사합니다. 순서를 끝까지 지켰습니다!"],
-        "seedance_2_0": ["Seedance 2.0은 빙글빙글 도는 동작이 화려합니다.", "그런데 인사와 시간 정지는 없습니다."],
+        "grok_video_v15": ["Grok은 순서는 잘 따랐지만,", "손에 목검이 두 자루씩 나옵니다."],
+        "kling4_0": ["Kling은 각도를 바꿔가며 합을 또렷하게 보여줍니다.", "목검과 두 사람의 동작이 가장 자연스럽습니다!"],
+        "gemini_omni_flash_1_1": ["Gemini는 순서는 끝까지 지켰지만,", "낙엽이 엉뚱한 곳에서 생겨납니다."],
+        "seedance_2_0": ["Seedance 2.0은 빙글빙글 도는 동작이 화려하고,", "시간 정지까지 해냈습니다!"],
         "wan3_0": ["Wan은 정면 구도로 안정적이지만,", "합이 적고 시간 정지가 없습니다."],
         "minimax_h3": ["MiniMax는 합이 시원시원합니다.", "다만 시간 정지는 없었습니다."],
     },
@@ -648,7 +649,7 @@ OBS = {
         "kling4_0": ["Kling은 걷기, 다가오기, 클로즈업 순서를 지켰고,", "옥비녀와 자수까지 그대로입니다!"],
         "minimax_h3": ["MiniMax는 두 사람의 얼굴을 잘 지켰지만,", "상투가 작게 바뀌었습니다."],
         "grok_video_v15": ["Grok은 세 컷 구성은 좋지만,", "귀공자의 머리 모양이 조금 달라졌습니다."],
-        "seedance_2_5": ["Seedance 2.5는 클로즈업이 아름답지만,", "귀공자의 상투가 풀리고 표정이 달라졌습니다."],
+        "seedance_2_5": ["Seedance 2.5는 화면이 가장 예쁩니다.", "그런데 귀공자의 상투가 풀리고 표정이 달라졌습니다."],
         "wan3_0": ["Wan도 옥비녀 상투와 자수를", "거의 그대로 지켰습니다!"],
     },
     "r5": {
@@ -658,11 +659,11 @@ OBS = {
         "seedance_2_5": ["Seedance 2.5도 정확합니다.", "차 따르는 손까지 자연스럽습니다."],
         "wan3_0": ["Wan은 '단야객잔'.", "한 글자가 틀렸습니다."],
         "flux_3_video": ["FLUX 3도 '단아객잔'을", "정확히 썼습니다!"],
-        "kling4_0": ["Kling도 네 글자를 정확히 썼습니다.", "현판으로 올라가는 카메라도 자연스럽습니다."],
+        "kling4_0": ["Kling도 네 글자를 정확히 썼고,", "현판 화면이 가장 예쁩니다!"],
         "minimax_h3": ["MiniMax는 글자는 맞지만,", "현판이 비스듬히 기울어 보입니다."],
     },
 }
-STAMP = {("r5", "seedance_2_0"): "단야?", ("r5", "wan3_0"): "단야?", ("r4", "gemini_omni_flash_1_1"): "거절"}
+STAMP = {("r3", "grok_video_v15"): "검 2개?", ("r3", "gemini_omni_flash_1_1"): "낙엽?", ("r5", "seedance_2_0"): "단야?", ("r5", "wan3_0"): "단야?", ("r4", "gemini_omni_flash_1_1"): "거절"}
 
 
 def scenes():
@@ -751,7 +752,7 @@ def scenes():
                             "몇 번이 세 단계를 다 해냈을까요?"], round="r2", reveal=3.2, music="wuxia",
         sfx=[("whoosh", 3.1)])
     round_clips("r2")
-    add("r2-verdict", "verdict", ["경공은 연못 위를 끝까지 달린 Wan입니다!",
+    add("r2-verdict", "verdict", ["경공은 Seedance 2.0이 가장 잘 표현했습니다!",
                                   "재미있는 건 Seedance 2.0은 연못을 건넜는데,",
                                   "2.5는 건너지 않았다는 점입니다.",
                                   "새 버전이 늘 시킨 대로 하는 건 아닙니다.",
@@ -766,13 +767,14 @@ def scenes():
                                 "순서대로 다 해내는지 보겠습니다."],
         round="r3", sub="지시 이행 시험 · 서소저 vs 귀공자", music="wuxia", sfx=[("brush", 0.1)])
     add("r3-grid", "grid", ["여덟 개 모두 두 사람의 옷과 머리는 잘 지켰습니다.",
-                            "차이는 순서에서 났습니다."], round="r3", reveal=2.6, music="wuxia",
+                            "차이는 디테일에서 났습니다."], round="r3", reveal=2.6, music="wuxia",
         sfx=[("whoosh", 2.5)])
     round_clips("r3")
-    add("r3-verdict", "verdict", ["비무는 Grok과 Gemini 공동 1등입니다!",
+    add("r3-verdict", "verdict", ["비무는 Kling이 가장 잘했습니다!",
+                                  "Grok은 검이 두 자루, Gemini는 낙엽이 엉뚱했습니다.",
                                   "그렇다면 같은 사람을 끝까지 유지하는 건",
                                   "누가 가장 잘할까요?"],
-        round="r3", hand="인사 → 합 → 정지 → 마주 서기", music="wuxia", sfx=[("stamp", 0.65)])
+        round="r3", hand="검 하나, 낙엽 하나까지 자연스럽게", music="wuxia", sfx=[("stamp", 0.65)])
 
     # 5. 시험 4 Reference
     add("r4-intro", "talk", ["네 번째는 가장 실용적인 시험입니다.",
@@ -787,7 +789,8 @@ def scenes():
     add("r4-faces", "faces", ["마지막 클로즈업을 원본 사진과 비교해 보겠습니다.",
                               "옥비녀 상투와 옷 자수까지 지킨 건",
                               "Kling, FLUX 3, Wan 세 모델입니다.",
-                              "Seedance 두 모델은 귀공자의 상투가 풀렸습니다."], music="calm")
+                              "가장 예쁜 화면은 Seedance였지만,",
+                              "귀공자의 상투가 풀린 건 아쉽습니다."], music="calm")
     add("r4-verdict", "verdict", ["Reference 시험은 Kling, FLUX 3, Wan 공동 1등입니다!",
                                   "마지막 시험은 함정입니다."],
         round="r4", hand="옥비녀 하나까지 그대로", music="wuxia", sfx=[("stamp", 0.65)])
@@ -799,7 +802,7 @@ def scenes():
         round="r5", sub="함정 · 한글 글자", music="calm", sfx=[("brush", 0.1)])
     add("r5-grid", "grid", ["결과는 반전입니다!",
                             "여덟 개 중 다섯 개가 네 글자를 정확히 썼습니다."],
-        round="r5", reveal=2.0, winners=WINNERS["r5"], winners_at=3.6, music="calm", sfx=[("ding", 3.6)])
+        round="r5", reveal=2.0, winners=R5_CORRECT, winners_at=3.6, music="calm", sfx=[("ding", 3.6)])
     round_clips("r5")
     add("r5-twist", "talk", ["더 재미있는 일이 있었습니다.",
                              "함정을 피하려고 이미지 AI로 현판을 먼저 만들었는데,",
@@ -807,16 +810,17 @@ def scenes():
                              "결론은 하나입니다.",
                              "글자는 어떤 AI든 꼭 눈으로 확인하십시오!"],
         kicker="함정의 함정", title="글자는 꼭 눈으로 확인", hl=["눈으로 확인"], sub="이미지 AI도 틀립니다: 단 → 탄", img="r5_signboard.png", img_w=780, img_h=440, cam="push", music="calm")
-    add("r5-verdict", "verdict", ["현판 시험은 다섯 모델 공동 1등입니다!"],
+    add("r5-verdict", "verdict", ["다섯 모델이 글자를 맞췄지만,",
+                                  "가장 예쁜 현판은 Kling 4.0입니다!"],
         round="r5", hand="Wan · Seedance 2.0은 단야, MiniMax는 기울어짐", music="wuxia", sfx=[("stamp", 0.65)])
 
     # 7. 점수 · 반전 · 강점
     add("board", "board", ["다섯 시험 결과입니다.",
-                           "1등을 가장 많이 한 모델은 FLUX 3, 세 번입니다!",
-                           "두 번 한 모델은 Kling, Wan, Gemini, Grok입니다.",
+                           "1등을 가장 많이 한 모델은 Kling, 세 번입니다!",
+                           "FLUX 3가 두 번, Seedance 2.0과 Wan이 한 번입니다.",
                            "가장 영화 같은 화면은 Seedance 2.5였습니다.",
-                           "그렇다면 정답은 FLUX 3일까요?",
-                           "아직 비용 이야기를 하지 않았습니다!"], music="calm", sfx=[("tick", 1.4), ("tick", 1.85), ("tick", 2.3), ("tick", 2.75), ("tick", 3.2), ("ding", 3.9)])
+                           "그런데 Seedance 2.5는 1등이 한 번도 없습니다.",
+                           "이제 비용을 보겠습니다!"], music="calm", sfx=[("tick", 1.4), ("tick", 1.85), ("tick", 2.3), ("tick", 2.75), ("tick", 3.2), ("ding", 3.9)])
     add("credits", "credits", ["다섯 시험에 든 크레딧입니다.",
                                "Kling 34, Wan 70, MiniMax 80, Gemini 96,",
                                "Seedance 2.0 180, Grok 180, FLUX 3 240, Seedance 2.5 280.",
@@ -825,11 +829,11 @@ def scenes():
                                "다만 Kling은 지금 출시 할인가입니다.",
                                "할인이 끝나면 가격이 오를 수 있습니다."],
         music="wuxia", sfx=[("tick", 0.6), ("tick", 0.9), ("tick", 1.2), ("tick", 1.5), ("tick", 1.8), ("tick", 2.1), ("tick", 2.4), ("tick", 2.7)])
-    add("kling-why", "talk", ["Kling은 1등 두 번을 가장 싼 값에 해냈습니다.",
-                              "Reference 시험 1등, 현판 글자도 정확했습니다.",
+    add("kling-why", "talk", ["Kling은 1등 세 번을 가장 싼 값에 해냈습니다.",
+                              "비무, Reference, 현판에서 1등입니다.",
                               "같은 인물로 여러 컷을 시킨 대로 만드는 일,",
                               "우리가 실제로 가장 많이 하는 일입니다!"],
-        kicker="그래서 Kling", title="싸고, 사람을 기억하고, 글자도 맞게", hl=["사람을 기억"], sub="Reference 공동 1등 · 현판 공동 1등 · 크레딧 최저", cam="push", music="wuxia")
+        kicker="그래서 Kling", title="싸고, 사람을 기억하고, 글자도 맞게", hl=["사람을 기억"], sub="비무 1등 · Reference 공동 1등 · 현판 1등 · 크레딧 최저", cam="push", music="wuxia")
     add("edit-demo", "split", ["Kling에는 만든 영상을 고치는 편집 기능도 있습니다.",
                                "장풍 파동이 안 보였던 부분만 고쳐봤습니다.",
                                "솔직히 이번에는 바람 번짐만 살짝 생겼습니다.",

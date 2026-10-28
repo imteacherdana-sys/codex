@@ -29,11 +29,11 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--
 </style>
 </head>
 <body>
-<div id="root" data-composition-id="s31" data-start="0" data-duration="7.62" data-width="1920" data-height="1080">
+<div id="root" data-composition-id="s31" data-start="0" data-duration="7.78" data-width="1920" data-height="1080">
 <div class="ground"></div><div class="gridbg" id="gridbg"></div>
 <div class="cam" id="cam">
 <img src="assets/images/last_grid_r3.png" alt="" style="position:absolute; inset:0; width:1920px; height:1080px;" />
-<video id="gv" class="clip" src="assets/clips/grid_r3.mp4" data-start="0" data-duration="7.62" data-track-index="1" muted playsinline style="position:absolute; left:0; top:0; width:1920px; height:1080px;"></video>
+<video id="gv" class="clip" src="assets/clips/grid_r3.mp4" data-start="0" data-duration="7.78" data-track-index="1" muted playsinline style="position:absolute; left:0; top:0; width:1920px; height:1080px;"></video>
 <div id="g0" style="position:absolute; left:72px; top:220px; width:420px; height:236px; border-radius:14px; box-shadow: 0 0 0 6px #070a1c, inset 0 0 0 2px rgba(255,255,255,.08);"><div style="position:absolute; left:10px; top:10px; width:46px; height:46px; border-radius:10px; background:var(--lime); color:#05060f; font-size:30px; font-weight:900; display:flex; align-items:center; justify-content:center;">1</div><div id="gn0" style="position:absolute; left:0; right:0; bottom:0; padding:7px 12px; background:rgba(5,6,15,.85); display:flex; justify-content:space-between; font-size:21px; font-weight:800; opacity:0; border-radius:0 0 12px 12px;"><span style="color:#e8e8f2">FLUX 3</span><span>48 크레딧</span></div><div id="gw0" style="position:absolute; inset:0; border:6px solid var(--lime); border-radius:16px; opacity:0;"></div></div>
 <div id="g1" style="position:absolute; left:524px; top:220px; width:420px; height:236px; border-radius:14px; box-shadow: 0 0 0 6px #070a1c, inset 0 0 0 2px rgba(255,255,255,.08);"><div style="position:absolute; left:10px; top:10px; width:46px; height:46px; border-radius:10px; background:var(--lime); color:#05060f; font-size:30px; font-weight:900; display:flex; align-items:center; justify-content:center;">2</div><div id="gn1" style="position:absolute; left:0; right:0; bottom:0; padding:7px 12px; background:rgba(5,6,15,.85); display:flex; justify-content:space-between; font-size:21px; font-weight:800; opacity:0; border-radius:0 0 12px 12px;"><span style="color:#ff6b5b">Seedance 2.5</span><span>56 크레딧</span></div><div id="gw1" style="position:absolute; inset:0; border:6px solid var(--lime); border-radius:16px; opacity:0;"></div></div>
 <div id="g2" style="position:absolute; left:976px; top:220px; width:420px; height:236px; border-radius:14px; box-shadow: 0 0 0 6px #070a1c, inset 0 0 0 2px rgba(255,255,255,.08);"><div style="position:absolute; left:10px; top:10px; width:46px; height:46px; border-radius:10px; background:var(--lime); color:#05060f; font-size:30px; font-weight:900; display:flex; align-items:center; justify-content:center;">3</div><div id="gn2" style="position:absolute; left:0; right:0; bottom:0; padding:7px 12px; background:rgba(5,6,15,.85); display:flex; justify-content:space-between; font-size:21px; font-weight:800; opacity:0; border-radius:0 0 12px 12px;"><span style="color:#c9a7ff">Grok Imagine 1.5</span><span>36 크레딧</span></div><div id="gw2" style="position:absolute; inset:0; border:6px solid var(--lime); border-radius:16px; opacity:0;"></div></div>
@@ -45,12 +45,12 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--
 </div>
 <div class="tag" id="ttl" style="font-size:30px; color:var(--fg); top:60px;">시험 3 · 비무</div>
 <div class="cap clip" id="cap0" data-start="0.40" data-duration="4.09" data-track-index="9"><span>여덟 개 모두 두 사람의 옷과 머리는 잘 지켰습니다.</span></div>
-<div class="cap clip" id="cap1" data-start="4.49" data-duration="2.64" data-track-index="9"><span>차이는 순서에서 났습니다.</span></div>
+<div class="cap clip" id="cap1" data-start="4.49" data-duration="2.80" data-track-index="9"><span>차이는 디테일에서 났습니다.</span></div>
 </div>
 <script>
 (function(){
 const tl = gsap.timeline({ paused: true });
-tl.fromTo("#cam", {scale: 1.07}, {scale: 1.0, duration: 7.62, ease: "sine.inOut"}, 0);
+tl.fromTo("#cam", {scale: 1.07}, {scale: 1.0, duration: 7.78, ease: "sine.inOut"}, 0);
 tl.fromTo("#ttl", {opacity: 0, y: -20}, {opacity: 1, y: 0, duration: 0.4}, 0.1);
 tl.fromTo("#cam", {opacity: 0}, {opacity: 1, duration: 0.4}, 0);
 tl.to("#gn0", {opacity: 1, duration: 0.3}, 2.60);

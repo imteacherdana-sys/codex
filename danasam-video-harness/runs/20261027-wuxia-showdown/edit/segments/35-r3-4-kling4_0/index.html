@@ -29,7 +29,7 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--
 </style>
 </head>
 <body>
-<div id="root" data-composition-id="s35" data-start="0" data-duration="8.60" data-width="1920" data-height="1080">
+<div id="root" data-composition-id="s35" data-start="0" data-duration="9.56" data-width="1920" data-height="1080">
 <div class="ground"></div><div class="gridbg" id="gridbg"></div>
 <div class="cam" id="cam">
 <div class="frame" id="fr" style="left:160px; top:60px; width:1600px; height:900px;"><img src="assets/images/last_r3_kling4_0.png" alt="" /><video id="v" class="clip" src="assets/clips/r3_kling4_0.mp4" data-start="0" data-duration="8.04" data-media-start="0" data-track-index="1" playsinline data-has-audio="true" data-volume="0.8"></video></div>
@@ -37,18 +37,18 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--
 <div class="chip" id="mchip" style="position:absolute; left:190px; top:90px; background:rgba(5,6,15,.82); color:#b4e61d; box-shadow: inset 0 0 0 2px #b4e61d;">Kling 4.0</div>
 <div class="chip" id="cchip" style="position:absolute; right:190px; top:90px; background:rgba(5,6,15,.82); color:var(--fg);">4 크레딧</div>
 <div class="tag" id="lbl" style="top:16px">시험 3 · 비무 · 4번</div>
-<div class="cap clip" id="cap0" data-start="0.40" data-duration="3.76" data-track-index="9"><span>Kling은 각도를 바꿔가며 보여줬지만,</span></div>
-<div class="cap clip" id="cap1" data-start="4.16" data-duration="2.96" data-track-index="9"><span>인사와 시간 정지가 빠졌습니다.</span></div>
+<div class="cap clip" id="cap0" data-start="0.40" data-duration="4.73" data-track-index="9"><span>Kling은 각도를 바꿔가며 합을 또렷하게 보여줍니다.</span></div>
+<div class="cap clip" id="cap1" data-start="5.13" data-duration="3.93" data-track-index="9"><span>목검과 두 사람의 동작이 가장 자연스럽습니다!</span></div>
 </div>
 <script>
 (function(){
 const tl = gsap.timeline({ paused: true });
-tl.fromTo("#cam", {scale: 1.0}, {scale: 1.06, duration: 8.60, ease: "sine.inOut"}, 0);
+tl.fromTo("#cam", {scale: 1.0}, {scale: 1.06, duration: 9.56, ease: "sine.inOut"}, 0);
 tl.fromTo("#fr", {opacity: 0, scale: 0.96}, {opacity: 1, scale: 1, duration: 0.45, ease: "expo.out"}, 0);
 tl.fromTo("#mchip", {opacity: 0, x: -30}, {opacity: 1, x: 0, duration: 0.35, ease: "back.out(2)"}, 0.3);
 tl.fromTo("#cchip", {opacity: 0, x: 30}, {opacity: 1, x: 0, duration: 0.35, ease: "back.out(2)"}, 0.45);
 tl.fromTo("#cap0 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 0.40);
-tl.fromTo("#cap1 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 4.16);
+tl.fromTo("#cap1 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 5.13);
 window.__timelines = window.__timelines || {};
 window.__timelines["s35"] = tl;
 })();

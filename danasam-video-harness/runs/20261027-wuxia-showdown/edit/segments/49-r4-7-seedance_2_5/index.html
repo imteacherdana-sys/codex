@@ -29,7 +29,7 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--
 </style>
 </head>
 <body>
-<div id="root" data-composition-id="s49" data-start="0" data-duration="9.24" data-width="1920" data-height="1080">
+<div id="root" data-composition-id="s49" data-start="0" data-duration="9.56" data-width="1920" data-height="1080">
 <div class="ground"></div><div class="gridbg" id="gridbg"></div>
 <div class="cam" id="cam">
 <div class="frame" id="fr" style="left:160px; top:60px; width:1600px; height:900px;"><img src="assets/images/last_r4_seedance_2_5.png" alt="" /><video id="v" class="clip" src="assets/clips/r4_seedance_2_5.mp4" data-start="0" data-duration="8.06" data-media-start="0" data-track-index="1" playsinline data-has-audio="true" data-volume="0.8"></video></div>
@@ -37,18 +37,18 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--
 <div class="chip" id="mchip" style="position:absolute; left:190px; top:90px; background:rgba(5,6,15,.82); color:#ff6b5b; box-shadow: inset 0 0 0 2px #ff6b5b;">Seedance 2.5</div>
 <div class="chip" id="cchip" style="position:absolute; right:190px; top:90px; background:rgba(5,6,15,.82); color:var(--fg);">56 크레딧</div>
 <div class="tag" id="lbl" style="top:16px">시험 4 · Reference · 7번</div>
-<div class="cap clip" id="cap0" data-start="0.40" data-duration="4.41" data-track-index="9"><span>Seedance 2.5는 클로즈업이 아름답지만,</span></div>
-<div class="cap clip" id="cap1" data-start="4.81" data-duration="3.93" data-track-index="9"><span>귀공자의 상투가 풀리고 표정이 달라졌습니다.</span></div>
+<div class="cap clip" id="cap0" data-start="0.40" data-duration="4.25" data-track-index="9"><span>Seedance 2.5는 화면이 가장 예쁩니다.</span></div>
+<div class="cap clip" id="cap1" data-start="4.65" data-duration="4.41" data-track-index="9"><span>그런데 귀공자의 상투가 풀리고 표정이 달라졌습니다.</span></div>
 </div>
 <script>
 (function(){
 const tl = gsap.timeline({ paused: true });
-tl.fromTo("#cam", {scale: 1.0}, {scale: 1.06, duration: 9.24, ease: "sine.inOut"}, 0);
+tl.fromTo("#cam", {scale: 1.0}, {scale: 1.06, duration: 9.56, ease: "sine.inOut"}, 0);
 tl.fromTo("#fr", {opacity: 0, scale: 0.96}, {opacity: 1, scale: 1, duration: 0.45, ease: "expo.out"}, 0);
 tl.fromTo("#mchip", {opacity: 0, x: -30}, {opacity: 1, x: 0, duration: 0.35, ease: "back.out(2)"}, 0.3);
 tl.fromTo("#cchip", {opacity: 0, x: 30}, {opacity: 1, x: 0, duration: 0.35, ease: "back.out(2)"}, 0.45);
 tl.fromTo("#cap0 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 0.40);
-tl.fromTo("#cap1 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 4.81);
+tl.fromTo("#cap1 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 4.65);
 window.__timelines = window.__timelines || {};
 window.__timelines["s49"] = tl;
 })();

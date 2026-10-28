@@ -29,7 +29,7 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--
 </style>
 </head>
 <body>
-<div id="root" data-composition-id="s51" data-start="0" data-duration="17.09" data-width="1920" data-height="1080">
+<div id="root" data-composition-id="s51" data-start="0" data-duration="19.40" data-width="1920" data-height="1080">
 <div class="ground"></div><div class="gridbg" id="gridbg"></div>
 <div class="cam" id="cam">
 <div id="ref" class="frame" style="left:120px; top:120px; width:520px; height:600px;"><img src="assets/images/ref_pair.png" alt="" style="object-fit:cover" /></div>
@@ -46,13 +46,14 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--
 <div class="cap clip" id="cap0" data-start="0.40" data-duration="4.25" data-track-index="9"><span>마지막 클로즈업을 원본 사진과 비교해 보겠습니다.</span></div>
 <div class="cap clip" id="cap1" data-start="4.65" data-duration="2.96" data-track-index="9"><span>옥비녀 상투와 옷 자수까지 지킨 건</span></div>
 <div class="cap clip" id="cap2" data-start="7.61" data-duration="4.25" data-track-index="9"><span>Kling, FLUX 3, Wan 세 모델입니다.</span></div>
-<div class="cap clip" id="cap3" data-start="11.85" data-duration="4.73" data-track-index="9"><span>Seedance 두 모델은 귀공자의 상투가 풀렸습니다.</span></div>
+<div class="cap clip" id="cap3" data-start="11.85" data-duration="3.76" data-track-index="9"><span>가장 예쁜 화면은 Seedance였지만,</span></div>
+<div class="cap clip" id="cap4" data-start="15.62" data-duration="3.28" data-track-index="9"><span>귀공자의 상투가 풀린 건 아쉽습니다.</span></div>
 </div>
 <script>
 (function(){
 const tl = gsap.timeline({ paused: true });
-tl.fromTo("#gridbg", {x: 0, y: 0}, {x: -48, y: -24, duration: 17.09, ease: "none"}, 0);
-tl.fromTo("#cam", {x: 40, scale: 1.04}, {x: -40, scale: 1.04, duration: 17.09, ease: "sine.inOut"}, 0);
+tl.fromTo("#gridbg", {x: 0, y: 0}, {x: -48, y: -24, duration: 19.40, ease: "none"}, 0);
+tl.fromTo("#cam", {x: 40, scale: 1.04}, {x: -40, scale: 1.04, duration: 19.40, ease: "sine.inOut"}, 0);
 tl.fromTo(["#ref", "#reft"], {opacity: 0, x: -40}, {opacity: 1, x: 0, duration: 0.5, ease: "expo.out"}, 0.1);
 tl.fromTo(["#f0", "#fn0"], {opacity: 0, y: 30}, {opacity: 1, y: 0, duration: 0.4, ease: "expo.out"}, 0.50);
 tl.fromTo(["#f1", "#fn1"], {opacity: 0, y: 30}, {opacity: 1, y: 0, duration: 0.4, ease: "expo.out"}, 0.62);
@@ -66,6 +67,7 @@ tl.fromTo("#cap0 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, 
 tl.fromTo("#cap1 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 4.65);
 tl.fromTo("#cap2 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 7.61);
 tl.fromTo("#cap3 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 11.85);
+tl.fromTo("#cap4 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 15.62);
 window.__timelines = window.__timelines || {};
 window.__timelines["s51"] = tl;
 })();
