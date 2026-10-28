@@ -29,6 +29,9 @@ CLIP_MIN = 8.6
 FULL_KINDS = {"talk"}
 FULL_NAMES = {"authority"}
 NO_FACE = {"film"}
+# 8개 그리드는 작은 얼굴 창이 8번 칸을 가려서 목소리만 쓴다. 표·그래프 장면은 얼굴 창을 오른쪽 위에 둔다
+VOICE_ONLY = {"grid"}
+PIP_TOP = {"credits", "board"}
 
 transcript = json.loads((ROOT / "assets/face/transcript.json").read_text())["segments"]
 track = json.loads((ROOT / "assets/face/track.json").read_text())
@@ -161,7 +164,7 @@ def compose_scene(s, d, res_dir):
                f"[{extra}:v]scale=700:-2,pad=iw+12:ih+12:6:6:color=white,format=rgba,"
                f"fade=t=in:st={name_at:.2f}:d=0.3:alpha=1,fade=t=out:st={name_at + 6.5:.2f}:d=0.4:alpha=1[th]",
                "[bg][th]overlay=x=W-w-90:y=110:shortest=1,trim=0:" + f"{d:.3f}" + "[v]"]
-    elif s["kind"] in NO_FACE or not cuts:
+    elif s["kind"] in NO_FACE or s["kind"] in VOICE_ONLY or not cuts:
         fc += [f"[0:v]fps=30,scale=1920:1080,setsar=1,tpad=stop_mode=clone:stop_duration=30,trim=0:{d:.3f},setpts=PTS-STARTPTS[v]"]
     elif full:
         x, y = face_box(cuts, 1060, 1080, 540)
@@ -175,7 +178,7 @@ def compose_scene(s, d, res_dir):
         fc += [f"[fvc]fps=30,crop=720:810:{x}:{y},scale=384:432,setsar=1,pad=392:440:4:4:color=0xb4e61d,format=rgba,"
                f"fade=t=out:st={max(0.0, vlen - 0.35):.2f}:d=0.35:alpha=1[pip]",
                f"[0:v]fps=30,scale=1920:1080,setsar=1,tpad=stop_mode=clone:stop_duration=30,trim=0:{d:.3f},setpts=PTS-STARTPTS[main]",
-               "[main][pip]overlay=x=W-w-36:y=H-h-36:eof_action=pass[v]"]
+               f"[main][pip]overlay=x=W-w-36:y={36 if s['kind'] in PIP_TOP else 'H-h-36'}:eof_action=pass[v]"]
     vparts = [p for p in fc if ":a]" not in p.split("]")[0] + "]" and not p.endswith("[fa]")]
     graph = ";".join(vparts)
     if not (vout.exists() and aout.exists()):
@@ -261,7 +264,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         if not ps:
             continue
         full = s["kind"] in FULL_KINDS or name in FULL_NAMES or name == "intro"
-        mr = 60 if full or s["kind"] in NO_FACE else 470
+        mr = 60 if full or s["kind"] in NO_FACE or s["kind"] in VOICE_ONLY or s["kind"] in PIP_TOP else 470
         # 원본 시간 → 장면 안 시간
         offs, acc = [], 0.0
         for a, b in cuts:
