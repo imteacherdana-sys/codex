@@ -18,6 +18,33 @@ LABEL = {"hook-grid": "첫 화면 · 장풍 8개", "hook-question": "질문", "a
          "film": "단편 「단아검법」", "recommend": "정리 · 추천", "cta": "설명란 링크", "answer": "첫 문제 정답", "outro": "마무리"}
 
 
+# 단아쌤이 텔레프롬프터에서 고친 문장 (장면 이름 → 원래 문장 → 바꿀 문장들). 영상 자막은 녹화본에서 실제로 말한 대로 다시 만든다
+OVERRIDES = {
+    "hook-grid": {
+        "같은 프롬프트 하나로 만든 장풍 영상 여덟 개입니다.": [
+            "안녕하세요 여러분, 단아쌤입니다.",
+            "얼마 전 강소라 배우님이 「웰컴 투 무협 월드」라는 영상으로",
+            "큰 주목을 받으시더라고요.",
+            "저도 웹소설로 무협을 정말 좋아해서",
+            "무협 드라마 한 편을 찍으려고 준비하던 중에",
+            "크레딧, 어떤 모델이 제일 저렴할까 궁금해졌습니다.",
+            "그래서 영상 AI 비용 비교를 가져왔습니다.",
+            "AI 숏드라마, 중드가 요즘 인기가 많으니",
+            "오늘 영상 보시면서 가성비 높은 영상 AI를 찾아보시면 좋겠습니다.",
+            "같은 프롬프트 하나로 만든 장풍 영상 여덟 개입니다.",
+        ],
+    },
+}
+
+
+def apply_overrides(name, lines):
+    rep = OVERRIDES.get(name, {})
+    out = []
+    for ln in lines:
+        out.extend(rep.get(ln, [ln]))
+    return out
+
+
 def part_of(name):
     if name.startswith(("hook", "authority", "stakes")):
         return "오프닝"
@@ -50,7 +77,7 @@ def main():
     scenes = []
     for s in plan["scenes"]:
         scenes.append({"id": s["name"], "part": part_of(s["name"]), "label": label_of(s["name"]), "start": s["start"],
-                       "lines": [c["text"] for c in s["caps"]], "kind": s["kind"]})
+                       "lines": apply_overrides(s["name"], [c["text"] for c in s["caps"]]), "kind": s["kind"]})
     tpl = (ROOT / "tools" / "teleprompter.tpl.html").read_text()
     out = tpl.replace("/*__DATA__*/[]", json.dumps(scenes, ensure_ascii=False)).replace("__TOTAL__", f"{plan['total'] / 60:.1f}")
     (ROOT / "upload" / "teleprompter.html").write_text(out)
