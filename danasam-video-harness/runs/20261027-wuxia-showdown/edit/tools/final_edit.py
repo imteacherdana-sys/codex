@@ -229,7 +229,8 @@ def split_caption(text, limit=22):
         lines.append(cur)
     # 마지막 줄이 너무 짧으면 앞줄과 다시 나눈다
     if len(lines) > 1 and len(lines[-1]) <= 4 and len(lines[-2]) + len(lines[-1]) + 1 <= limit + 6:
-        lines[-2] = lines[-2] + " " + lines.pop()
+        last = lines.pop()
+        lines[-1] = lines[-1] + " " + last
     return lines
 
 
