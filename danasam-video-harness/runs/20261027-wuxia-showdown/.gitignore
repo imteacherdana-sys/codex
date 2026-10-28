@@ -8,3 +8,4 @@ edit/assets/images/last_*.png
 edit/segments/*/node_modules
 edit/segments/*/assets
 edit/segments/*/.hyperframes/
+__pycache__/
