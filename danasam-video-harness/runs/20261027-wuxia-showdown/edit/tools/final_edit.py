@@ -185,7 +185,8 @@ def compose_scene(s, d, res_dir):
     graph = ";".join(vparts)
     if not (vout.exists() and aout.exists()):
         run(["ffmpeg", "-loglevel", "error", "-y", *inputs, "-filter_complex", graph, "-map", "[v]", "-t", f"{d:.3f}", "-an",
-             "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", "-pix_fmt", "yuv420p", str(vout)])
+             "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", "-pix_fmt", "yuv420p", str(vout) + ".part.mkv"])
+        Path(str(vout) + ".part.mkv").rename(vout)  # 중간에 실패하면 깨진 파일이 남지 않게
         # 목소리
         if cuts:
             ainputs, aparts = face_chain(cuts, 0)
