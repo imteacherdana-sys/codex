@@ -32,14 +32,14 @@ MODELS = {
     "flux_3_video": ("FLUX 3", "#e8e8f2"),
     "gemini_omni_flash_1_1": ("Gemini Omni 1.1", "#5b8cff"),
 }
-# 8초 한 클립 견적 (Higgsfield, 2026-10-27~28). R4는 Reference 모드 가격
+# 8초 한 클립 가격: Higgsfield 웹 생성하기 버튼 기준 (2026-10-29 화면 녹화). Kling 22→18, Seedance 2.0 48→36, MiniMax 32→16, Wan 28→24 할인 표시
 CREDITS = {
-    "r1": {"kling4_0": 4, "seedance_2_5": 56, "seedance_2_0": 36, "minimax_h3": 16, "wan3_0": 14, "grok_video_v15": 36,
+    "r1": {"kling4_0": 18, "seedance_2_5": 56, "seedance_2_0": 36, "minimax_h3": 16, "wan3_0": 24, "grok_video_v15": 36,
            "flux_3_video": 48, "gemini_omni_flash_1_1": 24},
 }
 CREDITS["r2"] = CREDITS["r3"] = CREDITS["r5"] = CREDITS["r1"]
 # R4 Gemini는 안전 필터로 2회 거절, 크레딧 환불 → 0
-CREDITS["r4"] = dict(CREDITS["r1"], kling4_0=18, gemini_omni_flash_1_1=0)
+CREDITS["r4"] = dict(CREDITS["r1"], gemini_omni_flash_1_1=0)
 TOTAL = {m: sum(CREDITS[r][m] for r in ("r1", "r2", "r3", "r4", "r5")) for m in MODELS}
 # 결과가 없는 칸
 FAILED = {("r4", "gemini_omni_flash_1_1"): "안전 필터로 생성 거절 (2회 시도)"}
@@ -591,14 +591,14 @@ def render_film(s):
 
 
 def render_screen(s):
-    """Higgsfield 작업 화면 녹화가 들어갈 자리. 녹화본으로 이 장면을 덮어쓴다."""
+    """Higgsfield 웹 작업 화면 녹화 (1.4배속으로 줄인 assets/clips/screen_rec.mp4)."""
     body = ['<div class="cam" id="cam">',
-            '<div id="slot" style="position:absolute; left:160px; top:70px; width:1600px; height:860px; border-radius:24px; border:4px dashed rgba(180,230,29,.7); background:rgba(16,20,46,.6); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px;">'
-            '<div style="font-size:30px; font-weight:800; color:var(--lime); letter-spacing:.08em;">SCREEN RECORDING</div>'
-            '<div style="font-size:64px; font-weight:900;">Higgsfield 작업 화면이 들어갈 자리</div>'
-            '<div style="font-size:32px; color:var(--mute); font-weight:600;">모델 선택기 전환 · 프롬프트 붙여넣기 · 생성 버튼 · 크레딧 표시</div></div>',
+            '<div id="slot" style="position:absolute; left:120px; top:60px; width:1680px; height:945px; border-radius:22px; overflow:hidden; border:3px solid rgba(180,230,29,.55); box-shadow:0 30px 80px rgba(0,0,0,.55);">'
+            f'<video class="clip" src="assets/clips/screen_rec.mp4" muted playsinline data-start="0" data-duration="{s.dur:.2f}" data-track-index="2" style="width:100%; height:100%; object-fit:cover;"></video></div>',
+            '<div class="chip" id="schip" style="position:absolute; left:150px; top:84px; background:rgba(5,6,15,.82); color:var(--lime);">Higgsfield 실제 작업 화면 · 1.4배속</div>',
             "</div>", s.caption_html()]
-    js = [gridbg_js(s.dur), 'tl.fromTo("#slot", {opacity: 0, scale: 0.97}, {opacity: 1, scale: 1, duration: 0.5, ease: "expo.out"}, 0.1);', s.caption_js()]
+    js = [gridbg_js(s.dur), 'tl.fromTo("#slot", {opacity: 0, scale: 0.97}, {opacity: 1, scale: 1, duration: 0.5, ease: "expo.out"}, 0.1);',
+          f'tl.fromTo("#cam", {{scale: 1.0}}, {{scale: 1.04, duration: {s.dur:.2f}, ease: "none"}}, 0);', s.caption_js()]
     return page(s.cid, s.dur, "\n".join(body), "\n".join(js))
 
 
@@ -728,7 +728,7 @@ def scenes():
                              "영상 속 결과는 같은 프롬프트로 처음 뽑은 결과입니다.",
                              "지금 Kling 4.0 출시 할인도 진행 중입니다.",
                              "링크는 설명란 맨 위에 있습니다!"],
-        min_dur=20.0, music="calm")
+        min_dur=61.0, music="calm")
     add("specs", "specs", ["시작 전에 여덟 모델을 짧게 보겠습니다.",
                            "Kling 4.0은 Reference를 15개까지 넣을 수 있고,",
                            "만든 영상을 고치는 편집 기능도 있습니다.",
@@ -742,7 +742,7 @@ def scenes():
                                 "낙엽이 날아가야 합니다."],
         round="r1", sub="보이지 않는 힘을 보이게 만드는 시험", music="wuxia", sfx=[("brush", 0.1)])
     add("r1-grid", "grid", ["크레딧부터 보겠습니다.",
-                            "같은 8초인데 Kling은 4, Seedance 2.5는 56입니다.",
+                            "같은 8초인데 Kling은 18, Seedance 2.5는 56입니다.",
                             "한 편씩 보겠습니다!"],
         round="r1", reveal=1.0, music="wuxia", sfx=[("tick", 1.0), ("tick", 1.3), ("tick", 1.6), ("tick", 1.9)])
     round_clips("r1")
@@ -830,18 +830,19 @@ def scenes():
                            "그런데 Seedance 2.5는 1등이 한 번도 없습니다.",
                            "이제 비용을 보겠습니다!"], music="calm", sfx=[("tick", 1.4), ("tick", 1.85), ("tick", 2.3), ("tick", 2.75), ("tick", 3.2), ("ding", 3.9)])
     add("credits", "credits", ["다섯 시험에 든 크레딧입니다.",
-                               "Kling 34, Wan 70, MiniMax 80, Gemini 96,",
+                               "MiniMax 80, Kling 90, Gemini 96, Wan 120,",
                                "Seedance 2.0 180, Grok 180, FLUX 3 240, Seedance 2.5 280.",
-                               "FLUX 3는 Kling의 7배,",
-                               "Seedance 2.5는 Kling의 8배를 썼습니다!",
-                               "다만 Kling은 지금 출시 할인가입니다.",
+                               "가장 싼 MiniMax는 1등이 없었습니다.",
+                               "1등 한 번에 든 크레딧은 Kling 30,",
+                               "FLUX 3 120, Seedance 2.0 180입니다!",
+                               "Kling은 지금 22에서 18로 할인 중입니다.",
                                "할인이 끝나면 가격이 오를 수 있습니다."],
         music="wuxia", sfx=[("tick", 0.6), ("tick", 0.9), ("tick", 1.2), ("tick", 1.5), ("tick", 1.8), ("tick", 2.1), ("tick", 2.4), ("tick", 2.7)])
-    add("kling-why", "talk", ["Kling은 1등 세 번을 가장 싼 값에 해냈습니다.",
+    add("kling-why", "talk", ["Kling은 1등 세 번을 두 번째로 싼 값에 해냈습니다.",
                               "비무, Reference, 현판에서 1등입니다.",
                               "같은 인물로 여러 컷을 시킨 대로 만드는 일,",
                               "우리가 실제로 가장 많이 하는 일입니다!"],
-        kicker="그래서 Kling", title="싸고, 사람을 기억하고, 글자도 맞게", hl=["사람을 기억"], sub="비무 1등 · Reference 공동 1등 · 현판 1등 · 크레딧 최저", cam="push", music="wuxia")
+        kicker="그래서 Kling", title="싸고, 사람을 기억하고, 글자도 맞게", hl=["사람을 기억"], sub="비무 1등 · Reference 공동 1등 · 현판 1등 · 1등 한 번에 30크레딧", cam="push", music="wuxia")
     add("edit-demo", "split", ["Kling에는 만든 영상을 고치는 편집 기능도 있습니다.",
                                "장풍 파동이 안 보였던 부분만 고쳐봤습니다.",
                                "솔직히 이번에는 바람 번짐만 살짝 생겼습니다.",
@@ -870,7 +871,7 @@ def scenes():
     add("cta", "talk", ["오늘 여덟 모델은 모두 Higgsfield에서 돌렸습니다.",
                         "설명란 링크에서 같은 프롬프트를 붙여넣고",
                         "여러분의 1등을 직접 골라보십시오!",
-                        "장풍 하나에 Kling은 4크레딧입니다."],
+                        "장풍 하나에 Kling은 18크레딧입니다."],
         kicker="설명란 링크", title="같은 프롬프트, 여러분의 1등은?", hl=["여러분의 1등"], sub="Kling 4.0 출시 할인 중 · 크레딧은 2026년 10월 기준", cam="punch", music="wuxia", sfx=[("ding", 0.4)])
     add("answer", "grid", ["처음 문제의 정답입니다!",
                            "1번 Seedance 2.0, 2번 MiniMax, 3번 FLUX 3, 4번 Gemini,",
