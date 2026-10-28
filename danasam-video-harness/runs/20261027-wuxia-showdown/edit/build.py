@@ -20,6 +20,8 @@ ROOT = Path(__file__).resolve().parent
 SEG = ROOT / os.environ.get("SEG_DIR", "segments")
 # NOCAPS=1 이면 자막 없이 만든다 (자막은 나중에 녹음본에 맞춰 따로 얹음)
 NOCAPS = bool(os.environ.get("NOCAPS"))
+# DURS=파일.json 이면 장면 길이를 녹음본 길이에 맞춰 덮어쓴다 ({장면 이름: 초})
+DURS = json.loads(Path(os.environ["DURS"]).read_text()) if os.environ.get("DURS") else {}
 NODE_MODULES = (ROOT / "../../../../examples/motion-masterclass/node_modules").resolve()
 
 MODELS = {
@@ -174,6 +176,8 @@ class Scene:
             self.cap_times.append((t, d))
             t += d
         self.dur = max(min_dur, t + tail)
+        if name in DURS:
+            self.dur = DURS[name]
         self.lead = lead
 
     @property
@@ -595,7 +599,7 @@ def render_screen(s):
     body = ['<div class="cam" id="cam">',
             '<div id="slot" style="position:absolute; left:120px; top:60px; width:1680px; height:945px; border-radius:22px; overflow:hidden; border:3px solid rgba(180,230,29,.55); box-shadow:0 30px 80px rgba(0,0,0,.55);">'
             f'<video class="clip" src="assets/clips/screen_rec.mp4" muted playsinline data-start="0" data-duration="{s.dur:.2f}" data-track-index="2" style="width:100%; height:100%; object-fit:cover;"></video></div>',
-            '<div class="chip" id="schip" style="position:absolute; left:150px; top:84px; background:rgba(5,6,15,.82); color:var(--lime);">Higgsfield 실제 작업 화면 · 1.4배속</div>',
+            '<div class="chip" id="schip" style="position:absolute; left:150px; top:84px; background:rgba(5,6,15,.82); color:var(--lime);">Higgsfield 실제 작업 화면 · 2배속</div>',
             "</div>", s.caption_html()]
     js = [gridbg_js(s.dur), 'tl.fromTo("#slot", {opacity: 0, scale: 0.97}, {opacity: 1, scale: 1, duration: 0.5, ease: "expo.out"}, 0.1);',
           f'tl.fromTo("#cam", {{scale: 1.0}}, {{scale: 1.04, duration: {s.dur:.2f}, ease: "none"}}, 0);', s.caption_js()]
