@@ -42,15 +42,15 @@ best AI video generator는 결국 무엇을 만드느냐에 따라 달라집니�
 00:00 8개 영상 AI 중 어떤 장풍이 진짜 같을까?
 00:48 같은 프롬프트로 어떻게 공정하게 비교했을까?
 01:12 Higgsfield에서 8개 모델은 어떻게 돌렸을까?
-01:54 장풍 이펙트는 어떤 AI가 가장 잘 그릴까?
-03:39 경공처럼 빠른 동작, Kling 4.0과 Seedance 2.5 중 누가 나을까?
-05:26 비무 장면에서 시킨 순서를 끝까지 지킨 AI는?
-07:13 같은 인물을 끝까지 유지하는 AI는? (Reference 시험)
-09:13 영상 AI는 한글 간판 글자를 쓸 수 있을까?
-11:04 8개 모델 최종 성적표, 1등은 누구일까?
-11:28 같은 시험에 크레딧은 얼마나 들었을까? Kling 4.0 vs Seedance 2.5
-12:47 Kling 4.0 하나로 무협 단편을 만들 수 있을까?
-13:33 결국 어떤 영상 AI를 써야 할까?
+02:35 장풍 이펙트는 어떤 AI가 가장 잘 그릴까?
+04:20 경공처럼 빠른 동작, Kling 4.0과 Seedance 2.5 중 누가 나을까?
+06:08 비무 장면, 목검과 낙엽까지 자연스러운 AI는?
+07:58 같은 인물을 끝까지 유지하는 AI는? (Reference 시험)
+10:00 영상 AI는 한글 간판 글자를 쓸 수 있을까?
+11:54 8개 모델 최종 성적표, 1등은 누구일까?
+12:19 같은 시험에 크레딧은 얼마나 들었을까? Kling 4.0 vs Seedance 2.5
+13:43 Kling 4.0 하나로 무협 단편을 만들 수 있을까?
+14:29 결국 어떤 영상 AI를 써야 할까?
 
 📝 시험별 프롬프트 (8개 모델 공통, 수정 없이 그대로)
 [시험 1 · 장풍] A Chinese woman in her early 20s, petite at about 162 cm, slender, with long straight black hair worn loose down to her waist, wearing a flowing white Chinese-style hanfu robe with wide sleeves, stands in a misty bamboo forest at dawn. She draws a slow breath, then thrusts both palms forward. A visible wave of air bursts from her palms, bending the bamboo stalks and sending a storm of green leaves flying away from her. Her wide sleeves and long hair whip in the wind. Low-angle shot, slow motion at the moment of release, cinematic wuxia film style, soft natural light. Sound: deep whoosh and rustling leaves.
@@ -83,7 +83,7 @@ AI video model comparison, Seedance 2.5, Kling 4.0, best AI video generator, sam
 
 ## 6. 제출 전 체크리스트 (브리프 요구사항)
 
-- [ ] 6분 이상 전용 영상 (완성본 14.8분)
+- [ ] 6분 이상 전용 영상 (완성본 15.8분)
 - [ ] Higgsfield 웹사이트 작업 화면 녹화를 영상의 화면 녹화 자리에 넣기 (모델 선택기 전환, 프롬프트 입력·생성)
 - [ ] 영상에서 "8개 모델 모두 Higgsfield에서, 같은 프롬프트와 같은 설정으로 돌렸다"고 말하기 (대본 포함)
 - [ ] 필수 모델 8개 모두 등장: Kling 4.0 · Seedance 2.5 · Seedance 2.0 · MiniMax H3 · Wan 3.0 · Grok Imagine 1.5 · FLUX 3 · Gemini Omni 1.1
