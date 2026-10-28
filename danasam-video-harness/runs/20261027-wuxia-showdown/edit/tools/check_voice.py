@@ -36,6 +36,6 @@ for n in (4, 3):
         if key in seen and t - seen[key] < 10:
             sus.append(f"{seen[key]:7.2f} → {t:7.2f}  '{key}'")
         seen[key] = t
-out = ["# 의심 구간 (같은 말이 10초 안에 다시 나옴)", *sorted(set(sus)) or ["없음"], "", "# 받아 적은 전체", *lines]
+out = ["# 의심 구간 (같은 말이 10초 안에 다시 나옴)", *(sorted(set(sus)) or ["없음"]), "", "# 받아 적은 전체", *lines]
 (ROOT / "out/voice_check.txt").write_text("\n".join(out))
 print("\n".join(out[: len(sus) + 3]))
