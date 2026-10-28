@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face { font-family: "Pretendard"; src: url("assets/fonts/PretendardVariable.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "NanumPen"; src: url("assets/fonts/NanumPenScript-korean.woff2") format("woff2"); }
+@font-face { font-family: "Noto Color Emoji"; src: local("Noto Color Emoji"); }
+:root { --bg0: #0b1026; --bg1: #05060f; --grid: rgba(124,58,237,.12); --violet: #7c3aed; --purple: #4a33a6;
+  --lime: #b4e61d; --coral: #ff6b5b; --fg: #f5f3ff; --mute: #a5a3c7; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg1); font-family: "Pretendard", sans-serif; color: var(--fg); word-break: keep-all; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+.ground { position: absolute; inset: 0; background: linear-gradient(var(--bg0), var(--bg1)); }
+.gridbg { position: absolute; inset: -80px; background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px; -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 25%, transparent 72%); mask-image: radial-gradient(ellipse at 50% 50%, #000 25%, transparent 72%); }
+.cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
+.cap { position: absolute; left: 160px; right: 160px; bottom: 64px; display: flex; justify-content: center; }
+.cap span { display: inline-block; max-width: 1500px; padding: 14px 28px 16px; border-radius: 14px; background: rgba(5,6,15,.78);
+  font-size: 42px; font-weight: 700; line-height: 1.38; text-align: center; letter-spacing: -0.01em; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.chip { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 12px; font-weight: 800; font-size: 30px; }
+.tag { position: absolute; left: 60px; top: 44px; font-size: 24px; font-weight: 700; color: var(--mute); letter-spacing: .04em; }
+.ad { position: absolute; right: 60px; top: 44px; font-size: 22px; font-weight: 700; color: var(--mute); padding: 6px 12px; border: 2px solid rgba(165,163,199,.5); border-radius: 8px; }
+.frame { position: absolute; border-radius: 22px; overflow: hidden; background: #000; box-shadow: 0 30px 80px rgba(0,0,0,.5), inset 0 0 0 2px rgba(255,255,255,.08); }
+.frame video, .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.hl { background: linear-gradient(transparent 55%, rgba(180,230,29,.55) 55%); }
+
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="s42" data-start="0" data-duration="17.68" data-width="1920" data-height="1080">
+<div class="ground"></div><div class="gridbg" id="gridbg"></div>
+<div class="cam" id="cam">
+<div id="bt" style="position:absolute; left:160px; top:70px; font-size:60px; font-weight:900;">다섯 시험 성적표 <span style="font-size:30px; color:var(--mute); font-weight:600;">· 단아쌤 1차 채점</span></div>
+<div id="h0" style="position:absolute; left:520px; top:180px; width:200px; text-align:center; font-size:30px; font-weight:800; color:var(--mute);">장풍</div>
+<div id="h1" style="position:absolute; left:720px; top:180px; width:200px; text-align:center; font-size:30px; font-weight:800; color:var(--mute);">경공</div>
+<div id="h2" style="position:absolute; left:920px; top:180px; width:200px; text-align:center; font-size:30px; font-weight:800; color:var(--mute);">비무</div>
+<div id="h3" style="position:absolute; left:1120px; top:180px; width:200px; text-align:center; font-size:30px; font-weight:800; color:var(--mute);">레퍼런스</div>
+<div id="h4" style="position:absolute; left:1320px; top:180px; width:200px; text-align:center; font-size:30px; font-weight:800; color:var(--mute);">현판</div>
+<div id="h5" style="position:absolute; left:1520px; top:180px; width:200px; text-align:center; font-size:30px; font-weight:800; color:var(--mute);">1등 횟수</div>
+<div id="br0" style="position:absolute; left:160px; top:240px; width:1600px; height:90px; border-radius:16px; background:rgba(16,20,46,.9);"></div>
+<div id="bn0" style="position:absolute; left:196px; top:262px; font-size:38px; font-weight:900; color:#b4e61d;">Kling 4.0</div>
+<div class="cell" id="c0_0" style="position:absolute; left:520px; top:256px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c0_1" style="position:absolute; left:720px; top:256px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c0_2" style="position:absolute; left:920px; top:256px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c0_3" style="position:absolute; left:1120px; top:256px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";">🏆</div>
+<div class="cell" id="c0_4" style="position:absolute; left:1320px; top:256px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";">🏆</div>
+<div id="w0" style="position:absolute; left:1520px; top:254px; width:200px; text-align:center; font-size:52px; font-weight:900; color:#b4e61d;">2</div>
+<div id="br1" style="position:absolute; left:160px; top:348px; width:1600px; height:90px; border-radius:16px; background:rgba(16,20,46,.9);"></div>
+<div id="bn1" style="position:absolute; left:196px; top:370px; font-size:38px; font-weight:900; color:#c9a7ff;">Grok 1.5</div>
+<div class="cell" id="c1_0" style="position:absolute; left:520px; top:364px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c1_1" style="position:absolute; left:720px; top:364px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c1_2" style="position:absolute; left:920px; top:364px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";">🏆</div>
+<div class="cell" id="c1_3" style="position:absolute; left:1120px; top:364px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c1_4" style="position:absolute; left:1320px; top:364px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";">🏆</div>
+<div id="w1" style="position:absolute; left:1520px; top:362px; width:200px; text-align:center; font-size:52px; font-weight:900; color:#b4e61d;">2</div>
+<div id="br2" style="position:absolute; left:160px; top:456px; width:1600px; height:90px; border-radius:16px; background:rgba(16,20,46,.9);"></div>
+<div id="bn2" style="position:absolute; left:196px; top:478px; font-size:38px; font-weight:900; color:#5b8cff;">Veo 3.1</div>
+<div class="cell" id="c2_0" style="position:absolute; left:520px; top:472px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";">🏆</div>
+<div class="cell" id="c2_1" style="position:absolute; left:720px; top:472px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c2_2" style="position:absolute; left:920px; top:472px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c2_3" style="position:absolute; left:1120px; top:472px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c2_4" style="position:absolute; left:1320px; top:472px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div id="w2" style="position:absolute; left:1520px; top:470px; width:200px; text-align:center; font-size:52px; font-weight:900; color:#f5f3ff;">1</div>
+<div id="br3" style="position:absolute; left:160px; top:564px; width:1600px; height:90px; border-radius:16px; background:rgba(16,20,46,.9);"></div>
+<div id="bn3" style="position:absolute; left:196px; top:586px; font-size:38px; font-weight:900; color:#ffbf3c;">Wan 3.0</div>
+<div class="cell" id="c3_0" style="position:absolute; left:520px; top:580px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c3_1" style="position:absolute; left:720px; top:580px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";">🏆</div>
+<div class="cell" id="c3_2" style="position:absolute; left:920px; top:580px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c3_3" style="position:absolute; left:1120px; top:580px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c3_4" style="position:absolute; left:1320px; top:580px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div id="w3" style="position:absolute; left:1520px; top:578px; width:200px; text-align:center; font-size:52px; font-weight:900; color:#f5f3ff;">1</div>
+<div id="br4" style="position:absolute; left:160px; top:672px; width:1600px; height:90px; border-radius:16px; background:rgba(16,20,46,.9);"></div>
+<div id="bn4" style="position:absolute; left:196px; top:694px; font-size:38px; font-weight:900; color:#ff6b5b;">Seedance 2.5</div>
+<div class="cell" id="c4_0" style="position:absolute; left:520px; top:688px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c4_1" style="position:absolute; left:720px; top:688px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c4_2" style="position:absolute; left:920px; top:688px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c4_3" style="position:absolute; left:1120px; top:688px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c4_4" style="position:absolute; left:1320px; top:688px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";">🏆</div>
+<div id="w4" style="position:absolute; left:1520px; top:686px; width:200px; text-align:center; font-size:52px; font-weight:900; color:#f5f3ff;">1</div>
+<div id="br5" style="position:absolute; left:160px; top:780px; width:1600px; height:90px; border-radius:16px; background:rgba(16,20,46,.9);"></div>
+<div id="bn5" style="position:absolute; left:196px; top:802px; font-size:38px; font-weight:900; color:#3fd6c6;">MiniMax H3</div>
+<div class="cell" id="c5_0" style="position:absolute; left:520px; top:796px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c5_1" style="position:absolute; left:720px; top:796px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c5_2" style="position:absolute; left:920px; top:796px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c5_3" style="position:absolute; left:1120px; top:796px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div class="cell" id="c5_4" style="position:absolute; left:1320px; top:796px; width:200px; text-align:center; font-size:46px; font-family:Pretendard, "Noto Color Emoji";"></div>
+<div id="w5" style="position:absolute; left:1520px; top:794px; width:200px; text-align:center; font-size:52px; font-weight:900; color:#f5f3ff;">0</div>
+</div>
+<div class="cap clip" id="cap0" data-start="0.40" data-duration="5.05" data-track-index="9"><span>다섯 시험 결과예요. 1등을 두 번 한 모델은 클링과 그록이에요.</span></div>
+<div class="cap clip" id="cap1" data-start="5.45" data-duration="7.64" data-track-index="9"><span>솔직히 제일 영화 같은 화면은 시댄스였어요. 그런데 시킨 걸 끝까지 따르는 모델은 시험마다 달랐어요.</span></div>
+<div class="cap clip" id="cap2" data-start="13.09" data-duration="4.09" data-track-index="9"><span>그럼 누가 정답일까요? 아직 돈 얘기를 안 했어요.</span></div>
+</div>
+<script>
+(function(){
+const tl = gsap.timeline({ paused: true });
+tl.fromTo("#gridbg", {x: 0, y: 0}, {x: -48, y: -24, duration: 17.68, ease: "none"}, 0);
+tl.fromTo("#cam", {scale: 1.0}, {scale: 1.06, duration: 17.68, ease: "sine.inOut"}, 0);
+tl.fromTo("#bt", {opacity: 0}, {opacity: 1, duration: 0.4}, 0.1);
+tl.fromTo("#h0", {opacity: 0}, {opacity: 1, duration: 0.3}, 0.3);
+tl.fromTo("#h1", {opacity: 0}, {opacity: 1, duration: 0.3}, 0.3);
+tl.fromTo("#h2", {opacity: 0}, {opacity: 1, duration: 0.3}, 0.3);
+tl.fromTo("#h3", {opacity: 0}, {opacity: 1, duration: 0.3}, 0.3);
+tl.fromTo("#h4", {opacity: 0}, {opacity: 1, duration: 0.3}, 0.3);
+tl.fromTo("#h5", {opacity: 0}, {opacity: 1, duration: 0.3}, 0.3);
+tl.fromTo(["#br0", "#bn0"], {opacity: 0, x: -40}, {opacity: 1, x: 0, duration: 0.4, ease: "expo.out"}, 0.40);
+tl.fromTo(["#br1", "#bn1"], {opacity: 0, x: -40}, {opacity: 1, x: 0, duration: 0.4, ease: "expo.out"}, 0.50);
+tl.fromTo(["#br2", "#bn2"], {opacity: 0, x: -40}, {opacity: 1, x: 0, duration: 0.4, ease: "expo.out"}, 0.60);
+tl.fromTo(["#br3", "#bn3"], {opacity: 0, x: -40}, {opacity: 1, x: 0, duration: 0.4, ease: "expo.out"}, 0.70);
+tl.fromTo(["#br4", "#bn4"], {opacity: 0, x: -40}, {opacity: 1, x: 0, duration: 0.4, ease: "expo.out"}, 0.80);
+tl.fromTo(["#br5", "#bn5"], {opacity: 0, x: -40}, {opacity: 1, x: 0, duration: 0.4, ease: "expo.out"}, 0.90);
+tl.fromTo(".cell[id$='_0']", {opacity: 0, scale: 0.4}, {opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)"}, 1.40);
+tl.fromTo(".cell[id$='_1']", {opacity: 0, scale: 0.4}, {opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)"}, 1.85);
+tl.fromTo(".cell[id$='_2']", {opacity: 0, scale: 0.4}, {opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)"}, 2.30);
+tl.fromTo(".cell[id$='_3']", {opacity: 0, scale: 0.4}, {opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)"}, 2.75);
+tl.fromTo(".cell[id$='_4']", {opacity: 0, scale: 0.4}, {opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)"}, 3.20);
+tl.fromTo("#w0", {opacity: 0, scale: 0.5}, {opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)"}, 3.9);
+tl.fromTo("#w1", {opacity: 0, scale: 0.5}, {opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)"}, 3.9);
+tl.fromTo("#w2", {opacity: 0, scale: 0.5}, {opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)"}, 3.9);
+tl.fromTo("#w3", {opacity: 0, scale: 0.5}, {opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)"}, 3.9);
+tl.fromTo("#w4", {opacity: 0, scale: 0.5}, {opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)"}, 3.9);
+tl.fromTo("#w5", {opacity: 0, scale: 0.5}, {opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)"}, 3.9);
+tl.fromTo("#cap0 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 0.40);
+tl.fromTo("#cap1 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 5.45);
+tl.fromTo("#cap2 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 13.09);
+window.__timelines = window.__timelines || {};
+window.__timelines["s42"] = tl;
+})();
+</script>
+</body>
+</html>

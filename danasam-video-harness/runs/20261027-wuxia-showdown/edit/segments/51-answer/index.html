@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face { font-family: "Pretendard"; src: url("assets/fonts/PretendardVariable.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "NanumPen"; src: url("assets/fonts/NanumPenScript-korean.woff2") format("woff2"); }
+@font-face { font-family: "Noto Color Emoji"; src: local("Noto Color Emoji"); }
+:root { --bg0: #0b1026; --bg1: #05060f; --grid: rgba(124,58,237,.12); --violet: #7c3aed; --purple: #4a33a6;
+  --lime: #b4e61d; --coral: #ff6b5b; --fg: #f5f3ff; --mute: #a5a3c7; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg1); font-family: "Pretendard", sans-serif; color: var(--fg); word-break: keep-all; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+.ground { position: absolute; inset: 0; background: linear-gradient(var(--bg0), var(--bg1)); }
+.gridbg { position: absolute; inset: -80px; background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px; -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 25%, transparent 72%); mask-image: radial-gradient(ellipse at 50% 50%, #000 25%, transparent 72%); }
+.cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
+.cap { position: absolute; left: 160px; right: 160px; bottom: 64px; display: flex; justify-content: center; }
+.cap span { display: inline-block; max-width: 1500px; padding: 14px 28px 16px; border-radius: 14px; background: rgba(5,6,15,.78);
+  font-size: 42px; font-weight: 700; line-height: 1.38; text-align: center; letter-spacing: -0.01em; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.chip { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 12px; font-weight: 800; font-size: 30px; }
+.tag { position: absolute; left: 60px; top: 44px; font-size: 24px; font-weight: 700; color: var(--mute); letter-spacing: .04em; }
+.ad { position: absolute; right: 60px; top: 44px; font-size: 22px; font-weight: 700; color: var(--mute); padding: 6px 12px; border: 2px solid rgba(165,163,199,.5); border-radius: 8px; }
+.frame { position: absolute; border-radius: 22px; overflow: hidden; background: #000; box-shadow: 0 30px 80px rgba(0,0,0,.5), inset 0 0 0 2px rgba(255,255,255,.08); }
+.frame video, .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.hl { background: linear-gradient(transparent 55%, rgba(180,230,29,.55) 55%); }
+
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="s51" data-start="0" data-duration="11.98" data-width="1920" data-height="1080">
+<div class="ground"></div><div class="gridbg" id="gridbg"></div>
+<div class="cam" id="cam">
+<img src="assets/images/last_grid_r1.png" alt="" style="position:absolute; inset:0; width:1920px; height:1080px;" />
+<video id="gv" class="clip" src="assets/clips/grid_r1.mp4" data-start="0" data-duration="8.40" data-track-index="1" muted playsinline style="position:absolute; left:0; top:0; width:1920px; height:1080px;"></video>
+<div id="g0" style="position:absolute; left:60px; top:150px; width:560px; height:315px; border-radius:16px; box-shadow: 0 0 0 6px #070a1c, inset 0 0 0 2px rgba(255,255,255,.08);"><div style="position:absolute; left:12px; top:12px; width:56px; height:56px; border-radius:12px; background:var(--lime); color:#05060f; font-size:36px; font-weight:900; display:flex; align-items:center; justify-content:center;">1</div><div id="gn0" style="position:absolute; left:0; right:0; bottom:0; padding:10px 14px; background:rgba(5,6,15,.82); display:flex; justify-content:space-between; font-size:26px; font-weight:800; opacity:0; border-radius:0 0 14px 14px;"><span style="color:#ffbf3c">Wan 3.0</span><span>14 크레딧</span></div><div id="gw0" style="position:absolute; inset:0; border:6px solid var(--lime); border-radius:16px; opacity:0;"></div></div>
+<div id="g1" style="position:absolute; left:680px; top:150px; width:560px; height:315px; border-radius:16px; box-shadow: 0 0 0 6px #070a1c, inset 0 0 0 2px rgba(255,255,255,.08);"><div style="position:absolute; left:12px; top:12px; width:56px; height:56px; border-radius:12px; background:var(--lime); color:#05060f; font-size:36px; font-weight:900; display:flex; align-items:center; justify-content:center;">2</div><div id="gn1" style="position:absolute; left:0; right:0; bottom:0; padding:10px 14px; background:rgba(5,6,15,.82); display:flex; justify-content:space-between; font-size:26px; font-weight:800; opacity:0; border-radius:0 0 14px 14px;"><span style="color:#5b8cff">Veo 3.1</span><span>80 크레딧</span></div><div id="gw1" style="position:absolute; inset:0; border:6px solid var(--lime); border-radius:16px; opacity:0;"></div></div>
+<div id="g2" style="position:absolute; left:1300px; top:150px; width:560px; height:315px; border-radius:16px; box-shadow: 0 0 0 6px #070a1c, inset 0 0 0 2px rgba(255,255,255,.08);"><div style="position:absolute; left:12px; top:12px; width:56px; height:56px; border-radius:12px; background:var(--lime); color:#05060f; font-size:36px; font-weight:900; display:flex; align-items:center; justify-content:center;">3</div><div id="gn2" style="position:absolute; left:0; right:0; bottom:0; padding:10px 14px; background:rgba(5,6,15,.82); display:flex; justify-content:space-between; font-size:26px; font-weight:800; opacity:0; border-radius:0 0 14px 14px;"><span style="color:#3fd6c6">MiniMax H3</span><span>16 크레딧</span></div><div id="gw2" style="position:absolute; inset:0; border:6px solid var(--lime); border-radius:16px; opacity:0;"></div></div>
+<div id="g3" style="position:absolute; left:60px; top:505px; width:560px; height:315px; border-radius:16px; box-shadow: 0 0 0 6px #070a1c, inset 0 0 0 2px rgba(255,255,255,.08);"><div style="position:absolute; left:12px; top:12px; width:56px; height:56px; border-radius:12px; background:var(--lime); color:#05060f; font-size:36px; font-weight:900; display:flex; align-items:center; justify-content:center;">4</div><div id="gn3" style="position:absolute; left:0; right:0; bottom:0; padding:10px 14px; background:rgba(5,6,15,.82); display:flex; justify-content:space-between; font-size:26px; font-weight:800; opacity:0; border-radius:0 0 14px 14px;"><span style="color:#c9a7ff">Grok 1.5</span><span>36 크레딧</span></div><div id="gw3" style="position:absolute; inset:0; border:6px solid var(--lime); border-radius:16px; opacity:0;"></div></div>
+<div id="g4" style="position:absolute; left:680px; top:505px; width:560px; height:315px; border-radius:16px; box-shadow: 0 0 0 6px #070a1c, inset 0 0 0 2px rgba(255,255,255,.08);"><div style="position:absolute; left:12px; top:12px; width:56px; height:56px; border-radius:12px; background:var(--lime); color:#05060f; font-size:36px; font-weight:900; display:flex; align-items:center; justify-content:center;">5</div><div id="gn4" style="position:absolute; left:0; right:0; bottom:0; padding:10px 14px; background:rgba(5,6,15,.82); display:flex; justify-content:space-between; font-size:26px; font-weight:800; opacity:0; border-radius:0 0 14px 14px;"><span style="color:#b4e61d">Kling 4.0</span><span>4 크레딧</span></div><div id="gw4" style="position:absolute; inset:0; border:6px solid var(--lime); border-radius:16px; opacity:0;"></div></div>
+<div id="g5" style="position:absolute; left:1300px; top:505px; width:560px; height:315px; border-radius:16px; box-shadow: 0 0 0 6px #070a1c, inset 0 0 0 2px rgba(255,255,255,.08);"><div style="position:absolute; left:12px; top:12px; width:56px; height:56px; border-radius:12px; background:var(--lime); color:#05060f; font-size:36px; font-weight:900; display:flex; align-items:center; justify-content:center;">6</div><div id="gn5" style="position:absolute; left:0; right:0; bottom:0; padding:10px 14px; background:rgba(5,6,15,.82); display:flex; justify-content:space-between; font-size:26px; font-weight:800; opacity:0; border-radius:0 0 14px 14px;"><span style="color:#ff6b5b">Seedance 2.5</span><span>56 크레딧</span></div><div id="gw5" style="position:absolute; inset:0; border:6px solid var(--lime); border-radius:16px; opacity:0;"></div></div>
+</div>
+<div class="tag" id="ttl" style="font-size:30px; color:var(--fg); top:60px;">첫 문제 정답</div>
+<div class="cap clip" id="cap0" data-start="0.40" data-duration="7.47" data-track-index="9"><span>처음 문제 정답이에요. 1번 완, 2번 비오, 3번 미니맥스, 4번 그록, 5번 클링, 6번 시댄스.</span></div>
+<div class="cap clip" id="cap1" data-start="7.87" data-duration="3.60" data-track-index="9"><span>여러분이 고른 번호는 어떤 모델이었어요?</span></div>
+</div>
+<script>
+(function(){
+const tl = gsap.timeline({ paused: true });
+tl.fromTo("#cam", {scale: 1.0}, {scale: 1.06, duration: 11.98, ease: "sine.inOut"}, 0);
+tl.fromTo("#ttl", {opacity: 0, y: -20}, {opacity: 1, y: 0, duration: 0.4}, 0.1);
+tl.fromTo("#cam", {opacity: 0}, {opacity: 1, duration: 0.4}, 0);
+tl.to("#gn0", {opacity: 1, duration: 0.3}, 0.80);
+tl.to("#gn1", {opacity: 1, duration: 0.3}, 0.98);
+tl.to("#gn2", {opacity: 1, duration: 0.3}, 1.16);
+tl.to("#gn3", {opacity: 1, duration: 0.3}, 1.34);
+tl.to("#gn4", {opacity: 1, duration: 0.3}, 1.52);
+tl.to("#gn5", {opacity: 1, duration: 0.3}, 1.70);
+tl.fromTo("#cap0 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 0.40);
+tl.fromTo("#cap1 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 7.87);
+window.__timelines = window.__timelines || {};
+window.__timelines["s51"] = tl;
+})();
+</script>
+</body>
+</html>

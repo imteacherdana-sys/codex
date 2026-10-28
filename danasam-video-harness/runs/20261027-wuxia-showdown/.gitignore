@@ -1,1 +1,10 @@
 *.mp4
+*.mkv
+edit/renders/
+edit/out/
+edit/logs/
+edit/assets/audio/*.wav
+edit/assets/images/last_*.png
+edit/segments/*/node_modules
+edit/segments/*/assets
+edit/segments/*/.hyperframes/

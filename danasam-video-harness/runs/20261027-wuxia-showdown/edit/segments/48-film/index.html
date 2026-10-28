@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face { font-family: "Pretendard"; src: url("assets/fonts/PretendardVariable.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "NanumPen"; src: url("assets/fonts/NanumPenScript-korean.woff2") format("woff2"); }
+@font-face { font-family: "Noto Color Emoji"; src: local("Noto Color Emoji"); }
+:root { --bg0: #0b1026; --bg1: #05060f; --grid: rgba(124,58,237,.12); --violet: #7c3aed; --purple: #4a33a6;
+  --lime: #b4e61d; --coral: #ff6b5b; --fg: #f5f3ff; --mute: #a5a3c7; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg1); font-family: "Pretendard", sans-serif; color: var(--fg); word-break: keep-all; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+.ground { position: absolute; inset: 0; background: linear-gradient(var(--bg0), var(--bg1)); }
+.gridbg { position: absolute; inset: -80px; background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px; -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 25%, transparent 72%); mask-image: radial-gradient(ellipse at 50% 50%, #000 25%, transparent 72%); }
+.cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
+.cap { position: absolute; left: 160px; right: 160px; bottom: 64px; display: flex; justify-content: center; }
+.cap span { display: inline-block; max-width: 1500px; padding: 14px 28px 16px; border-radius: 14px; background: rgba(5,6,15,.78);
+  font-size: 42px; font-weight: 700; line-height: 1.38; text-align: center; letter-spacing: -0.01em; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.chip { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 12px; font-weight: 800; font-size: 30px; }
+.tag { position: absolute; left: 60px; top: 44px; font-size: 24px; font-weight: 700; color: var(--mute); letter-spacing: .04em; }
+.ad { position: absolute; right: 60px; top: 44px; font-size: 22px; font-weight: 700; color: var(--mute); padding: 6px 12px; border: 2px solid rgba(165,163,199,.5); border-radius: 8px; }
+.frame { position: absolute; border-radius: 22px; overflow: hidden; background: #000; box-shadow: 0 30px 80px rgba(0,0,0,.5), inset 0 0 0 2px rgba(255,255,255,.08); }
+.frame video, .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.hl { background: linear-gradient(transparent 55%, rgba(180,230,29,.55) 55%); }
+
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="s48" data-start="0" data-duration="31.40" data-width="1920" data-height="1080">
+<div class="ground"></div><div class="gridbg" id="gridbg"></div>
+<video id="fv0" class="clip" src="assets/clips/film_s1.mp4" data-start="0.60" data-duration="4.00" data-media-start="0" data-track-index="1" playsinline data-has-audio="true" data-volume="0.9" style="position:absolute; left:0; top:0; width:1920px; height:1080px; object-fit:cover;"></video>
+<video id="fv1" class="clip" src="assets/clips/film_s2b.mp4" data-start="4.60" data-duration="5.00" data-media-start="0" data-track-index="2" playsinline data-has-audio="true" data-volume="0.9" style="position:absolute; left:0; top:0; width:1920px; height:1080px; object-fit:cover;"></video>
+<video id="fv2" class="clip" src="assets/clips/film_s3a.mp4" data-start="9.60" data-duration="6.00" data-media-start="0" data-track-index="1" playsinline data-has-audio="true" data-volume="0.9" style="position:absolute; left:0; top:0; width:1920px; height:1080px; object-fit:cover;"></video>
+<video id="fv3" class="clip" src="assets/clips/film_s4b.mp4" data-start="15.60" data-duration="8.00" data-media-start="0" data-track-index="2" playsinline data-has-audio="true" data-volume="0.9" style="position:absolute; left:0; top:0; width:1920px; height:1080px; object-fit:cover;"></video>
+<video id="fv4" class="clip" src="assets/clips/film_s5.mp4" data-start="23.60" data-duration="4.00" data-media-start="0" data-track-index="1" playsinline data-has-audio="true" data-volume="0.9" style="position:absolute; left:0; top:0; width:1920px; height:1080px; object-fit:cover;"></video>
+<video id="fv5" class="clip" src="assets/clips/r5_kling4_0.mp4" data-start="27.60" data-duration="3.40" data-media-start="4.6" data-track-index="2" playsinline data-has-audio="true" data-volume="0.9" style="position:absolute; left:0; top:0; width:1920px; height:1080px; object-fit:cover;"></video>
+<div style="position:absolute; left:0; right:0; top:0; height:110px; background:#000; z-index:5"></div><div style="position:absolute; left:0; right:0; bottom:0; height:110px; background:#000; z-index:5"></div>
+<div id="ftitle" class="clip" data-start="28.00" data-duration="3.00" data-track-index="8" style="position:absolute; left:0; right:0; top:420px; text-align:center; z-index:6;"><div style="font-size:120px; font-weight:900; letter-spacing:.3em; text-shadow: 0 6px 30px rgba(0,0,0,.8);">단아검법</div><div style="margin-top:10px; font-size:34px; font-weight:700; color:var(--lime); letter-spacing:.2em; text-shadow: 0 4px 20px rgba(0,0,0,.8);">MADE WITH KLING 4.0 · HIGGSFIELD</div></div>
+<div id="fcard" class="clip" data-start="0" data-duration="0.6" data-track-index="7" style="position:absolute; inset:0; background:#000; z-index:7"></div>
+</div>
+<script>
+(function(){
+const tl = gsap.timeline({ paused: true });
+tl.fromTo("#ftitle > div", {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.6, stagger: 0.2, ease: "expo.out"}, 28.05);
+window.__timelines = window.__timelines || {};
+window.__timelines["s48"] = tl;
+})();
+</script>
+</body>
+</html>
