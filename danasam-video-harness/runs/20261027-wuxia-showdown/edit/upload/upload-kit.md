@@ -48,7 +48,7 @@ best AI video generator는 결국 무엇을 만드느냐에 따라 달라집니�
 07:58 같은 인물을 끝까지 유지하는 AI는? (Reference 시험)
 10:00 영상 AI는 한글 간판 글자를 쓸 수 있을까?
 11:54 8개 모델 최종 성적표, 1등은 누구일까?
-12:19 같은 시험에 크레딧은 얼마나 들었을까? Kling 4.0 vs Seedance 2.5
+12:19 가장 싼 영상 AI와 가성비 1등은 같을까? Kling 4.0 vs Seedance 2.5
 13:43 Kling 4.0 하나로 무협 단편을 만들 수 있을까?
 14:29 결국 어떤 영상 AI를 써야 할까?
 
@@ -59,7 +59,19 @@ best AI video generator는 결국 무엇을 만드느냐에 따라 달라집니�
 [시험 4 · Reference] Use the two reference images for the woman in white and the man in dark navy. Shot 1: she walks onto an arched stone bridge over a lotus pond at dusk. Shot 2: he approaches from the other side and stops facing her. Shot 3: close-up, they look at each other, a breeze moves her long hair. Keep both faces, hair and clothes exactly as in the references in every shot. Soft lantern light.
 [시험 5 · 현판] Inside an old wooden inn in a wuxia town, a wooden signboard above the door reads "단아객잔" in black Korean letters. Below it, a Chinese woman in her early 20s with long straight black hair, wearing a flowing white Chinese-style hanfu robe, pours tea from a clay teapot into a small cup with one hand, steam rising. Close-up on her hands and the cup, then tilt up to the signboard. Warm lantern light.
 
-※ 크레딧은 2026년 10월 Higgsfield 기준입니다. Kling 4.0은 출시 할인가입니다.
+💰 8초 · 720p 한 편 크레딧 (Higgsfield 생성하기 버튼 기준, 2026년 10월 29일)
+• MiniMax H3 16 (32에서 할인, 2K 고정)
+• Kling 4.0 18 (22에서 출시 할인)
+• Gemini Omni 1.1 24
+• Wan 3.0 24 (28에서 할인)
+• Seedance 2.0 36 (48에서 할인)
+• Grok Imagine 1.5 36
+• FLUX 3 48
+• Seedance 2.5 56
+다섯 시험 합계는 MiniMax 80 · Kling 90 · Gemini 96 · Wan 120 · Seedance 2.0 180 · Grok 180 · FLUX 3 240 · Seedance 2.5 280입니다.
+1등 한 번에 든 크레딧은 Kling 30 · FLUX 3 120 · Wan 120 · Seedance 2.0 180입니다.
+
+※ 할인가는 바뀔 수 있습니다. 생성하기 버튼의 숫자를 꼭 확인해 주십시오.
 ※ 등장인물과 장소는 모두 AI로 만든 가상 인물·가상 장소입니다.
 
 #AIvideomodels #Kling4 #Seedance25 #HiggsfieldAI #AI영상비교
