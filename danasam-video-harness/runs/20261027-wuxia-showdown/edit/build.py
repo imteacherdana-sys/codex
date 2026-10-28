@@ -17,7 +17,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-SEG = ROOT / "segments"
+SEG = ROOT / os.environ.get("SEG_DIR", "segments")
+# NOCAPS=1 이면 자막 없이 만든다 (자막은 나중에 녹음본에 맞춰 따로 얹음)
+NOCAPS = bool(os.environ.get("NOCAPS"))
 NODE_MODULES = (ROOT / "../../../../examples/motion-masterclass/node_modules").resolve()
 
 MODELS = {
@@ -179,12 +181,16 @@ class Scene:
         return f"s{self.num:02d}"
 
     def caption_html(self):
+        if NOCAPS:
+            return ""
         out = []
         for i, (c, (t, d)) in enumerate(zip(self.caps, self.cap_times)):
             out.append(f'<div class="cap clip" id="cap{i}" data-start="{t:.2f}" data-duration="{d:.2f}" data-track-index="9"><span>{esc(c)}</span></div>')
         return "\n".join(out)
 
     def caption_js(self):
+        if NOCAPS:
+            return ""
         js = []
         for i, (t, d) in enumerate(self.cap_times):
             js.append(f'tl.fromTo("#cap{i} span", {{opacity: 0, y: 14}}, {{opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}}, {t:.2f});')
@@ -718,6 +724,8 @@ def scenes():
     add("screen", "screen", ["Higgsfield에서는 모델 선택기에서 모델만 바꾸면 됩니다.",
                              "프롬프트는 그대로 남아 있어서",
                              "여덟 번 복사할 필요가 없습니다.",
+                             "이 화면은 생성 과정이고,",
+                             "영상 속 결과는 같은 프롬프트로 처음 뽑은 결과입니다.",
                              "지금 Kling 4.0 출시 할인도 진행 중입니다.",
                              "링크는 설명란 맨 위에 있습니다!"],
         min_dur=20.0, music="calm")

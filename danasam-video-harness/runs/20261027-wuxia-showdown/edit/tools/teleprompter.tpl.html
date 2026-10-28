@@ -1,0 +1,209 @@
+<title>단아검법 텔레프롬프터</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600&family=Song+Myung&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* 레이아웃: 위쪽 조작 막대 + 어두운 읽기 무대, 화면 35% 높이에 읽는 줄 표시. 촬영장에서 쓰는 한 가지 어두운 화면으로 고정 */
+:root {
+  --stage: #0b0d14;
+  --bar: #151925;
+  --ink: #f2f0e8;
+  --dim: #8a90a3;
+  --rule: #262b3a;
+  --jade: #b4e61d;
+  --seal: #ff6b5b;
+  --edit: #2a2f12;
+  --f-read: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --f-part: "Song Myung", "Nanum Myeongjo", serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --size: 52px;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { background: var(--stage); color: var(--ink); font-family: var(--f-read); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bar); }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bar); border-bottom: 1px solid var(--rule);
+  padding-block: 10px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.bar h1 { font-family: var(--f-part); font-weight: 400; font-size: 20px; margin: 0; margin-right: auto; white-space: nowrap; }
+.bar h1 small { font-family: var(--f-read); font-size: 12px; color: var(--dim); margin-left: 8px; }
+.grp { display: flex; align-items: center; gap: 6px; }
+.grp .lbl { font-size: 12px; color: var(--dim); letter-spacing: .04em; }
+.grp .val { font-family: var(--f-mono); font-size: 13px; min-width: 3.2em; text-align: center; font-variant-numeric: tabular-nums; }
+button, select { font: inherit; font-size: 14px; color: var(--ink); background: #1f2433; border: 1px solid var(--rule); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+button:hover, select:hover { border-color: var(--dim); }
+button:focus-visible, select:focus-visible, [contenteditable]:focus-visible { outline: 2px solid var(--jade); outline-offset: 2px; }
+button[aria-pressed="true"] { background: var(--jade); color: #10130a; border-color: var(--jade); font-weight: 600; }
+#play { min-width: 92px; font-weight: 600; }
+#play.on { background: var(--seal); border-color: var(--seal); color: #1a0a08; }
+select { max-width: 220px; }
+
+.guide { position: fixed; left: 0; right: 0; top: 35vh; height: 0; border-top: 2px solid var(--jade); opacity: .55; pointer-events: none; z-index: 3; }
+.guide::before { content: "▶"; position: absolute; left: max(4px, env(safe-area-inset-left, 0px)); top: -14px; color: var(--jade); font-size: 16px; }
+body.editing .guide { display: none; }
+
+.stage { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 35vh 70vh; }
+.stage.mirror { transform: scaleX(-1); }
+.wrap { max-width: 30em; margin: 0 auto; display: flex; flex-direction: column; gap: 1.1em; font-size: var(--size); }
+.part { font-family: var(--f-part); font-size: .62em; color: var(--jade); border-top: 1px solid var(--rule); padding-top: .8em; margin-top: .6em; }
+.scene { display: flex; flex-direction: column; gap: .35em; min-width: 0; }
+.meta { font-size: 15px; color: var(--dim); display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.meta .tc { font-family: var(--f-mono); font-variant-numeric: tabular-nums; }
+.meta .tag { color: var(--seal); }
+.line { line-height: 1.45; font-weight: 600; word-break: keep-all; overflow-wrap: anywhere; border-radius: 6px; }
+.line.changed { box-shadow: inset 4px 0 0 var(--jade); padding-left: .3em; }
+.none { color: var(--dim); font-size: .55em; font-style: italic; }
+body.editing .line { background: var(--edit); padding: .1em .3em; cursor: text; }
+.help { font-size: 14px; color: var(--dim); max-width: 46em; margin: 0 auto 1.2em; line-height: 1.6; font-family: var(--f-read); }
+body:not(.editing) .help.edit-only { display: none; }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--jade); color: #10130a;
+  padding: 10px 18px; border-radius: 10px; font-weight: 600; z-index: 9; }
+textarea.copybox { width: 100%; height: 12em; font: 14px/1.5 var(--f-mono); background: #1f2433; color: var(--ink); border: 1px solid var(--rule); border-radius: 8px; padding: 10px; box-sizing: border-box; }
+@media (max-width: 640px) { :root { --size: 34px; } .bar h1 small { display: none; } }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<header class="bar">
+  <h1>단아검법 텔레프롬프터<small>무협 쇼다운 · 전체 약 __TOTAL__분</small></h1>
+  <div class="grp"><button id="play" type="button">▶ 시작</button></div>
+  <div class="grp"><span class="lbl">속도</span><button id="slower" type="button" aria-label="느리게">−</button><span class="val" id="speedv"></span><button id="faster" type="button" aria-label="빠르게">+</button></div>
+  <div class="grp"><span class="lbl">글자</span><button id="smaller" type="button" aria-label="글자 작게">가−</button><button id="bigger" type="button" aria-label="글자 크게">가+</button></div>
+  <div class="grp"><select id="jump" aria-label="장면으로 이동"></select></div>
+  <div class="grp"><button id="mirror" type="button" aria-pressed="false">좌우 반전</button><button id="editbtn" type="button" aria-pressed="false">대본 고치기</button></div>
+</header>
+<div class="guide" aria-hidden="true"></div>
+
+<main class="stage" id="stage">
+  <p class="help">스페이스바나 화면 터치로 시작·멈춤, ↑↓ 속도, ←→ 이전·다음 장면입니다. 초록 줄에 오는 문장을 읽으십시오. 말이 조금 달라져도 괜찮습니다. 자막은 실제로 말한 대로 다시 넣습니다.</p>
+  <div class="help edit-only">
+    <p>문장을 눌러 바로 고치면 됩니다. 고친 문장 왼쪽에 초록 줄이 생기고, 이 기기에만 저장됩니다. 다 고친 뒤 아래 버튼으로 바뀐 부분을 복사해 대화창에 붙여 넣어 주십시오.</p>
+    <p><button id="copy" type="button">바뀐 부분 복사</button> <button id="reset" type="button">원래 대본으로 되돌리기</button></p>
+    <textarea class="copybox" id="copybox" hidden readonly aria-label="바뀐 부분"></textarea>
+  </div>
+  <div class="wrap" id="wrap"></div>
+</main>
+
+<script>
+const SCENES = /*__DATA__*/[];
+const KEY = "danasam-wuxia-prompter-v1";
+let st = { speed: 60, size: null, edits: {} };
+try { Object.assign(st, JSON.parse(localStorage.getItem(KEY) || "{}")); } catch (e) {}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+const $ = (id) => document.getElementById(id);
+const wrap = $("wrap");
+function tc(t) { const m = Math.floor(t / 60), s = Math.floor(t % 60); return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0"); }
+
+let lastPart = null;
+SCENES.forEach((s, si) => {
+  if (s.part !== lastPart) {
+    const p = document.createElement("div"); p.className = "part"; p.textContent = s.part; wrap.appendChild(p); lastPart = s.part;
+  }
+  const box = document.createElement("section"); box.className = "scene"; box.id = "s-" + si;
+  const meta = document.createElement("div"); meta.className = "meta";
+  meta.innerHTML = '<span class="tc"></span><span class="nm"></span>';
+  meta.querySelector(".tc").textContent = tc(s.start);
+  meta.querySelector(".nm").textContent = s.label;
+  if (s.kind === "screen") { const t = document.createElement("span"); t.className = "tag"; t.textContent = "화면 녹화 위에서 읽기"; meta.appendChild(t); }
+  if (s.kind === "clip" && s.id !== "authority") { const t = document.createElement("span"); t.className = "tag"; t.textContent = "영상 보면서"; meta.appendChild(t); }
+  box.appendChild(meta);
+  if (!s.lines.length) {
+    const n = document.createElement("div"); n.className = "none"; n.textContent = "(대사 없음 · 단편이 재생되는 동안 쉬어 가십시오)"; box.appendChild(n);
+  }
+  s.lines.forEach((ln, li) => {
+    const d = document.createElement("div"); d.className = "line"; d.dataset.k = s.id + "#" + li; d.dataset.orig = ln;
+    const ed = st.edits[d.dataset.k];
+    d.textContent = ed != null ? ed : ln;
+    if (ed != null && ed !== ln) d.classList.add("changed");
+    d.addEventListener("input", () => {
+      const v = d.textContent.trim();
+      if (v === ln) delete st.edits[d.dataset.k]; else st.edits[d.dataset.k] = v;
+      d.classList.toggle("changed", v !== ln); save();
+    });
+    box.appendChild(d);
+  });
+  wrap.appendChild(box);
+  const o = document.createElement("option"); o.value = si; o.textContent = tc(s.start) + " " + s.part + " · " + s.label; $("jump").appendChild(o);
+});
+
+function applySize() { if (st.size) document.documentElement.style.setProperty("--size", st.size + "px"); }
+applySize();
+$("speedv").textContent = st.speed;
+$("bigger").onclick = () => { st.size = Math.min(110, (st.size || parseInt(getComputedStyle(document.documentElement).getPropertyValue("--size"))) + 4); applySize(); save(); };
+$("smaller").onclick = () => { st.size = Math.max(22, (st.size || parseInt(getComputedStyle(document.documentElement).getPropertyValue("--size"))) - 4); applySize(); save(); };
+function setSpeed(v) { st.speed = Math.max(10, Math.min(240, v)); $("speedv").textContent = st.speed; save(); }
+$("faster").onclick = () => setSpeed(st.speed + 10);
+$("slower").onclick = () => setSpeed(st.speed - 10);
+
+let playing = false, last = 0, acc = 0, lock = null;
+function frame(t) {
+  if (!playing) return;
+  if (last) { acc += st.speed * (t - last) / 1000; const step = Math.floor(acc); if (step) { window.scrollBy(0, step); acc -= step; } }
+  last = t;
+  if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) { toggle(false); return; }
+  requestAnimationFrame(frame);
+}
+async function toggle(on) {
+  playing = on == null ? !playing : on;
+  $("play").textContent = playing ? "❚❚ 멈춤" : "▶ 시작";
+  $("play").classList.toggle("on", playing);
+  last = 0; acc = 0;
+  if (playing) {
+    requestAnimationFrame(frame);
+    try { lock = await navigator.wakeLock.request("screen"); } catch (e) {}
+  } else if (lock) { try { lock.release(); } catch (e) {} lock = null; }
+}
+$("play").onclick = () => toggle();
+$("stage").addEventListener("click", (e) => { if (!document.body.classList.contains("editing") && !e.target.closest("button,textarea")) toggle(); });
+
+function currentScene() {
+  const y = window.innerHeight * 0.35; let best = 0;
+  document.querySelectorAll(".scene").forEach((el, i) => { if (el.getBoundingClientRect().top <= y) best = i; });
+  return best;
+}
+function goTo(i) {
+  i = Math.max(0, Math.min(SCENES.length - 1, i));
+  const el = $("s-" + i); const y = el.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.35;
+  window.scrollTo({ top: y, behavior: "smooth" }); $("jump").value = i;
+}
+$("jump").onchange = (e) => goTo(+e.target.value);
+window.addEventListener("scroll", () => { $("jump").value = currentScene(); }, { passive: true });
+
+$("mirror").onclick = () => { const on = $("stage").classList.toggle("mirror"); $("mirror").setAttribute("aria-pressed", on); };
+$("editbtn").onclick = () => {
+  const on = document.body.classList.toggle("editing");
+  $("editbtn").setAttribute("aria-pressed", on);
+  document.querySelectorAll(".line").forEach((d) => { d.contentEditable = on ? "plaintext-only" : "false"; if (on && d.contentEditable !== "plaintext-only") d.contentEditable = "true"; });
+  if (on) { toggle(false); $("stage").classList.remove("mirror"); $("mirror").setAttribute("aria-pressed", false); window.scrollTo({ top: 0 }); }
+};
+function toast(msg) { const t = document.createElement("div"); t.className = "toast"; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 1800); }
+$("copy").onclick = async () => {
+  const rows = [];
+  SCENES.forEach((s) => s.lines.forEach((ln, li) => {
+    const v = st.edits[s.id + "#" + li];
+    if (v != null && v !== ln) rows.push("[" + tc(s.start) + " " + s.part + " · " + s.label + "]\n원래: " + ln + "\n변경: " + v);
+  }));
+  const text = rows.length ? "텔레프롬프터 대본 수정 " + rows.length + "곳\n\n" + rows.join("\n\n") : "바뀐 문장이 없습니다.";
+  const box = $("copybox"); box.value = text; box.hidden = false;
+  try { await navigator.clipboard.writeText(text); toast(rows.length ? "바뀐 " + rows.length + "곳을 복사했습니다" : "바뀐 문장이 없습니다"); }
+  catch (e) { box.focus(); box.select(); toast("아래 칸을 길게 눌러 복사해 주십시오"); }
+};
+let armed = false;
+$("reset").onclick = () => {
+  if (!armed) { armed = true; $("reset").textContent = "한 번 더 누르면 되돌립니다"; setTimeout(() => { armed = false; $("reset").textContent = "원래 대본으로 되돌리기"; }, 3000); return; }
+  st.edits = {}; save();
+  document.querySelectorAll(".line").forEach((d) => { d.textContent = d.dataset.orig; d.classList.remove("changed"); });
+  armed = false; $("reset").textContent = "원래 대본으로 되돌리기"; toast("원래 대본으로 되돌렸습니다");
+};
+
+document.addEventListener("keydown", (e) => {
+  if (document.body.classList.contains("editing") || e.target.matches("select,textarea")) return;
+  if (e.code === "Space") { e.preventDefault(); toggle(); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); setSpeed(st.speed + 10); }
+  else if (e.key === "ArrowDown") { e.preventDefault(); setSpeed(st.speed - 10); }
+  else if (e.key === "ArrowRight") { e.preventDefault(); goTo(currentScene() + 1); }
+  else if (e.key === "ArrowLeft") { e.preventDefault(); goTo(currentScene() - 1); }
+  else if (e.key === "m" || e.key === "M") $("mirror").click();
+});
+</script>

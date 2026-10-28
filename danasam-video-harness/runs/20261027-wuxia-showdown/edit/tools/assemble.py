@@ -11,6 +11,7 @@
 사용: python3 tools/assemble.py
 """
 import json
+import os
 import subprocess
 import wave
 from pathlib import Path
@@ -57,7 +58,7 @@ def main():
     # 1) 장면마다 길이·형식을 맞춘다 (소리가 없는 장면에는 무음 트랙)
     lst = []
     for s in scenes:
-        src = ROOT / "renders" / f"{Path(s['dir']).name}.mp4"
+        src = ROOT / os.environ.get("RENDER_DIR", "renders") / f"{Path(s['dir']).name}.mp4"
         dst = OUT / "norm" / f"{Path(s['dir']).name}.mp4"
         has_audio = bool(subprocess.run(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", str(src)],
                                         capture_output=True, text=True).stdout.strip())
@@ -119,7 +120,7 @@ def main():
     write_wav(OUT / "stems" / "music_sfx.wav", bed)
 
     # 3) 완성본: 클립 소리 + 배경음악·효과음, 마지막에 라우드니스 맞춤
-    final = OUT / "wuxia-showdown-final.mp4"
+    final = OUT / os.environ.get("FINAL_NAME", "wuxia-showdown-final.mp4")
     run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(video), "-i", str(OUT / "stems" / "music_sfx.wav"),
          "-filter_complex", "[0:a]volume=0.9[c];[c][1:a]amix=inputs=2:normalize=0,alimiter=limit=0.95,loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000,alimiter=limit=0.89:level=false[a]",
          "-map", "0:v", "-map", "[a]", "-c:v", "libx264", "-preset", "medium", "-crf", "19", "-pix_fmt", "yuv420p",

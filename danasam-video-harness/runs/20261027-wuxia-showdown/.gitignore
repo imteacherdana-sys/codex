@@ -9,3 +9,5 @@ edit/segments/*/node_modules
 edit/segments/*/assets
 edit/segments/*/.hyperframes/
 __pycache__/
+segments_nocap/
+renders_nocap/
