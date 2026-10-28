@@ -165,6 +165,8 @@ def compose_scene(s, d, res_dir):
                f"fade=t=in:st={name_at:.2f}:d=0.3:alpha=1,fade=t=out:st={name_at + 6.5:.2f}:d=0.4:alpha=1[th]",
                "[bg][th]overlay=x=W-w-90:y=110:shortest=1,trim=0:" + f"{d:.3f}" + "[v]"]
     elif s["kind"] in NO_FACE or s["kind"] in VOICE_ONLY or not cuts:
+        fc = [p for p in fc if "[fv" not in p and not p.endswith("[fvc]")]  # 얼굴 영상은 쓰지 않음 (목소리는 따로 뽑음)
+        inputs = inputs[:2]
         fc += [f"[0:v]fps=30,scale=1920:1080,setsar=1,tpad=stop_mode=clone:stop_duration=30,trim=0:{d:.3f},setpts=PTS-STARTPTS[v]"]
     elif full:
         x, y = face_box(cuts, 1060, 1080, 540)
