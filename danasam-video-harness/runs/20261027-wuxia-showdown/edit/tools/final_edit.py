@@ -506,7 +506,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     (WORK / "captions.ass").write_text(head + "\n".join(ev) + "\n")
     out = []
     for i, (a, b, ln) in enumerate(srt, 1):
-        f = lambda x: f"{int(x // 3600):02d}:{int(x % 3600 // 60):02d}:{int(x % 60):02d},{int(round((x % 1) * 1000)) % 1000:03d}"
+        f = lambda x: (lambda ms: f"{ms // 3600000:02d}:{ms // 60000 % 60:02d}:{ms // 1000 % 60:02d},{ms % 1000:03d}")(int(round(x * 1000)))
         out += [str(i), f"{f(a)} --> {f(b)}", ln, ""]
     (ROOT / "out/captions_final.srt").write_text("\n".join(out))
 
