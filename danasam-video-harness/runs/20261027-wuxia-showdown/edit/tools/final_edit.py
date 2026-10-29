@@ -57,6 +57,11 @@ def pieces_of(name):
     return out
 
 
+def is_exact(name, k):
+    refs = EDL.get(name, [])
+    return k < len(refs) and isinstance(refs[k][0], tuple)
+
+
 def room(a, b):
     """[a, b] 앞뒤로 다른 말이 시작·끝나는 지점 (여유를 붙여도 남의 말이 섞이지 않게)."""
     prev_end = max((e for st, e in ALL_WORDS if st < a - 0.05 and e <= a + 0.05), default=0.0)
@@ -98,7 +103,8 @@ def all_cuts():
     out = {}
     for r in rows:
         a, b = r["c"]
-        out.setdefault(r["scene"], []).append((snap(a, -1), snap(b, +1)))
+        reach = 0.06 if is_exact(r["scene"], r["k"]) else 0.25
+        out.setdefault(r["scene"], []).append((snap(a, -1, reach), snap(b, +1, reach)))
     return out
 
 
@@ -141,6 +147,8 @@ def raw_cuts(name):
     for k, (a, b, _, _) in enumerate(ps):
         pre = LEAD if k == 0 else GAP / 2
         post = TAIL if k == len(ps) - 1 else GAP / 2
+        if is_exact(name, k):  # 손으로 정한 편집점: 앞뒤에 다시 한 말·절은 말이 있어서 여유를 붙이지 않는다
+            pre = post = 0.0
         lo, hi = room(a, b)
         cuts.append([max(0.0, min(a, max(a - pre, lo))), max(b, min(b + post, hi))])
     # 붙어 있는 문장끼리 겹치면 가운데에서 나눈다 (같은 소리가 두 번 들리지 않게)
