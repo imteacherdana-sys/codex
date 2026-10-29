@@ -392,7 +392,7 @@ def render_prompt(s):
             f'<div id="rt" style="position:absolute; left:160px; top:110px; font-size:72px; font-weight:900;">{esc(ROUND_NAME[rnd])}</div>',
             f'<div id="rs" style="position:absolute; left:160px; top:205px; font-size:34px; color:var(--mute); font-weight:600;">{esc(k.get("sub", ""))}</div>',
             '<div id="card" style="position:absolute; left:160px; top:290px; width:1600px; padding:44px 52px; border-radius:24px; background:rgba(16,20,46,.92); box-shadow: inset 0 0 0 2px rgba(124,58,237,.6);">'
-            '<div style="font-size:22px; color:var(--mute); font-weight:700; letter-spacing:.08em; margin-bottom:18px;">PROMPT · 6개 모델 공통</div>'
+            '<div style="font-size:22px; color:var(--mute); font-weight:700; letter-spacing:.08em; margin-bottom:18px;">PROMPT · 8개 모델 공통</div>'
             f'<div id="ptxt" style="font-family: ui-monospace, Menlo, monospace; font-size:34px; line-height:1.55; color:#e9e6ff;">{t}</div></div>',
             "</div>", s.caption_html()]
     style = ".hlw { background-image: linear-gradient(rgba(255,213,0,.55), rgba(255,213,0,.55)); background-repeat: no-repeat; background-position: 0 90%; background-size: 0% 40%; box-decoration-break: clone; -webkit-box-decoration-break: clone; color: #fff; }"
@@ -506,7 +506,7 @@ def render_credits(s):
     mx = max(TOTAL.values())
     body = ['<div class="cam" id="cam">',
             '<div id="ct" style="position:absolute; left:160px; top:80px; font-size:60px; font-weight:900;">시험 5개에 든 크레딧</div>',
-            '<div id="cs" style="position:absolute; left:160px; top:160px; font-size:28px; color:var(--mute); font-weight:600;">8초 클립 5개 합계 · Higgsfield 견적 · 2026년 10월 27~28일 기준 · Kling은 출시 할인가</div>']
+            '<div id="cs" style="position:absolute; left:160px; top:160px; font-size:28px; color:var(--mute); font-weight:600;">8초 · 720p 한 편 × 시험 5개 · Higgsfield 생성하기 버튼 가격 (2026년 10월 29일) · Kling 출시 할인 22→18</div>']
     for i, m in enumerate(order):
         name, col = MODELS[m]
         y = 214 + i * 78
@@ -594,15 +594,38 @@ def render_film(s):
     return page(s.cid, s.dur, "\n".join(body), "\n".join(js))
 
 
+# 화면 녹화 속 모델을 바꾸는 순간 (원본 초, 모델, 생성하기 버튼 가격)
+SCREEN_SWITCH = [(1.0, "Seedance 2.5", "56"), (22.0, "Kling 4.0", "22 → 18"), (36.0, "Wan 3.0", "28 → 24"),
+                 (46.0, "Seedance 2.0", "48 → 36"), (57.0, "MiniMax H3", "32 → 16"), (63.0, "Gemini Omni 1.1", "24"),
+                 (72.0, "FLUX 3", "48"), (82.0, "Grok Imagine 1.5", "36")]
+SCREEN_SRC_LEN = 85.33
+
+
+def screen_speed(dur):
+    return SCREEN_SRC_LEN / max(1.0, dur - 0.4)
+
+
 def render_screen(s):
-    """Higgsfield 웹 작업 화면 녹화 (1.4배속으로 줄인 assets/clips/screen_rec.mp4)."""
+    """Higgsfield 웹 작업 화면 녹화 (빠르게 돌린 assets/clips/screen_rec.mp4) + 모델을 바꿀 때마다 이름표."""
+    sp = screen_speed(s.dur)
     body = ['<div class="cam" id="cam">',
             '<div id="slot" style="position:absolute; left:120px; top:60px; width:1680px; height:945px; border-radius:22px; overflow:hidden; border:3px solid rgba(180,230,29,.55); box-shadow:0 30px 80px rgba(0,0,0,.55);">'
             f'<video class="clip" src="assets/clips/screen_rec.mp4" muted playsinline data-start="0" data-duration="{s.dur:.2f}" data-track-index="2" style="width:100%; height:100%; object-fit:cover;"></video></div>',
-            '<div class="chip" id="schip" style="position:absolute; left:150px; top:84px; background:rgba(5,6,15,.82); color:var(--lime);">Higgsfield 실제 작업 화면 · 2배속</div>',
-            "</div>", s.caption_html()]
-    js = [gridbg_js(s.dur), 'tl.fromTo("#slot", {opacity: 0, scale: 0.97}, {opacity: 1, scale: 1, duration: 0.5, ease: "expo.out"}, 0.1);',
-          f'tl.fromTo("#cam", {{scale: 1.0}}, {{scale: 1.04, duration: {s.dur:.2f}, ease: "none"}}, 0);', s.caption_js()]
+            f'<div class="chip" id="schip" style="position:absolute; left:150px; top:84px; background:rgba(5,6,15,.82); color:var(--lime);">Higgsfield 실제 작업 화면 · {sp:.0f}배속</div>',
+            '<div class="chip" style="position:absolute; right:150px; top:84px; background:rgba(5,6,15,.82); color:var(--fg);">프롬프트는 그대로 · 모델만 선택</div>']
+    js = [gridbg_js(s.dur), 'tl.fromTo("#slot", {opacity: 0, scale: 0.97}, {opacity: 1, scale: 1, duration: 0.5, ease: "expo.out"}, 0.1);']
+    for i, (t, name, price) in enumerate(SCREEN_SWITCH):
+        at = t / sp
+        end = (SCREEN_SWITCH[i + 1][0] / sp) if i + 1 < len(SCREEN_SWITCH) else s.dur
+        body.append(f'<div id="sw{i}" style="position:absolute; left:50%; top:820px; transform:translateX(-50%); padding:16px 34px; border-radius:18px; '
+                    'background:rgba(5,6,15,.9); border:3px solid var(--lime); font-size:44px; font-weight:900; white-space:nowrap; opacity:0;">'
+                    f'<span style="color:var(--mute); font-size:30px;">모델 선택 {i + 1}/8 · </span>{esc(name)}'
+                    f'<span style="color:var(--lime); font-size:34px;"> · {esc(price)} 크레딧</span></div>')
+        js.append(f'tl.fromTo("#sw{i}", {{opacity: 0, y: 16}}, {{opacity: 1, y: 0, duration: 0.2}}, {at:.2f});')
+        js.append(f'tl.to("#sw{i}", {{opacity: 0, duration: 0.15}}, {max(at + 0.3, end - 0.15):.2f});')
+    body += ["</div>", s.caption_html()]
+    js.append(f'tl.fromTo("#cam", {{scale: 1.0}}, {{scale: 1.04, duration: {s.dur:.2f}, ease: "none"}}, 0);')
+    js.append(s.caption_js())
     return page(s.cid, s.dur, "\n".join(body), "\n".join(js))
 
 
@@ -732,7 +755,7 @@ def scenes():
                              "영상 속 결과는 같은 프롬프트로 처음 뽑은 결과입니다.",
                              "지금 Kling 4.0 출시 할인도 진행 중입니다.",
                              "링크는 설명란 맨 위에 있습니다!"],
-        min_dur=61.0, music="calm")
+        min_dur=29.0, music="calm", sfx=[("tick", t / screen_speed(DURS.get("screen", 29.0))) for t, _, _ in SCREEN_SWITCH])
     add("specs", "specs", ["시작 전에 여덟 모델을 짧게 보겠습니다.",
                            "Kling 4.0은 Reference를 15개까지 넣을 수 있고,",
                            "만든 영상을 고치는 편집 기능도 있습니다.",
@@ -885,7 +908,7 @@ def scenes():
     add("outro", "talk", ["여러분이 채점했다면 1등은 누구입니까?",
                           "댓글로 알려주십시오.",
                           "다음 영상에서는 오늘 단편을 3분으로 늘려보겠습니다!"],
-        kicker="다음 영상", title="단아검법, 3분으로", sub="구독하고 기다려 주십시오", cam="pull", music="wuxia", tail=1.5)
+        kicker="다음 영상", title="Kling 4.0으로 무협 드라마 완성", sub="구독하고 기다려 주십시오", cam="pull", music="wuxia", tail=1.5)
     return S
 
 

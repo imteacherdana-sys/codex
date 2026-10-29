@@ -161,11 +161,14 @@ def raw_cuts(name):
 
 def scene_list():
     plan = json.loads((ROOT / "plan.json").read_text())
+    hl_cuts = [sum(d for _, _, d in HIGHLIGHT[:k]) for k in range(1, len(HIGHLIGHT))]
+    highlight = {"num": 0, "name": "highlight", "kind": "highlight", "dur": HIGHLIGHT_DUR, "music": "wuxia",
+                 "sfx": [("whoosh", max(0.0, t - 0.2)) for t in hl_cuts] + [("ding", HIGHLIGHT_DUR - 2.6)]}
     intro = {"num": 0, "name": "intro", "kind": "intro", "dur": 0, "music": "calm", "sfx": []}
     tr = transform_window(raw_cuts("intro")) if TRANSFORM.exists() else None
     if tr:
         intro["sfx"] = [("whoosh", tr[0] - 0.25), ("stamp", tr[0]), ("whoosh", tr[1] - 0.25)]
-    return [intro] + plan["scenes"]
+    return [highlight, intro] + plan["scenes"]
 
 
 def voice_len(name):
@@ -179,18 +182,19 @@ def target_dur(s):
     if s["kind"] == "clip" and s["name"] != "authority":
         return round(max(CLIP_MIN, v), 2)
     if s["kind"] == "screen":
-        return round(max(40.0, v), 2)
+        return round(max(29.0, v), 2)
     return round(max(3.0, v), 2)
 
 
 def cmd_plan():
     scenes = scene_list()
-    durs = {s["name"]: target_dur(s) for s in scenes if s["name"] != "intro"}
+    scenes = [x for x in scenes if "dir" in x]  # 렌더 장면만 (하이라이트·첫 인사는 렌더가 없음)
+    durs = {s["name"]: target_dur(s) for s in scenes}
     (ROOT / "assets/face/durs.json").write_text(json.dumps(durs, ensure_ascii=False, indent=1))
     total = sum(durs.values()) + voice_len("intro")
     print(f"총 {total / 60:.1f}분 (첫 인사 {voice_len('intro'):.1f}초 포함)")
     longer = []
-    for s in scenes[1:]:
+    for s in scenes:
         r = ROOT / "renders_nocap" / f"{Path(s['dir']).name}.mp4"
         have = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(r)],
                                     capture_output=True, text=True).stdout or 0)
@@ -227,6 +231,10 @@ def face_chain(cuts, first_input):
     return inputs, parts
 
 
+# 맨 앞 하이라이트: 완성 영상을 전체 화면으로 빠르게 보여 준다 (클립, 시작 초, 길이)
+HIGHLIGHT = [("film_s2b", 0.8, 1.6), ("r2_seedance_2_0", 3.0, 1.4), ("r3_kling4_0", 2.6, 1.4), ("r1_flux_3_video", 3.0, 1.3),
+             ("film_s4b", 2.0, 1.6), ("r5_kling4_0", 4.4, 3.2)]
+HIGHLIGHT_DUR = round(sum(d for _, _, d in HIGHLIGHT), 2)
 TRANSFORM = ROOT / "assets/transform/transformed.mp4"
 TRANSFORM_SRC = 27.70  # 변신 영상이 따라 한 원본 구간의 시작 (assets/transform/motion.mp4)
 TRANSFORM_SPAN = (28.6, 36.9)  # 원본 시각 기준으로 변신해 있는 구간 (약 8초)
@@ -255,10 +263,16 @@ def compose_scene(s, d, res_dir):
     name = s["name"]
     key = f"{s['num']:02d}-{name}"
     vout, aout, cout = WORK / f"{key}.mkv", WORK / f"{key}_voice.wav", WORK / f"{key}_clip.wav"
+    if name == "highlight":
+        return compose_highlight(d, vout, aout, cout)
     cuts = source_cuts(name)
     full = s["kind"] in FULL_KINDS or name in FULL_NAMES
     inputs, fc = [], []
-    if name != "intro":
+    if name == "film-intro":
+        # 단편을 설명하는 동안 오른쪽 카드에서 단편 영상을 미리 보여 준다
+        film = next(x for x in scene_list() if x["name"] == "film")
+        inputs += ["-ss", "6", "-i", str(res_dir / f"{film['num']:02d}-film.mp4")]
+    elif name != "intro":
         inputs += ["-i", str(res_dir / f"{key}.mp4")]
     if cuts:
         fi = 0 if name == "intro" else 1
@@ -333,6 +347,24 @@ def compose_scene(s, d, res_dir):
              "-c:a", "pcm_s16le", str(cout)])
     else:
         run(["ffmpeg", "-loglevel", "error", "-y", "-f", "lavfi", "-t", f"{d:.3f}", "-i", f"anullsrc=r={SR}:cl=stereo", str(cout)])
+    return vout, aout, cout
+
+
+def compose_highlight(d, vout, aout, cout):
+    inputs, parts, labels = [], [], []
+    for k, (clip, st, du) in enumerate(HIGHLIGHT):
+        inputs += ["-ss", f"{st}", "-t", f"{du}", "-i", str(ROOT / f"assets/clips/{clip}.mp4")]
+        parts.append(f"[{k}:v]fps=30,scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,setsar=1,"
+                     f"zoompan=z='1+0.04*on/({du}*30)':d=1:s=1920x1080:fps=30,trim=0:{du},setpts=PTS-STARTPTS,"
+                     f"fade=t=in:d=0.12:color=white,fade=t=out:st={du - 0.1}:d=0.1[h{k}]")
+        labels.append(f"[h{k}]")
+    parts.append("".join(labels) + f"concat=n={len(HIGHLIGHT)}:v=1:a=0[v]")
+    if not vout.exists():
+        run(["ffmpeg", "-loglevel", "error", "-y", *inputs, "-filter_complex", ";".join(parts), "-map", "[v]", "-t", f"{d:.3f}",
+             "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", "-pix_fmt", "yuv420p", str(vout) + ".part.mkv"])
+        Path(str(vout) + ".part.mkv").rename(vout)
+    for p in (aout, cout):
+        run(["ffmpeg", "-loglevel", "error", "-y", "-f", "lavfi", "-t", f"{d:.3f}", "-i", f"anullsrc=r={SR}:cl=stereo", str(p)])
     return vout, aout, cout
 
 
@@ -416,6 +448,7 @@ WrapStyle: 2
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Title,Pretendard Caption,120,&H00FFFFFF,&H00FFFFFF,&H000A0A0A,&H64000000,0,0,0,0,100,100,0,0,1,9,4,5,60,60,0,1
 Style: Neigong,Nanum Pen,170,&H00FFFFFF,&H00FFFFFF,&H0074B43C,&H00000000,0,0,0,0,100,100,4,0,1,7,0,8,60,60,150,1
 Style: Cap,Pretendard Caption,50,&H00FFFFFF,&H00FFFFFF,&H380F0605,&H380F0605,0,0,0,0,100,100,0,0,3,16,0,2,60,60,58,1
 
@@ -457,6 +490,8 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         for t, end, ln in scene_ev:
             ev.append(f"Dialogue: 0,{ass_time(t)},{ass_time(end)},Cap,,60,{mr},58,,{ln}")
             srt.append((t, end, ln))
+    ev.append(f"Dialogue: 1,{ass_time(HIGHLIGHT_DUR - 2.7)},{ass_time(HIGHLIGHT_DUR - 0.1)},Title,,0,0,0,,"
+              "{\\fad(150,200)\\fscx85\\fscy85\\t(0,300,\\fscx100\\fscy100)}웰컴투 {\\c&H00DEFF&}AI무협월드\\N{\\fs64\\c&HFFFFFF&}Seedance 2.5 {\\c&H00DEFF&}VS{\\c&HFFFFFF&} Kling 4.0")
     tr = transform_window(source_cuts("intro"))
     if tr:
         t = starts["intro"] + tr[0] - 0.35
@@ -520,6 +555,7 @@ def cmd_build(res):
     scenes = scene_list()
     durs = json.loads((ROOT / "assets/face/durs.json").read_text())
     durs["intro"] = round(voice_len("intro"), 2)
+    durs["highlight"] = HIGHLIGHT_DUR
     starts, t = {}, 0.0
     for s in scenes:
         starts[s["name"]] = t
