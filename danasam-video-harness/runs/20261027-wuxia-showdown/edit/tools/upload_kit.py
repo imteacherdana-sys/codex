@@ -57,6 +57,19 @@ def tc(t):
 def main():
     plan = json.loads((ROOT / "plan.json").read_text())
     start = {s["name"]: s["start"] for s in plan["scenes"]}
+    try:  # 얼굴 녹화 편집본이 있으면 그 시간표(하이라이트·첫 인사 포함)를 쓴다
+        import sys
+        sys.path.insert(0, str(ROOT / "tools"))
+        import final_edit as F
+        durs = json.loads((ROOT / "assets/face/durs.json").read_text())
+        durs["intro"], durs["highlight"] = F.voice_len("intro"), F.HIGHLIGHT_DUR
+        t, start = 0.0, {}
+        for s in F.scene_list():
+            start[s["name"]] = t
+            t += durs[s["name"]]
+        plan["total"] = t
+    except FileNotFoundError:
+        pass
     chapters = [(0.0 if name == "hook-grid" else start[name], q) for name, q in CHAPTERS if name in start]
     chapters.sort()
     prompts = json.loads((ROOT / "prompts.json").read_text())
@@ -120,11 +133,12 @@ best AI video generator는 결국 무엇을 만드느냐에 따라 달라집니�
 
 추천: 1번 (검색어 Kling 4.0 · Seedance 2.5가 앞에 옴). 영상 내용에 없는 약속은 하지 않습니다.
 
-## 2. 썸네일 (브리프: 8개 결과 그리드 또는 강한 두 모델의 분할, **제목 글자는 넣지 않기**)
+## 2. 썸네일
 
-- A안 `thumbnail-grid8.jpg`: 장풍 시험 8개 결과 4×2 그리드, 번호만 표시
-- B안 `thumbnail-split.jpg`: Kling 4.0 vs Seedance 2.5 반반 분할, 모델 이름 작은 라벨만
-- 추천: A안 (한 프롬프트 · 8개 결과라는 실험이 한눈에 보임)
+- **C안 (단아쌤 선택 후보)** `thumbnail-wuxia-c.jpg`: 무복·삿갓·대나무 숲에서 포권 인사하는 단아쌤 + "웰컴투 AI무협월드 / Seedance2.5 VS Kling4"
+- D안 `thumbnail-wuxia-d.jpg`: 같은 콘셉트 다른 컷
+- 글자 없는 안 `thumbnail-grid8.jpg` (장풍 8개 그리드) · `thumbnail-split.jpg` (Kling vs Seedance 반반)
+- 참고: 브리프는 제목 글자를 넣지 않은 썸네일을 권장합니다. 글자 있는 C안을 쓰면 A/B 테스트에 글자 없는 그리드 안을 함께 올려 보십시오.
 
 ## 3. 설명란 (UTM 링크는 첫 두 줄 안에, 더보기 없이 보이게)
 

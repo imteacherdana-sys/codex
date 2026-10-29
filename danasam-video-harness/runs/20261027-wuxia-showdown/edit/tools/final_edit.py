@@ -455,7 +455,7 @@ Style: Cap,Pretendard Caption,50,&H00FFFFFF,&H00FFFFFF,&H380F0605,&H380F0605,0,0
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
-    ev, srt = [], []
+    ev, srt, caps = [], [], []
     for s in scenes:
         name = s["name"]
         cuts, ps = source_cuts(name), pieces_of(name)
@@ -488,8 +488,14 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             end = scene_ev[k][1] if scene_ev[k][1] is not None else nxt
             scene_ev[k][1] = max(scene_ev[k][0] + 0.6, min(end if k + 1 < len(scene_ev) and scene_ev[k][1] is not None else nxt, nxt) - 0.02)
         for t, end, ln in scene_ev:
-            ev.append(f"Dialogue: 0,{ass_time(t)},{ass_time(end)},Cap,,60,{mr},58,,{ln}")
-            srt.append((t, end, ln))
+            caps.append([max(t, starts[name]), end, ln, mr])
+    # 영상 전체에서 자막끼리 겹치지 않게 (장면이 바뀌는 곳에서 겹치면 두 줄이 위아래로 튄다)
+    caps.sort(key=lambda c: c[0])
+    for k in range(len(caps) - 1):
+        caps[k][1] = max(caps[k][0] + 0.3, min(caps[k][1], caps[k + 1][0] - 0.02))
+    for t, end, ln, mr in caps:
+        ev.append(f"Dialogue: 0,{ass_time(t)},{ass_time(end)},Cap,,60,{mr},58,,{ln}")
+        srt.append((t, end, ln))
     ev.append(f"Dialogue: 1,{ass_time(HIGHLIGHT_DUR - 2.7)},{ass_time(HIGHLIGHT_DUR - 0.1)},Title,,0,0,0,,"
               "{\\fad(150,200)\\fscx85\\fscy85\\t(0,300,\\fscx100\\fscy100)}웰컴투 {\\c&H00DEFF&}AI무협월드\\N{\\fs64\\c&HFFFFFF&}Seedance 2.5 {\\c&H00DEFF&}VS{\\c&HFFFFFF&} Kling 4.0")
     tr = transform_window(source_cuts("intro"))

@@ -13,11 +13,12 @@
 
 추천: 1번 (검색어 Kling 4.0 · Seedance 2.5가 앞에 옴). 영상 내용에 없는 약속은 하지 않습니다.
 
-## 2. 썸네일 (브리프: 8개 결과 그리드 또는 강한 두 모델의 분할, **제목 글자는 넣지 않기**)
+## 2. 썸네일
 
-- A안 `thumbnail-grid8.jpg`: 장풍 시험 8개 결과 4×2 그리드, 번호만 표시
-- B안 `thumbnail-split.jpg`: Kling 4.0 vs Seedance 2.5 반반 분할, 모델 이름 작은 라벨만
-- 추천: A안 (한 프롬프트 · 8개 결과라는 실험이 한눈에 보임)
+- **C안 (단아쌤 선택 후보)** `thumbnail-wuxia-c.jpg`: 무복·삿갓·대나무 숲에서 포권 인사하는 단아쌤 + "웰컴투 AI무협월드 / Seedance2.5 VS Kling4"
+- D안 `thumbnail-wuxia-d.jpg`: 같은 콘셉트 다른 컷
+- 글자 없는 안 `thumbnail-grid8.jpg` (장풍 8개 그리드) · `thumbnail-split.jpg` (Kling vs Seedance 반반)
+- 참고: 브리프는 제목 글자를 넣지 않은 썸네일을 권장합니다. 글자 있는 C안을 쓰면 A/B 테스트에 글자 없는 그리드 안을 함께 올려 보십시오.
 
 ## 3. 설명란 (UTM 링크는 첫 두 줄 안에, 더보기 없이 보이게)
 
@@ -40,17 +41,17 @@ best AI video generator는 결국 무엇을 만드느냐에 따라 달라집니�
 
 ⏱ 챕터
 00:00 8개 영상 AI 중 어떤 장풍이 진짜 같을까?
-00:48 같은 프롬프트로 어떻게 공정하게 비교했을까?
-01:12 Higgsfield에서 8개 모델은 어떻게 돌렸을까?
-02:35 장풍 이펙트는 어떤 AI가 가장 잘 그릴까?
-04:20 경공처럼 빠른 동작, Kling 4.0과 Seedance 2.5 중 누가 나을까?
+01:31 같은 프롬프트로 어떻게 공정하게 비교했을까?
+01:53 Higgsfield에서 8개 모델은 어떻게 돌렸을까?
+02:42 장풍 이펙트는 어떤 AI가 가장 잘 그릴까?
+04:24 경공처럼 빠른 동작, Kling 4.0과 Seedance 2.5 중 누가 나을까?
 06:08 비무 장면, 목검과 낙엽까지 자연스러운 AI는?
-07:58 같은 인물을 끝까지 유지하는 AI는? (Reference 시험)
-10:00 영상 AI는 한글 간판 글자를 쓸 수 있을까?
-11:54 8개 모델 최종 성적표, 1등은 누구일까?
-12:19 가장 싼 영상 AI와 가성비 1등은 같을까? Kling 4.0 vs Seedance 2.5
-13:43 Kling 4.0 하나로 무협 단편을 만들 수 있을까?
-14:29 결국 어떤 영상 AI를 써야 할까?
+07:51 같은 인물을 끝까지 유지하는 AI는? (Reference 시험)
+09:48 영상 AI는 한글 간판 글자를 쓸 수 있을까?
+11:40 8개 모델 최종 성적표, 1등은 누구일까?
+12:02 가장 싼 영상 AI와 가성비 1등은 같을까? Kling 4.0 vs Seedance 2.5
+13:24 Kling 4.0 하나로 무협 단편을 만들 수 있을까?
+14:08 결국 어떤 영상 AI를 써야 할까?
 
 📝 시험별 프롬프트 (8개 모델 공통, 수정 없이 그대로)
 [시험 1 · 장풍] A Chinese woman in her early 20s, petite at about 162 cm, slender, with long straight black hair worn loose down to her waist, wearing a flowing white Chinese-style hanfu robe with wide sleeves, stands in a misty bamboo forest at dawn. She draws a slow breath, then thrusts both palms forward. A visible wave of air bursts from her palms, bending the bamboo stalks and sending a storm of green leaves flying away from her. Her wide sleeves and long hair whip in the wind. Low-angle shot, slow motion at the moment of release, cinematic wuxia film style, soft natural light. Sound: deep whoosh and rustling leaves.
@@ -95,7 +96,7 @@ AI video model comparison, Seedance 2.5, Kling 4.0, best AI video generator, sam
 
 ## 6. 제출 전 체크리스트 (브리프 요구사항)
 
-- [ ] 6분 이상 전용 영상 (완성본 15.8분)
+- [ ] 6분 이상 전용 영상 (완성본 15.5분)
 - [ ] Higgsfield 웹사이트 작업 화면 녹화를 영상의 화면 녹화 자리에 넣기 (모델 선택기 전환, 프롬프트 입력·생성)
 - [ ] 영상에서 "8개 모델 모두 Higgsfield에서, 같은 프롬프트와 같은 설정으로 돌렸다"고 말하기 (대본 포함)
 - [ ] 필수 모델 8개 모두 등장: Kling 4.0 · Seedance 2.5 · Seedance 2.0 · MiniMax H3 · Wan 3.0 · Grok Imagine 1.5 · FLUX 3 · Gemini Omni 1.1
