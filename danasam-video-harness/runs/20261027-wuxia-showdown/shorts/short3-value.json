@@ -1,0 +1,152 @@
+{
+ "face": {
+  "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/face/face_all.mp4",
+  "track": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/face/track.json"
+ },
+ "music": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/audio/bgm_wuxia.wav",
+ "music_gain": 0.14,
+ "id": "short3-value",
+ "highlight_words": [
+  "Kling",
+  "3번",
+  "1등",
+  "30",
+  "22",
+  "18",
+  "작품"
+ ],
+ "beats": [
+  {
+   "voice": [
+    [
+     687.67,
+     691.57
+    ]
+   ],
+   "caption": "1등을 가장 많이 한 모델은 Kling, 3번입니다.",
+   "visual": {
+    "type": "title",
+    "rows": [
+     "가성비",
+     "1등"
+    ],
+    "y": 330
+   }
+  },
+  {
+   "voice": [
+    [
+     725.48,
+     729.63
+    ]
+   ],
+   "caption": "가장 싼 MiniMax는 1등이 없었습니다.",
+   "visual": {
+    "type": "sticker",
+    "text": "최저가 MiniMax = 1등 0번",
+    "size": 74,
+    "y": 400
+   }
+  },
+  {
+   "voice": [
+    [
+     735.26,
+     744.65
+    ]
+   ],
+   "caption": "1등 한 번에 든 크레딧은 Kling 30, FLUX 3 120, Seedance 2.0 180입니다.",
+   "visual": {
+    "type": "bars",
+    "title": "1등 한 번에 든 크레딧",
+    "unit": 20,
+    "items": [
+     [
+      "Kling 4.0",
+      30,
+      true
+     ],
+     [
+      "FLUX 3",
+      120
+     ],
+     [
+      "Seedance 2.0",
+      180
+     ]
+    ]
+   }
+  },
+  {
+   "voice": [
+    [
+     748.99,
+     754.95
+    ]
+   ],
+   "caption": "Kling은 지금 22크레딧에서 18크레딧으로 할인하고 있는 중입니다.",
+   "visual": {
+    "type": "sticker",
+    "text": "지금 22 → 18 할인 중",
+    "y": 400
+   }
+  },
+  {
+   "voice": [
+    [
+     804.74,
+     809.34
+    ],
+    [
+     809.34,
+     812.67
+    ]
+   ],
+   "caption": "그래서 오늘 결과를 바탕으로 Kling 하나만으로 30초 무협 단편을 한번 만들어 봤습니다.",
+   "visual": {
+    "type": "clip",
+    "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/film_s2b.mp4",
+    "label": "Kling 4.0 단편",
+    "color": "#63e6be",
+    "from": 0.0
+   }
+  },
+  {
+   "voice": [],
+   "caption": "",
+   "min": 5.0,
+   "visual": {
+    "type": "full",
+    "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/film_s4b.mp4",
+    "from": 1.5,
+    "audio": true
+   }
+  },
+  {
+   "voice": [],
+   "caption": "",
+   "min": 3.2,
+   "visual": {
+    "type": "full",
+    "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r5_kling4_0.mp4",
+    "from": 4.6,
+    "audio": true
+   }
+  },
+  {
+   "voice": [
+    [
+     812.67,
+     814.93
+    ]
+   ],
+   "caption": "비교가 아닌 작품 같지 않나요?",
+   "visual": {
+    "type": "sticker",
+    "text": "8개 전체 비교는 본편에서!",
+    "size": 76,
+    "y": 380
+   }
+  }
+ ]
+}

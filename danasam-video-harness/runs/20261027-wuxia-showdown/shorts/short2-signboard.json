@@ -1,0 +1,171 @@
+{
+ "face": {
+  "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/face/face_all.mp4",
+  "track": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/face/track.json"
+ },
+ "music": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/audio/bgm_wuxia.wav",
+ "music_gain": 0.14,
+ "id": "short2-signboard",
+ "highlight_words": [
+  "단아객잔",
+  "5개",
+  "단야",
+  "탄",
+  "눈으로"
+ ],
+ "beats": [
+  {
+   "voice": [
+    [
+     607.21,
+     612.16
+    ]
+   ],
+   "caption": "객잔 현판에 '단아객잔'이라는 네 글자를 쓰고요.",
+   "visual": {
+    "type": "title",
+    "rows": [
+     "단아",
+     "객잔"
+    ],
+    "y": 330
+   }
+  },
+  {
+   "voice": [
+    [
+     614.95,
+     618.79
+    ]
+   ],
+   "caption": "AI는 글자와 손가락에 약하다고 하잖아요.",
+   "visual": {
+    "type": "sticker",
+    "text": "AI는 글자에 약하다?",
+    "y": 400
+   }
+  },
+  {
+   "voice": [
+    [
+     618.79,
+     621.3
+    ],
+    [
+     621.3,
+     626.73
+    ]
+   ],
+   "caption": "자, 결과는 반전이었는데요. 8개 중에 5개나 네 글자를 정확히 썼습니다.",
+   "visual": {
+    "type": "grid",
+    "clips": [
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r5_seedance_2_0.mp4",
+      "from": 5.2
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r5_grok_video_v15.mp4",
+      "from": 5.2
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r5_gemini_omni_flash_1_1.mp4",
+      "from": 5.2
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r5_seedance_2_5.mp4",
+      "from": 5.2
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r5_wan3_0.mp4",
+      "from": 5.2
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r5_flux_3_video.mp4",
+      "from": 5.2
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r5_kling4_0.mp4",
+      "from": 5.2
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r5_minimax_h3.mp4",
+      "from": 5.2
+     }
+    ]
+   }
+  },
+  {
+   "voice": [
+    [
+     628.35,
+     631.63
+    ]
+   ],
+   "caption": "'단야객잔'이라고 해서 글자를 틀렸는데요.",
+   "visual": {
+    "type": "clip",
+    "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r5_seedance_2_0.mp4",
+    "label": "Seedance 2.0",
+    "color": "#ffc9a9",
+    "from": 5.0,
+    "stamp": "단야?",
+    "stamp_at": 0.8
+   }
+  },
+  {
+   "voice": [
+    [
+     651.29,
+     655.96
+    ]
+   ],
+   "caption": "Kling도 네 글자를 정확하게 썼고, 현판 화면이 가장 예쁘게 나왔습니다.",
+   "visual": {
+    "type": "clip",
+    "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r5_kling4_0.mp4",
+    "label": "Kling 4.0",
+    "color": "#b4e61d",
+    "from": 4.8,
+    "stamp": "제일 예쁨!",
+    "stamp_at": 2.4,
+    "badge": "18 크레딧"
+   }
+  },
+  {
+   "voice": [
+    [
+     661.6,
+     668.63
+    ],
+    [
+     668.63,
+     671.94
+    ]
+   ],
+   "caption": "더 재미있는 일이 있었는데, 함정을 피하려고 이미지 AI로 현판을 먼저 만들었는데 이미지 AI가 '단'을 '탄'으로 틀렸습니다.",
+   "visual": {
+    "type": "clip",
+    "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/images/r5_signboard.png",
+    "label": "이미지 AI",
+    "color": "#d0bfff",
+    "stamp": "단 → 탄",
+    "stamp_at": 4.2
+   }
+  },
+  {
+   "voice": [
+    [
+     673.75,
+     678.71
+    ]
+   ],
+   "caption": "글자는 어떤 AI든 꼭 눈으로 확인해야 한다는 점입니다.",
+   "visual": {
+    "type": "sticker",
+    "text": "글자는 꼭 눈으로 확인!",
+    "y": 380
+   }
+  }
+ ]
+}
