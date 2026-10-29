@@ -3,7 +3,7 @@ import sys, wave, numpy as np
 
 SR = 48000
 OUT = sys.argv[1]
-END = 60.05
+END = 60.67
 rng = np.random.default_rng(7)
 
 
@@ -90,17 +90,17 @@ def place(buf, x, at, gain=1.0):
 
 N = int(END * SR) + SR
 sfx = np.zeros(N)
-place(sfx, snap(), 16.0, 1.0)                 # hairpin snap (clip A shot 3)
+place(sfx, snap(), 16.5, 1.0)                 # hairpin snap (clip A shot 3)
 place(sfx, ding(), 0.0, 0.0)
-place(sfx, tension(1.6), 43.0, 0.8)           # before the reveal
-place(sfx, blowout(), 55.2, 0.9)              # candles out
+place(sfx, tension(1.6), 43.6, 0.8)           # before the reveal
+place(sfx, blowout(), 55.9, 0.9)              # candles out
 place(sfx, drum(52, 2.0, 1.4), END - 0.4, 0.0)
 
 bgm = np.zeros(N)
 tt = np.arange(N) / SR
 drone = (np.sin(2 * np.pi * 73.42 * tt) + 0.6 * np.sin(2 * np.pi * 110.0 * tt + 0.3) +
          0.3 * np.sin(2 * np.pi * 146.8 * tt * 1.003)) * (0.6 + 0.4 * np.sin(2 * np.pi * 0.11 * tt))
-lvl = np.interp(tt, [0, 1.5, 13, 18, 30, 38, 48, 55.0, 55.6, END + 1], [0, .2, .22, .3, .2, .22, .26, .3, 0, 0])
+lvl = np.interp(tt, [0, 1.5, 13, 18, 30.6, 38.6, 48.6, 55.6, 56.2, END + 1], [0, .2, .22, .3, .2, .22, .26, .3, 0, 0])
 bgm += drone * lvl
 
 
@@ -115,8 +115,8 @@ def pattern(start, end, bpm, accents, gain):
 pattern(0.3, 6.0, 120, [2, 0, 1, 1, 2, 0, 1, 0], 0.45)      # qinggong run
 pattern(13.0, 18.5, 60, [1, 0, 0, 0, 1, 0, 0, 0], 0.4)      # heartbeat while she watches
 pattern(19.0, 30.0, 80, [1, 0, 0, 1, 0, 0, 1, 0], 0.3)      # uneasy breakfast
-pattern(30.0, 38.0, 120, [2, 0, 1, 1, 2, 0, 1, 0], 0.5)     # palm wind
-pattern(43.0, 55.0, 120, [2, 1, 1, 1, 2, 1, 2, 1], 0.5)     # build to reveal
+pattern(30.63, 38.6, 120, [2, 0, 1, 1, 2, 0, 1, 0], 0.5)     # palm wind
+pattern(43.6, 55.6, 120, [2, 1, 1, 1, 2, 1, 2, 1], 0.5)     # build to reveal
 
 for name, x in [('sfx', sfx), ('bgm', bgm)]:
     x = x / max(1e-9, np.abs(x).max()) * 0.9
