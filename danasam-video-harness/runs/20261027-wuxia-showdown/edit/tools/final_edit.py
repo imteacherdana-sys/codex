@@ -97,8 +97,41 @@ def all_cuts():
             y["c"][0] = max(y["c"][0], min(cut, y["sa"]))
     out = {}
     for r in rows:
-        out.setdefault(r["scene"], []).append(tuple(r["c"]))
+        a, b = r["c"]
+        out.setdefault(r["scene"], []).append((snap(a, -1), snap(b, +1)))
     return out
+
+
+_ENV = None
+
+
+def energy():
+    """원본 소리의 10ms 단위 크기 (편집점을 실제 무음에 맞추는 데 쓴다)."""
+    global _ENV
+    if _ENV is None:
+        with wave.open(str(ROOT / "assets/face/face16k.wav")) as w:
+            x = np.frombuffer(w.readframes(w.getnframes()), dtype="<i2").astype(np.float32) / 32768.0
+        hop = 160
+        n = len(x) // hop
+        fr = x[: n * hop].reshape(n, hop)
+        e = np.sqrt((fr ** 2).mean(axis=1))
+        _ENV = np.convolve(e, np.ones(3) / 3, mode="same")  # 30ms 평균
+    return _ENV
+
+
+def snap(t, side, reach=0.25):
+    """t 근처(±reach초)에서 가장 조용한 곳으로 편집점을 옮긴다.
+    whisper의 단어 경계는 조금씩 어긋나서, 그대로 자르면 앞뒤 말 끝이 묻어 나온다 ('…고요'가 남던 문제)."""
+    e = energy()
+    i0, i1 = max(0, int((t - reach) * 100)), min(len(e) - 1, int((t + reach) * 100))
+    if i1 <= i0:
+        return t
+    seg = e[i0:i1 + 1]
+    quiet = seg.min() + 0.15 * (np.median(seg) - seg.min())
+    cand = np.where(seg <= quiet)[0]
+    # 조용한 프레임 가운데 원래 지점에 가장 가까운 곳
+    k = cand[np.argmin(np.abs(cand + i0 - t * 100))]
+    return (i0 + k) / 100
 
 
 def raw_cuts(name):
@@ -240,10 +273,11 @@ def compose_scene(s, d, res_dir):
             t_in, t_out, src_off = tr
             inputs += ["-i", str(TRANSFORM)]
             ti = extra + 1
-            fc += [f"[{ti}:v]fps=30,scale=1920:1080,setsar=1,trim={src_off:.3f}:{src_off + t_out - t_in:.3f},setpts=PTS-STARTPTS+{t_in:.3f}/TB,format=rgba,"
-                   f"fade=t=in:st={t_in:.3f}:d=0.45:alpha=1,fade=t=out:st={t_out - 0.45:.3f}:d=0.45:alpha=1[tr]",
-                   f"color=c=white:s=1920x1080:r=30:d={d:.3f},format=rgba,colorchannelmixer=aa=0,"
-                   f"geq=r=255:g=255:b=255:a='255*0.85*(exp(-pow((T-{t_in:.3f})/0.12,2))+exp(-pow((T-{t_out:.3f})/0.12,2)))'[flash]"]
+            fc += [f"[{ti}:v]fps=30,scale=1920:1080,setsar=1,trim={src_off - 0.45:.3f}:{src_off + t_out - t_in + 0.45:.3f},setpts=PTS-STARTPTS+{t_in - 0.45:.3f}/TB,format=rgba,"
+                   f"fade=t=in:st={t_in - 0.45:.3f}:d=0.9:alpha=1,fade=t=out:st={t_out - 0.45:.3f}:d=0.9:alpha=1[tr]",
+                   f"color=c=white:s=1920x1080:r=30:d={d:.3f},format=rgba,"
+                   # 옥빛 내공이 화면 가운데에서 퍼지는 빛 (변신할 때 · 돌아올 때)
+                   f"geq=r=200:g=245:b=215:a='255*0.6*(exp(-pow((T-{t_in:.3f})/0.28,2))+0.7*exp(-pow((T-{t_out:.3f})/0.28,2)))*exp(-(pow(X-W/2,2)+pow(Y-H*0.42,2))/pow(W*0.45,2))'[flash]"]
             fc += ["[fvc]fps=30,scale=1920:1080,setsar=1[bg0]", "[bg0][tr]overlay=eof_action=pass[bg1]", "[bg1][flash]overlay[bg]"]
         else:
             fc += ["[fvc]fps=30,scale=1920:1080,setsar=1[bg]"]
@@ -374,6 +408,7 @@ WrapStyle: 2
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Neigong,Nanum Pen,170,&H00FFFFFF,&H00FFFFFF,&H0074B43C,&H00000000,0,0,0,0,100,100,4,0,1,7,0,8,60,60,150,1
 Style: Cap,Pretendard Caption,50,&H00FFFFFF,&H00FFFFFF,&H380F0605,&H380F0605,0,0,0,0,100,100,0,0,3,16,0,2,60,60,58,1
 
 [Events]
@@ -414,6 +449,11 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
         for t, end, ln in scene_ev:
             ev.append(f"Dialogue: 0,{ass_time(t)},{ass_time(end)},Cap,,60,{mr},58,,{ln}")
             srt.append((t, end, ln))
+    tr = transform_window(source_cuts("intro"))
+    if tr:
+        t = starts["intro"] + tr[0] - 0.35
+        ev.append(f"Dialogue: 1,{ass_time(t)},{ass_time(t + 2.2)},Neigong,,0,0,150,,"
+                  "{\\fad(250,450)\\blur2\\fscx80\\fscy80\\t(0,450,\\fscx108\\fscy108)\\t(450,900,\\fscx100\\fscy100)}내공 개방!")
     (WORK / "captions.ass").write_text(head + "\n".join(ev) + "\n")
     out = []
     for i, (a, b, ln) in enumerate(srt, 1):
