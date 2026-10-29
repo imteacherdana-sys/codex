@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape" data-composition-variables='[{"id": "line", "type": "string", "label": "문장", "default": "핵심은 딱 하나"}]'>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Pretendard"; src: url("assets/fonts/Pretendard.woff2") format("woff2"); font-weight: 100 900; font-display: block; }
+      @font-face { font-family: "Noto Color Emoji"; src: local("Noto Color Emoji"); }
+      @font-face { font-family: "NanumPen"; src: url("assets/fonts/NanumPenScript-korean.woff2") format("woff2"); font-display: block; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #05060f; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; color: #f5f3ff; word-break: keep-all; }
+      .ground { position: absolute; inset: 0; background: linear-gradient(#0b1026, #05060f); }
+      .grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(124,58,237,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(124,58,237,.12) 1px, transparent 1px); background-size: 40px 40px; -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 70%); mask-image: radial-gradient(ellipse at 50% 50%, #000 20%, transparent 70%); }
+
+      .hero { position: absolute; left: 860px; top: 280px; width: 200px; height: 200px; display: grid; place-items: center; font-size: 180px; font-family: "Noto Color Emoji", sans-serif; }
+      .bit { position: absolute; left: 920px; top: 340px; width: 80px; height: 80px; display: grid; place-items: center; font-size: 64px; font-family: "Noto Color Emoji", sans-serif; }
+      .line { position: absolute; left: 0; right: 0; top: 600px; text-align: center; font-size: 96px; font-weight: 800; letter-spacing: -0.02em; }
+      .line b { color: #b4e61d; font-weight: 800; }
+      .sub { position: absolute; left: 0; right: 0; top: 740px; text-align: center; font-size: 36px; font-weight: 600; color: #a5a3c7; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="emoji-burst" data-start="0" data-duration="5" data-width="1920" data-height="1080">
+      <div class="ground"></div>
+      <div class="grid"></div>
+      <div class="hero" id="emoji-burst-hero">🎯</div>
+      <div class="bit" id="emoji-burst-b0">✨</div>
+      <div class="bit" id="emoji-burst-b1">🎉</div>
+      <div class="bit" id="emoji-burst-b2">💡</div>
+      <div class="bit" id="emoji-burst-b3">👍</div>
+      <div class="bit" id="emoji-burst-b4">🔥</div>
+      <div class="bit" id="emoji-burst-b5">⭐</div>
+      <div class="bit" id="emoji-burst-b6">💯</div>
+      <div class="bit" id="emoji-burst-b7">🙌</div>
+      <div class="line" id="emoji-burst-line">핵심은 <b>딱 하나</b></div>
+      <div class="sub" id="emoji-burst-sub">이모지는 의미가 바로 읽히는 것 하나만</div>
+      <div id="emoji-burst-drv" class="clip" data-start="0" data-duration="5" data-track-index="0" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none"></div>
+    </div>
+    <script>
+      (function () {
+        window.__timelines = window.__timelines || {};
+        const vars = (window.__hyperframes && window.__hyperframes.getVariables && window.__hyperframes.getVariables()) || {};
+        const tl = gsap.timeline({ paused: true });
+
+        const bits = ["#emoji-burst-b0", "#emoji-burst-b1", "#emoji-burst-b2", "#emoji-burst-b3", "#emoji-burst-b4", "#emoji-burst-b5", "#emoji-burst-b6", "#emoji-burst-b7"];
+        gsap.set(bits.concat(["#emoji-burst-line", "#emoji-burst-sub"]), { opacity: 0 });
+        tl.fromTo("#emoji-burst-hero", { scale: 0, rotation: -20 }, { scale: 1, rotation: 0, duration: 0.7, ease: "back.out(2.2)" }, 0.3);
+        bits.forEach(function (b, i) {
+          const a = (i / bits.length) * Math.PI * 2 - Math.PI / 2, r = 300 + (i % 2) * 70;
+          tl.fromTo(b, { opacity: 0, x: 0, y: 0, scale: 0.4 }, { opacity: 1, x: Math.cos(a) * r, y: Math.sin(a) * r * 0.62, scale: 1, duration: 0.7, ease: "expo.out" }, 0.55 + i * 0.03);
+          tl.to(b, { opacity: 0, scale: 0.6, duration: 0.4, ease: "power2.in" }, 2.6 + i * 0.03);
+        });
+        tl.fromTo("#emoji-burst-line", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 1.1);
+        tl.fromTo("#emoji-burst-sub", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 1.6);
+
+        window.__timelines["emoji-burst"] = tl;
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "motion-masterclass",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "check": "hyperframes check --json",
+    "preview": "hyperframes preview",
+    "render": "hyperframes render --quality delivery --output renders/motion-masterclass.mp4"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "hyperframes": "0.8.203"
+  },
+  "private": true
+}

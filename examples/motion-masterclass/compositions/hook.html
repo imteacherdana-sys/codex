@@ -1,0 +1,42 @@
+<template>
+  <style>
+    @font-face { font-family: "Pretendard"; src: url("assets/fonts/Pretendard.woff2") format("woff2"); font-weight: 100 900; }
+    #root { position: absolute; inset: 0; font-family: "Pretendard", sans-serif; color: #f5f3ff; word-break: keep-all; }
+    #hook-sub { position: absolute; left: 0; right: 0; top: 410px; text-align: center; font-size: 120px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+    #hook-stamp { position: absolute; left: 1330px; top: 300px; padding: 14px 30px; border: 8px solid #ff6b5b; border-radius: 16px; color: #ff6b5b; font-size: 64px; font-weight: 900; }
+    #hook-lead { position: absolute; left: 0; right: 0; top: 590px; text-align: center; font-size: 34px; font-weight: 500; color: #a5a3c7; }
+    #hook-row { position: absolute; left: 0; right: 0; top: 660px; display: flex; justify-content: center; gap: 0; }
+    .hook-word { font-size: 72px; font-weight: 800; padding: 0 56px; border-left: 3px solid rgba(124, 58, 237, 0.7); }
+    .hook-word:first-child { border-left: 0; }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1920" data-height="1080">
+    <div id="hook-sub" data-hold>모션그래픽 완전정복</div>
+    <div id="hook-stamp">밋밋함</div>
+    <div id="hook-lead">오늘 살릴 원리 네 가지</div>
+    <div id="hook-row">
+      <span class="hook-word" id="hook-w1">타이밍</span>
+      <span class="hook-word" id="hook-w2">이징</span>
+      <span class="hook-word" id="hook-w3">위계</span>
+      <span class="hook-word" id="hook-w4">전환</span>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // 0초: 자막이 아무 움직임 없이 그냥 떠 있다 (첫 프레임 = 썸네일)
+      gsap.set("#hook-sub", { opacity: 1 });
+      gsap.set(["#hook-stamp", "#hook-lead", ".hook-word"], { opacity: 0 });
+      // "밋밋하죠?" — 코랄 도장이 찍힌다
+      tl.fromTo("#hook-stamp", { opacity: 0, scale: 1.7, rotation: -14 }, { opacity: 1, scale: 1, rotation: -8, duration: 0.22, ease: "power4.out" }, 4.4);
+      // B02 시작 — 도장이 빠지고 자막이 위로
+      tl.to("#hook-stamp", { opacity: 0, duration: 0.18, ease: "power3.in" }, 6.4);
+      tl.to("#hook-sub", { y: -150, scale: 0.72, duration: 0.7, ease: "power2.inOut" }, 6.5);
+      tl.fromTo("#hook-lead", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 8.3);
+      // "원리 네 가지로" — 단어가 하나씩
+      ["#hook-w1", "#hook-w2", "#hook-w3", "#hook-w4"].forEach(function (id, i) {
+        tl.fromTo(id, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 8.8 + i * 0.12);
+      });
+      window.__timelines["hook"] = tl;
+    })();
+  </script>
+</template>

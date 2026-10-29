@@ -1,0 +1,31 @@
+{
+  "run_id": "YYYYMMDD-topic-01",
+  "topic": "",
+  "timezone": "Asia/Seoul",
+  "format": "longform",
+  "target_minutes": 10,
+  "ad_status": "undecided",
+  "state": "intake",
+  "revision": 1,
+  "script_version": 0,
+  "review_status": "pending",
+  "gates": {
+    "H1_concept": { "status": "not_reached" },
+    "H2_shoot": { "status": "not_reached" },
+    "H3_publish": { "status": "not_reached" }
+  },
+  "budget": { "credit_cap": 200, "credit_used": 0 },
+  "artifacts": {},
+  "assumptions": [],
+  "open_questions": [],
+  "blockers": [],
+  "retry_count": 0,
+  "flags": {
+    "demo_executed": false,
+    "footage_reviewed": false,
+    "thumbnail_rendered": false,
+    "publish_authorized": false
+  },
+  "next_action": "write_brief",
+  "history": []
+}

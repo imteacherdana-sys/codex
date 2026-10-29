@@ -1,0 +1,60 @@
+<template>
+  <style>
+    @font-face { font-family: "Pretendard"; src: url("assets/fonts/Pretendard.woff2") format("woff2"); font-weight: 100 900; }
+    #root { position: absolute; inset: 0; font-family: "Pretendard", sans-serif; color: #f5f3ff; word-break: keep-all; }
+    .hi-head { position: absolute; left: 120px; top: 110px; display: flex; align-items: baseline; gap: 22px; }
+    .hi-head b { font-size: 44px; font-weight: 800; color: #b4e61d; }
+    .hi-head span { font-size: 64px; font-weight: 800; }
+    #hi-sub { position: absolute; left: 0; right: 0; top: 440px; display: flex; justify-content: center; gap: 0.3em; font-size: 120px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+    .hi-w { position: relative; display: inline-block; }
+    .hi-bar { position: absolute; left: 0; right: 0; bottom: -18px; height: 12px; border-radius: 6px; transform-origin: left center; }
+    #hi-bar1 { background: #ff6b5b; }
+    #hi-bar2 { background: #b4e61d; }
+    .hi-sticker { position: absolute; padding: 10px 22px; border-radius: 14px; font-size: 44px; font-weight: 900; }
+    #hi-s1 { left: 360px; top: 330px; background: #ff6b5b; color: #05060f; }
+    #hi-s2 { left: 1390px; top: 340px; background: #7c3aed; color: #f5f3ff; }
+    #hi-s3 { left: 880px; top: 650px; background: #22d3ee; color: #05060f; }
+    .hi-tag { position: absolute; left: 0; right: 0; top: 760px; text-align: center; font-size: 38px; font-weight: 700; }
+    #hi-tag-good { color: #b4e61d; }
+    #hi-tag-bad { color: #ff6b5b; }
+  </style>
+  <div id="root" data-composition-id="hierarchy" data-width="1920" data-height="1080">
+    <div class="hi-head" id="hi-head"><b>03</b><span>위계</span></div>
+    <div id="hi-sub">
+      <span class="hi-w" id="hi-w1"><span id="hi-t1">모션그래픽</span><i class="hi-bar" id="hi-bar1"></i></span>
+      <span class="hi-w" id="hi-w2"><span id="hi-t2">완전정복</span><i class="hi-bar" id="hi-bar2"></i></span>
+    </div>
+    <div class="hi-sticker" id="hi-s1">NEW!</div>
+    <div class="hi-sticker" id="hi-s2">중요</div>
+    <div class="hi-sticker" id="hi-s3">꼭 보세요</div>
+    <div class="hi-tag" id="hi-tag-good">강조는 딱 하나</div>
+    <div class="hi-tag" id="hi-tag-bad">다 강조 = 강조 없음</div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      const stickers = ["#hi-s1", "#hi-s2", "#hi-s3"];
+      gsap.set(["#hi-sub", "#hi-tag-good", "#hi-tag-bad"].concat(stickers), { opacity: 0 });
+      gsap.set(["#hi-bar1", "#hi-bar2"], { scaleX: 0 });
+      tl.fromTo("#hi-head", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.6, ease: "expo.out" }, 0.25);
+      tl.fromTo("#hi-sub", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.5);
+      // B07 "강조할 단어는 딱 하나만"
+      tl.to("#hi-t2", { color: "#b4e61d", duration: 0.25, ease: "power2.out" }, 3.4);
+      tl.to("#hi-bar2", { scaleX: 1, duration: 0.45, ease: "expo.out" }, 3.5);
+      tl.fromTo("#hi-tag-good", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 3.7);
+      // B08 "다 강조하면" — 전부 강조
+      tl.to("#hi-tag-good", { opacity: 0, duration: 0.15, ease: "power3.in" }, 6.0);
+      tl.to("#hi-t1", { color: "#ff6b5b", duration: 0.2, ease: "power2.out" }, 6.2);
+      tl.to("#hi-bar1", { scaleX: 1, duration: 0.35, ease: "expo.out" }, 6.25);
+      stickers.forEach(function (s, i) {
+        tl.fromTo(s, { opacity: 0, scale: 1.6, rotation: (i - 1) * 9 }, { opacity: 1, scale: 1, rotation: (i - 1) * 6, duration: 0.22, ease: "back.out(1.4)" }, 6.35 + i * 0.12);
+      });
+      tl.fromTo("#hi-tag-bad", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "power2.out" }, 7.0);
+      // 다시 하나만
+      tl.to(stickers.concat(["#hi-tag-bad"]), { opacity: 0, duration: 0.2, ease: "power3.in" }, 8.6);
+      tl.to("#hi-t1", { color: "#f5f3ff", duration: 0.25, ease: "power2.out" }, 8.6);
+      tl.to("#hi-bar1", { scaleX: 0, duration: 0.25, ease: "power3.in" }, 8.6);
+      window.__timelines["hierarchy"] = tl;
+    })();
+  </script>
+</template>

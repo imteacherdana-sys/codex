@@ -1,0 +1,188 @@
+{
+ "face": {
+  "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/face/face_all.mp4",
+  "track": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/face/track.json"
+ },
+ "music": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/audio/bgm_wuxia.wav",
+ "music_gain": 0.14,
+ "id": "short1-jangpung",
+ "highlight_words": [
+  "8개",
+  "FLUX",
+  "Kling",
+  "18",
+  "56",
+  "민망"
+ ],
+ "beats": [
+  {
+   "voice": [
+    [
+     37.65,
+     43.21
+    ]
+   ],
+   "caption": "같은 프롬프트 하나로 만든 장풍 영상 8개가 있는데요.",
+   "visual": {
+    "type": "title",
+    "rows": [
+     "장풍",
+     "대결"
+    ],
+    "y": 330
+   }
+  },
+  {
+   "voice": [
+    [
+     43.39,
+     45.16
+    ],
+    [
+     45.31,
+     49.06
+    ]
+   ],
+   "caption": "만든 AI만 다릅니다. 이 중에 진짜 무협 영화 같은 건 몇 번일까요?",
+   "visual": {
+    "type": "grid",
+    "clips": [
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r1_seedance_2_0.mp4",
+      "from": 2.5
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r1_minimax_h3.mp4",
+      "from": 2.5
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r1_flux_3_video.mp4",
+      "from": 2.5
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r1_gemini_omni_flash_1_1.mp4",
+      "from": 2.5
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r1_seedance_2_5.mp4",
+      "from": 2.5
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r1_grok_video_v15.mp4",
+      "from": 2.5
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r1_wan3_0.mp4",
+      "from": 2.5
+     },
+     {
+      "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r1_kling4_0.mp4",
+      "from": 2.5
+     }
+    ]
+   }
+  },
+  {
+   "voice": [
+    [
+     215.84,
+     219.91
+    ],
+    [
+     219.91,
+     225.76
+    ]
+   ],
+   "caption": "그리고 FLUX 3는 공기의 파동이 눈에 보이는데요. 카메라가 밀고 들어오는 연출까지 제일 장풍답다는 생각이 들었습니다.",
+   "visual": {
+    "type": "clip",
+    "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r1_flux_3_video.mp4",
+    "label": "FLUX 3",
+    "color": "#ffffff",
+    "from": 2.0,
+    "stamp": "장풍 1등!",
+    "stamp_at": 3.2,
+    "badge": "48 크레딧"
+   }
+  },
+  {
+   "voice": [
+    [
+     267.13,
+     271.35
+    ],
+    [
+     271.35,
+     276.75
+    ]
+   ],
+   "caption": "그리고 Kling은 마보 자세가 굉장히 무협답죠. 그런데 장풍의 파동이 정작 잘 보이지 않았습니다.",
+   "visual": {
+    "type": "clip",
+    "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r1_kling4_0.mp4",
+    "label": "Kling 4.0",
+    "color": "#b4e61d",
+    "from": 1.5,
+    "stamp": "파동 어디?",
+    "stamp_at": 3.0,
+    "badge": "18 크레딧"
+   }
+  },
+  {
+   "voice": [
+    [
+     236.57,
+     240.5
+    ]
+   ],
+   "caption": "그런데 옷감이 너무 얇게 보여서 조금 민망하더라고요.",
+   "visual": {
+    "type": "clip",
+    "src": "/home/user/codex/danasam-video-harness/runs/20261027-wuxia-showdown/edit/assets/clips/r1_seedance_2_5.mp4",
+    "label": "Seedance 2.5",
+    "color": "#ff8787",
+    "from": 2.5,
+    "badge": "56 크레딧"
+   }
+  },
+  {
+   "voice": [
+    [
+     190.45,
+     194.95
+    ]
+   ],
+   "caption": "Kling은 18, 그리고 Seedance 2.5는 56입니다.",
+   "visual": {
+    "type": "bars",
+    "title": "8초 한 편 크레딧",
+    "unit": 6,
+    "items": [
+     [
+      "Kling 4.0",
+      18,
+      true
+     ],
+     [
+      "Seedance 2.5",
+      56
+     ]
+    ]
+   }
+  },
+  {
+   "voice": [
+    [
+     858.8,
+     863.06
+    ]
+   ],
+   "caption": "장풍 하나에 Kling은 18크레딧이면 충분합니다.",
+   "visual": {
+    "type": "sticker",
+    "text": "전체 결과는 본편에서!",
+    "y": 380
+   }
+  }
+ ]
+}

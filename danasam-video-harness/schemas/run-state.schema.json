@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "danasam-video-harness/run-state.schema.json",
+  "title": "Run state — 세진 v1.2 실행 기록 + 촬영 이후 단계",
+  "type": "object",
+  "required": ["run_id", "topic", "state", "revision", "review_status", "next_action"],
+  "properties": {
+    "run_id": { "type": "string", "pattern": "^[0-9]{8}-.+-[0-9]{2}$" },
+    "topic": { "type": "string" },
+    "timezone": { "const": "Asia/Seoul" },
+    "format": { "enum": ["longform", "shorts"] },
+    "target_minutes": { "type": "number" },
+    "ad_status": { "enum": ["none", "sponsored", "affiliate", "undecided"] },
+    "state": {
+      "enum": [
+        "intake", "research_complete", "concept_locked", "script_draft",
+        "production_package_draft", "pd_review", "revision", "document_ready",
+        "awaiting_footage", "footage_ingested", "rough_cut", "motion_built",
+        "assembled", "edit_review", "publish_ready", "published", "retro_done"
+      ]
+    },
+    "revision": { "type": "integer", "minimum": 1 },
+    "script_version": { "type": "integer" },
+    "review_status": { "enum": ["pending", "PASS", "REVISE", "BLOCKED", "stale"] },
+    "gates": {
+      "type": "object",
+      "properties": {
+        "H1_concept": { "$ref": "#/$defs/gate" },
+        "H2_shoot": { "$ref": "#/$defs/gate" },
+        "H3_publish": { "$ref": "#/$defs/gate" }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "properties": {
+        "credit_cap": { "type": "number" },
+        "credit_used": { "type": "number" }
+      }
+    },
+    "artifacts": { "type": "object", "additionalProperties": { "type": "string" } },
+    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "open_questions": { "type": "array", "items": { "type": "string" }, "description": "다음 관문에서 한 번에 묻는다" },
+    "blockers": { "type": "array", "items": { "type": "string" } },
+    "retry_count": { "type": "integer" },
+    "flags": {
+      "type": "object",
+      "properties": {
+        "demo_executed": { "type": "boolean" },
+        "footage_reviewed": { "type": "boolean" },
+        "thumbnail_rendered": { "type": "boolean" },
+        "publish_authorized": { "type": "boolean" }
+      }
+    },
+    "next_action": { "type": "string" },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "at": { "type": "string" },
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "by": { "type": "string" },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "gate": {
+      "type": "object",
+      "properties": {
+        "status": { "enum": ["not_reached", "waiting", "passed", "changes_requested"] },
+        "decided_at": { "type": "string" },
+        "decision": { "type": "string" }
+      }
+    }
+  }
+}

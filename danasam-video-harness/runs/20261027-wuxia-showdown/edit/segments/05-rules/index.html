@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face { font-family: "Pretendard"; src: url("assets/fonts/PretendardVariable.woff2") format("woff2"); font-weight: 100 900; }
+@font-face { font-family: "NanumPen"; src: url("assets/fonts/NanumPenScript-korean.woff2") format("woff2"); }
+@font-face { font-family: "Noto Color Emoji"; src: local("Noto Color Emoji"); }
+:root { --bg0: #0b1026; --bg1: #05060f; --grid: rgba(124,58,237,.12); --violet: #7c3aed; --purple: #4a33a6;
+  --lime: #b4e61d; --coral: #ff6b5b; --fg: #f5f3ff; --mute: #a5a3c7; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--bg1); font-family: "Pretendard", sans-serif; color: var(--fg); word-break: keep-all; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+.ground { position: absolute; inset: 0; background: linear-gradient(var(--bg0), var(--bg1)); }
+.gridbg { position: absolute; inset: -80px; background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 48px 48px; -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 25%, transparent 72%); mask-image: radial-gradient(ellipse at 50% 50%, #000 25%, transparent 72%); }
+.cam { position: absolute; inset: 0; transform-origin: 50% 50%; }
+.cap { position: absolute; left: 160px; right: 160px; bottom: 64px; display: flex; justify-content: center; }
+.cap span { display: inline-block; white-space: nowrap; padding: 14px 28px 16px; border-radius: 14px; background: rgba(5,6,15,.78);
+  font-size: 42px; font-weight: 700; line-height: 1.38; text-align: center; letter-spacing: -0.01em; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+.chip { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px; border-radius: 12px; font-weight: 800; font-size: 30px; }
+.tag { position: absolute; left: 60px; top: 44px; font-size: 24px; font-weight: 700; color: var(--mute); letter-spacing: .04em; }
+.frame { position: absolute; border-radius: 22px; overflow: hidden; background: #000; box-shadow: 0 30px 80px rgba(0,0,0,.5), inset 0 0 0 2px rgba(255,255,255,.08); }
+.frame video, .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.hl { background: linear-gradient(transparent 55%, rgba(180,230,29,.55) 55%); }
+
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="s05" data-start="0" data-duration="23.74" data-width="1920" data-height="1080">
+<div class="ground"></div><div class="gridbg" id="gridbg"></div>
+<div class="cam" id="cam">
+<div id="rt" style="position:absolute; left:0; right:0; top:150px; text-align:center; font-size:72px; font-weight:900;">공정 조건</div>
+<div id="it0" style="position:absolute; left:460px; top:310px; display:flex; align-items:center; gap:28px; font-size:52px; font-weight:800;"><span style="width:64px; height:64px; border-radius:14px; background:var(--lime); color:#05060f; display:flex; align-items:center; justify-content:center; font-size:44px;">✓</span>8개 모델 모두 Higgsfield에서</div>
+<div id="it1" style="position:absolute; left:460px; top:430px; display:flex; align-items:center; gap:28px; font-size:52px; font-weight:800;"><span style="width:64px; height:64px; border-radius:14px; background:var(--lime); color:#05060f; display:flex; align-items:center; justify-content:center; font-size:44px;">✓</span>같은 프롬프트 · 같은 설정</div>
+<div id="it2" style="position:absolute; left:460px; top:550px; display:flex; align-items:center; gap:28px; font-size:52px; font-weight:800;"><span style="width:64px; height:64px; border-radius:14px; background:var(--lime); color:#05060f; display:flex; align-items:center; justify-content:center; font-size:44px;">✓</span>8초 · 16:9 · 첫 결과만</div>
+<div id="it3" style="position:absolute; left:460px; top:670px; display:flex; align-items:center; gap:28px; font-size:52px; font-weight:800;"><span style="width:64px; height:64px; border-radius:14px; background:var(--lime); color:#05060f; display:flex; align-items:center; justify-content:center; font-size:44px;">✓</span>가격은 마지막에 공개</div>
+</div>
+<div class="cap clip" id="cap0" data-start="0.40" data-duration="2.40" data-track-index="9"><span>조건은 모두 같습니다.</span></div>
+<div class="cap clip" id="cap1" data-start="2.80" data-duration="4.41" data-track-index="9"><span>여덟 개 모델 모두 Higgsfield에서 돌렸고,</span></div>
+<div class="cap clip" id="cap2" data-start="7.21" data-duration="4.25" data-track-index="9"><span>모두 똑같은 프롬프트와 똑같은 설정을 넣었습니다.</span></div>
+<div class="cap clip" id="cap3" data-start="11.46" data-duration="4.25" data-track-index="9"><span>8초, 16:9, 다시 뽑기 없이 첫 결과만 씁니다.</span></div>
+<div class="cap clip" id="cap4" data-start="15.71" data-duration="4.25" data-track-index="9"><span>MiniMax만 2K로 고정돼 화질이 다릅니다.</span></div>
+<div class="cap clip" id="cap5" data-start="19.95" data-duration="3.28" data-track-index="9"><span>모델별 비용은 마지막에 공개합니다!</span></div>
+</div>
+<script>
+(function(){
+const tl = gsap.timeline({ paused: true });
+tl.fromTo("#gridbg", {x: 0, y: 0}, {x: -48, y: -24, duration: 23.74, ease: "none"}, 0);
+tl.fromTo("#cam", {scale: 1.0}, {scale: 1.06, duration: 23.74, ease: "sine.inOut"}, 0);
+tl.fromTo("#rt", {opacity: 0, y: -20}, {opacity: 1, y: 0, duration: 0.4}, 0.1);
+tl.fromTo("#it0", {opacity: 0, x: -40}, {opacity: 1, x: 0, duration: 0.4, ease: "back.out(1.6)"}, 0.50);
+tl.fromTo("#it1", {opacity: 0, x: -40}, {opacity: 1, x: 0, duration: 0.4, ease: "back.out(1.6)"}, 0.85);
+tl.fromTo("#it2", {opacity: 0, x: -40}, {opacity: 1, x: 0, duration: 0.4, ease: "back.out(1.6)"}, 1.20);
+tl.fromTo("#it3", {opacity: 0, x: -40}, {opacity: 1, x: 0, duration: 0.4, ease: "back.out(1.6)"}, 1.55);
+tl.fromTo("#cap0 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 0.40);
+tl.fromTo("#cap1 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 2.80);
+tl.fromTo("#cap2 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 7.21);
+tl.fromTo("#cap3 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 11.46);
+tl.fromTo("#cap4 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 15.71);
+tl.fromTo("#cap5 span", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out"}, 19.95);
+window.__timelines = window.__timelines || {};
+window.__timelines["s05"] = tl;
+})();
+</script>
+</body>
+</html>
