@@ -252,8 +252,12 @@ def visual(b, i, total):
         body.append(f'<div class="{cls}" id="w{i}" style="left:{x:.0f}px; top:{y}px; width:{ww}px; height:{hh}px; opacity:0">'
                     + (f'<img src="assets/{Path(v["src"]).name}" alt="" style="width:100%; height:100%; object-fit:cover" />'
                        if v["src"].endswith((".png", ".jpg")) else
+                       (f'<video class="clip" src="assets/{Path(v["src"]).name}" data-start="{s:.3f}" data-duration="{d:.3f}" '
+                        f'data-media-start="{v.get("from", 0)}" data-track-index="{6 + i % 3}" muted playsinline '
+                        'style="position:absolute; inset:-60px; width:calc(100% + 120px); height:calc(100% + 120px); filter: blur(34px) brightness(.75)"></video>' if full else '') +
                        f'<video class="clip" src="assets/{Path(v["src"]).name}" data-start="{s:.3f}" data-duration="{d:.3f}" '
-                       f'data-media-start="{v.get("from", 0)}" data-track-index="{3 + i % 3}" muted playsinline></video>') + '</div>')
+                       f'data-media-start="{v.get("from", 0)}" data-track-index="{3 + i % 3}" muted playsinline'
+                       + (' style="position:absolute; left:0; top:640px; width:1080px; height:608px; object-fit:contain"' if full else '') + '></video>') + '</div>')
         if full:
             js.append(f'tl.fromTo("#w{i}", {{opacity: 0, scale: 1.08}}, {{opacity: 1, scale: 1, duration: 0.25}}, {s:.3f});')
         else:
